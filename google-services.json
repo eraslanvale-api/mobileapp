@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "285726305688",
+    "project_id": "vale-8bc33",
+    "storage_bucket": "vale-8bc33.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285726305688:android:aa756c2b9793bce9dc0fed",
+        "android_client_info": {
+          "package_name": "com.oktii.vale"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuKa5Qd2JTB_yRcXTKmMm1_4ANJaUTbIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285726305688:android:6ec39f9eab27e9fcdc0fed",
+        "android_client_info": {
+          "package_name": "com.premiumvale.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuKa5Qd2JTB_yRcXTKmMm1_4ANJaUTbIc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

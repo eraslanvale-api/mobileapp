@@ -1,0 +1,452 @@
+{
+	"info": {
+		"_postman_id": "851f25e6-d9a7-4812-b8ee-c89009dcf0ab",
+		"name": "_sms-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get user credit",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/user/credit",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"user",
+						"credit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get sms senders",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"keyword\": null,\r\n    \"status\": null,\r\n    \"pageIndex\": null,\r\n    \"pageSize\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/list-sender",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"list-sender"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create otp",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": \"905306423675\",\r\n    \"sender\": \"08507770174\",\r\n    \"content\": \"Doğrulama kodunuz: 123456\",\r\n    \"pushSettings\": {\r\n        \"url\": \"https://webhook.site/58645951-78ac-4be1-ada2-5ba39662f6f6\"\r\n    },\r\n    \"encoding\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/create-otp",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"create-otp"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create single",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": 1,\r\n    \"sendingType\": 0,\r\n    \"title\": \"X tarihli tekil test\",\r\n    \"content\": \"Test amaçlı tekil mesaj örneğidir, dikkate almayınız.\",\r\n    \"number\": 905306423675,\r\n    \"encoding\": 0,\r\n    \"sender\": \"08507770174\",\r\n    \"periodicSettings\": null,\r\n    \"sendingDate\": null,\r\n    \"validity\": 60,\r\n    \"pushSettings\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/create",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create 1 to N",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": 1,\r\n    \"sendingType\": 1,\r\n    \"title\": \"X tarihli 1 - N testi\",\r\n    \"content\": \"1'e çoklu mesaj gönderim örneğidir, dikkate almayınız.\",\r\n    \"numbers\": [\"905306423675\"],\r\n    \"encoding\": 1,\r\n    \"sender\": \"08507770174\",\r\n    \"periodicSettings\": null,\r\n    \"sendingDate\": null,\r\n    \"validity\": 1440\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/create",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create N to N",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": 1,\r\n    \"sendingType\": 2,\r\n    \"title\": \"X tarihli N - N testi\",\r\n    \"content\": \"\",\r\n    \"numbers\": [\r\n        {\r\n            \"nr\": 905306423675,\r\n            \"msg\": \"A kişisine özel mesaj\"\r\n        }\r\n    ],\r\n    \"encoding\": 1,\r\n    \"sender\": \"08507770174\",\r\n    \"periodicSettings\": null,\r\n    \"sendingDate\": null,\r\n    \"validity\": null,\r\n    \"pushSettings\": {\r\n        \"url\": \"https://webhook.site/58645951-78ac-4be1-ada2-5ba39662f6f6\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/create",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create N to N with custom fields",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": 1,\r\n    \"sendingType\": 1,\r\n    \"title\": \"X tarihli N - N dinamik gönderim testi\",\r\n    \"content\": \"Merhaba NAME SURNAME, bu bir test mesajıdır.\",\r\n    \"numbers\": [\r\n        {\r\n            \"nr\": \"905306423675\",\r\n            \"cfs\": {\r\n                \"NAME\": \"FERHAT\",\r\n                \"SURNAME\": \"KÜÇÜKASLAN\"\r\n            }\r\n        }\r\n    ],\r\n    \"customFields\": [\r\n        \"NAME\",\r\n        \"SURNAME\"\r\n    ],\r\n    \"encoding\": 1,\r\n    \"sender\": \"08507770174\",\r\n    \"periodicSettings\": null,\r\n    \"sendingDate\": null,\r\n    \"validity\": 60,\r\n    \"pushSettings\": {\r\n        \"url\": \"https://webhook.site/8d7ed0f7-b316-4b6a-a594-a7f34d270846\"\r\n    },\r\n    \"commercial\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/create",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cancel sms package",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 111152\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/cancel",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get sms packages",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ids\": null,\r\n    \"status\": null,\r\n    \"keyword\": null,\r\n    \"sender\": null,\r\n    \"pageIndex\": 0,\r\n    \"pageSize\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/list",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get sms package items",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "ajcDLcgdeHV",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "ferhatkucukaslan",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"pkgID\": 110969,\r\n    \"uuid\": null,\r\n    \"target\": null,\r\n    \"operator\": null,\r\n    \"state\": null,\r\n    \"startDate\": null,\r\n    \"finishDate\": null,\r\n    \"pageIndex\": 0,\r\n    \"pageSize\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://smslogin.nac.com.tr:9587/sms/list-item",
+					"protocol": "http",
+					"host": [
+						"smslogin.nac.com.tr"
+					],
+					"port": "9587",
+					"path": [
+						"sms",
+						"list-item"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
