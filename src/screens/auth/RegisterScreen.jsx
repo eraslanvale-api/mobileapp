@@ -56,11 +56,16 @@ export default function RegisterScreen({ navigation }) {
     const pw = String(password);
     const em = String(email).trim();
     const phoneOk = /^5[0-9]{9}$/.test(ph);
-    const mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
-    if (!fn) e.fullName = "Ad Soyad zorunlu";
+    // Email opsiyonel, ama girildiyse valid olmalı
+    const mailOk = em ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) : true;
+    
+    // Apple Review: Ad Soyad ve Email zorunlu değil
+    // if (!fn) e.fullName = "Ad Soyad zorunlu";
+    
     if (!phoneOk) e.phone = "Geçerli bir telefon numarası girin (5XX XXX XXXX)";
-    if (!em) e.email = "E-posta zorunlu";
-    else if (!mailOk) e.email = "Geçerli bir e-posta girin";
+    
+    if (em && !mailOk) e.email = "Geçerli bir e-posta girin";
+    
     if (!pw) e.password = "Parola zorunlu";
     else if (pw.length < 6) e.password = "En az 6 karakter";
     if (!term) e.term = "Kullanım şartları onaylanmalı";
@@ -80,9 +85,13 @@ export default function RegisterScreen({ navigation }) {
       const payload = {
         full_name: fullName.trim(),
         phone_number: fullPhone,
-        email: email.trim(),
         password: password,
       };
+      
+      // Email varsa ekle
+      if (email.trim()) {
+          payload.email = email.trim();
+      }
 
       const response = await register(payload);
       // console.log('Register Response:', JSON.stringify(response.data));
@@ -201,6 +210,9 @@ export default function RegisterScreen({ navigation }) {
               maxLength={13}
             />
           </View>
+          <Text style={{ fontSize: fs(11), color: Colors.gray, marginTop: 4, marginLeft: 4 }}>
+             * Telefon numarası, hesabın SMS ile doğrulanması için gereklidir.
+          </Text>
           {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
         </View>
 

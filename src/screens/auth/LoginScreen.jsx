@@ -26,12 +26,48 @@ export default function LoginScreen({ navigation, route }) {
     const [webTitle, setWebTitle] = useState('');
     const openWeb = (title, url) => { if (!url) return; setWebTitle(title); setWebUrl(url); setWebOpen(true); };
 
+    const formatInput = (text) => {
+        // Eğer harf veya @ varsa formatlama yapma (email girişine izin ver)
+        if (/[a-zA-Z@]/.test(text)) {
+            return text;
+        }
+
+        // Sadece rakamları al
+        const cleaned = text.replace(/\D/g, "");
+
+        // 1. Durum: 5 ile başlıyorsa (10 hane: 5XX XXX XX XX)
+        if (cleaned.startsWith('5')) {
+            const match = cleaned.slice(0, 10).match(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+            if (match) {
+                return `${match[1]} ${match[2]} ${match[3]} ${match[4]}`.trim().replace(/\s+/g, " ");
+            }
+        }
+        // 2. Durum: 05 ile başlıyorsa (11 hane: 05XX XXX XX XX)
+        else if (cleaned.startsWith('05')) {
+            const match = cleaned.slice(0, 11).match(/^(\d{0,4})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+            if (match) {
+                return `${match[1]} ${match[2]} ${match[3]} ${match[4]}`.trim().replace(/\s+/g, " ");
+            }
+        }
+        // 3. Durum: 90 ile başlıyorsa (12 hane: 90 5XX XXX XX XX)
+        else if (cleaned.startsWith('90')) {
+             const match = cleaned.slice(0, 12).match(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+             if (match) {
+                 return `${match[1]} ${match[2]} ${match[3]} ${match[4]} ${match[5]}`.trim().replace(/\s+/g, " ");
+             }
+        }
+
+        return text;
+    };
+
     const validate = () => {
         const e = {};
         const em = String(email).trim();
         const pw = String(password);
-        const mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
-        if (!mailOk) e.email = "Geçerli bir e-posta girin";
+        
+        if (!em) e.email = "E-posta veya Telefon giriniz";
+        // Email formatı kontrolünü kaldırdık çünkü telefon da girilebilir
+        
         if (pw.length < 6) e.password = "Parola en az 6 karakter olmalı";
         setErrors(e);
         return Object.keys(e).length === 0;
@@ -43,7 +79,22 @@ export default function LoginScreen({ navigation, route }) {
         setErrors({}); // Önceki hataları temizle
 
         try {
-            const response = await login({ email: email, password: password });
+            // Backend'e göndermeden önce telefon numarasını temizle
+            let loginValue = email.trim();
+            if (!loginValue.includes('@') && !/[a-zA-Z]/.test(loginValue)) {
+                 // Sadece rakam içeriyorsa telefon muamelesi yap
+                 let cleanPhone = loginValue.replace(/\D/g, "");
+                 // Başındaki 90 veya 0'ı kaldır, 10 haneli (5XX...) hale getir
+                 if (cleanPhone.startsWith('90')) cleanPhone = cleanPhone.substring(2);
+                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+                 
+                 // Eğer 10 haneli geçerli bir numara kaldıysa onu gönder
+                 if (cleanPhone.length === 10 && cleanPhone.startsWith('5')) {
+                     loginValue = cleanPhone;
+                 }
+            }
+
+            const response = await login({ email: loginValue, password: password });
 
             // Standart DRF Yanıtı: { token: "...", user: {...} }
             const responseBody = response?.data;
@@ -127,8 +178,8 @@ export default function LoginScreen({ navigation, route }) {
                                 keyboardType="email-address"
                                 autoCapitalize="none"
                                 value={email}
-                                onChangeText={setEmail}
-                                placeholder="E-posta adresiniz"
+                                onChangeText={(t) => setEmail(formatInput(t))}
+                                placeholder="E-posta veya Telefon (5XX...)"
                                 placeholderTextColor={Colors.gray}
                             />
                             {email.length > 0 && (
@@ -137,6 +188,9 @@ export default function LoginScreen({ navigation, route }) {
                                 </Pressable>
                             )}
                         </View>
+                        <Text style={{ fontSize: fs(11), color: Colors.gray, marginTop: 4, marginLeft: 4 }}>
+                             * E-posta adresinizle veya telefon numaranızla giriş yapabilirsiniz.
+                        </Text>
                         {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
                     </View>
 
