@@ -27,7 +27,7 @@ export default {
     ios: {
       supportsTablet: true,
       bundleIdentifier: "com.premiumvale.app",
-      buildNumber: "11", // Her yeni App Store gönderiminde artırın
+      buildNumber: "12", // Her yeni App Store gönderiminde artırın
       googleServicesFile: process.env.GOOGLE_SERVICES_IOS || "./GoogleService-Info.plist",
       infoPlist: {
         "ITSAppUsesNonExemptEncryption": false,
