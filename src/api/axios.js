@@ -89,9 +89,12 @@ api.interceptors.response.use(
     }
 
     if (status) {
-      // console.log('API Hatası:', status, data);
+      console.log(`API Hatası [${status}]:`, error.config?.url, data);
     } else {
-      // console.log('Sunucuya erişilemiyor:', error.message);
+      console.log('Sunucuya erişilemiyor:', error.config?.url, error.message);
+      if (error.toJSON) {
+        console.log('Hata Detayı:', error.toJSON());
+      }
     }
 
     return Promise.reject(error);

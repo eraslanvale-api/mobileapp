@@ -41,7 +41,7 @@ const LoadingPulse = () => {
                     marginBottom: 10
                 }}
             />
-            <Text style={{ color: '#888', fontFamily: 'PlusJakartaSans-Medium' }}>Veriler Güncelleniyor...</Text>
+            <Text style={{ color: Colors.gray, fontFamily: 'PlusJakartaSans-Medium' }}>Veriler Güncelleniyor...</Text>
         </View>
     );
 };
@@ -127,15 +127,15 @@ export default function DriverHomeScreen({ navigation }) {
                 {/* Header: Service & Status */}
                 <View style={styles.cardHeader}>
                     <View style={styles.serviceRow}>
-                        <View style={[styles.serviceIcon, { backgroundColor: isHistory ? '#f5f5f5' : '#fff9f0' }]}>
-                            <Ionicons name="car-sport" size={18} color={isHistory ? '#888' : '#f4a119'} />
+                        <View style={[styles.serviceIcon, { backgroundColor: isHistory ? Colors.background : Colors.background }]}>
+                            <Ionicons name="car-sport" size={18} color={isHistory ? Colors.gray : Colors.primary} />
                         </View>
                         <Text style={[styles.cardTitle, isHistory && styles.textHistory]} numberOfLines={1}>
                             {item.customerName || 'Transfer Hizmeti'}
                         </Text>
                     </View>
                     {!!item.status && (
-                        <View style={[styles.statusChip, { borderColor: statusColor, backgroundColor: isHistory ? '#fff' : statusColor + '15' }]}>
+                        <View style={[styles.statusChip, { borderColor: statusColor, backgroundColor: isHistory ? Colors.secondary : statusColor + '15' }]}>
                             <Text style={[styles.statusChipText, { color: statusColor }]}>{statusLabel}</Text>
                         </View>
                     )}
@@ -178,7 +178,7 @@ export default function DriverHomeScreen({ navigation }) {
                         <Ionicons name="calendar-outline" size={14} color="#888" />
                         <Text style={styles.footerText} numberOfLines={1}>{dateStr || '—'}</Text>
                     </View>
-                    
+
                     <View style={styles.priceContainer}>
                         <Ionicons name="navigate-outline" size={14} color="#1a1a1a" style={{ marginRight: 4 }} />
                         <Text style={[styles.priceText, isHistory && styles.textHistory]}>
@@ -213,7 +213,7 @@ export default function DriverHomeScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
+            <StatusBar barStyle="light-content" backgroundColor={Colors.background} />
 
             {(loading || refreshing) && (
                 <View style={styles.loadingOverlay}>
@@ -290,8 +290,8 @@ export default function DriverHomeScreen({ navigation }) {
 
                         {(!pendingJobs || pendingJobs.length === 0) && !activeJob ? (
                             <View style={styles.emptyBox}>
-                                <View style={[styles.emptyIconBg, { backgroundColor: '#f5f5f5' }]}>
-                                    <Ionicons name="file-tray-outline" size={32} color="#888" />
+                                <View style={[styles.emptyIconBg, { backgroundColor: Colors.background }]}>
+                                    <Ionicons name="file-tray-outline" size={32} color={Colors.gray} />
                                 </View>
                                 <Text style={styles.emptyText}>Şu anda size atanmış bekleyen bir görev bulunmuyor.</Text>
                             </View>
@@ -332,7 +332,7 @@ export default function DriverHomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: Colors.background,
     },
     driverHeader: {
         marginTop: ms(60),
@@ -341,18 +341,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: ms(24),
         paddingVertical: ms(16),
-        backgroundColor: '#f8f9fa',
+        backgroundColor: Colors.background,
     },
     welcomeText: {
         fontSize: fs(13),
-        color: '#888',
+        color: Colors.gray,
         fontFamily: 'PlusJakartaSans-Medium',
         marginBottom: ms(2),
     },
     headerName: {
         fontSize: fs(22),
         fontFamily: 'PlusJakartaSans-ExtraBold',
-        color: '#1a1a1a',
+        color: Colors.white,
     },
     logoutBtn: {
         width: ms(42),
@@ -429,11 +429,11 @@ const styles = StyleSheet.create({
     },
     tabs: {
         flexDirection: 'row',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(12),
         padding: ms(4),
         borderWidth: 1,
-        borderColor: '#f0f0f0',
+        borderColor: Colors.border,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
@@ -451,11 +451,11 @@ const styles = StyleSheet.create({
     },
     tabText: {
         fontFamily: 'PlusJakartaSans-Medium',
-        color: '#888',
+        color: Colors.gray,
         fontSize: fs(13),
     },
     activeTabText: {
-        color: '#fff',
+        color: Colors.black,
         fontFamily: 'PlusJakartaSans-Bold',
     },
     scrollContent: {
@@ -463,7 +463,7 @@ const styles = StyleSheet.create({
     },
     // NEW CARD STYLES
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(20),
         padding: ms(16),
         marginBottom: ms(16),
@@ -474,13 +474,13 @@ const styles = StyleSheet.create({
         shadowRadius: ms(12),
         elevation: 3,
         borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.03)',
+        borderColor: Colors.border,
     },
     cardHistory: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         shadowOpacity: 0.03,
         elevation: 1,
-        borderColor: '#f0f0f0',
+        borderColor: Colors.border,
     },
     cardHeader: {
         flexDirection: 'row',
@@ -489,7 +489,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(16),
         paddingBottom: vs(12),
         borderBottomWidth: 1,
-        borderBottomColor: '#f5f5f5',
+        borderBottomColor: Colors.border,
     },
     serviceRow: {
         flexDirection: 'row',
@@ -518,13 +518,13 @@ const styles = StyleSheet.create({
     cardTitle: {
         fontSize: fs(16),
         fontWeight: '700',
-        color: '#1a1a1a',
+        color: Colors.white,
         flex: 1,
         marginRight: s(8),
         fontFamily: 'PlusJakartaSans-Bold',
     },
     textHistory: {
-        color: '#666',
+        color: Colors.gray,
     },
     statusChip: {
         borderWidth: 1,
@@ -568,25 +568,25 @@ const styles = StyleSheet.create({
     },
     addrLabel: {
         fontSize: fs(11),
-        color: '#999',
+        color: Colors.gray,
         marginBottom: vs(2),
         fontWeight: '600',
         fontFamily: 'PlusJakartaSans-SemiBold',
     },
     addrText: {
         fontSize: fs(14),
-        color: '#333',
+        color: Colors.white,
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans-Medium',
     },
     textMuted: {
-        color: '#bbb',
+        color: Colors.gray,
     },
     cardFooter: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#f9fafb',
+        backgroundColor: Colors.background,
         marginHorizontal: -ms(16),
         marginBottom: -ms(16),
         paddingHorizontal: ms(16),
@@ -594,7 +594,7 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: ms(20),
         borderBottomRightRadius: ms(20),
         borderTopWidth: 1,
-        borderTopColor: '#f0f0f0',
+        borderTopColor: Colors.border,
     },
     footerItem: {
         flexDirection: 'row',
@@ -603,30 +603,30 @@ const styles = StyleSheet.create({
     footerText: {
         marginLeft: s(6),
         fontSize: fs(13),
-        color: '#666',
+        color: Colors.gray,
         fontWeight: '500',
         fontFamily: 'PlusJakartaSans-Medium',
     },
     priceContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         paddingHorizontal: s(10),
         paddingVertical: vs(4),
         borderRadius: ms(8),
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: Colors.border,
         flexDirection: 'row',
         alignItems: 'center',
     },
     priceText: {
         fontSize: fs(14),
         fontWeight: '800',
-        color: '#1a1a1a',
+        color: Colors.white,
         fontFamily: 'PlusJakartaSans-ExtraBold',
     },
     detailBtn: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f4a119',
+        backgroundColor: Colors.primary,
         paddingVertical: vs(6),
         paddingHorizontal: s(12),
         borderRadius: ms(8),
@@ -635,7 +635,7 @@ const styles = StyleSheet.create({
     detailBtnText: {
         fontSize: fs(12),
         fontWeight: '700',
-        color: '#fff',
+        color: Colors.black,
         marginRight: s(2),
         fontFamily: 'PlusJakartaSans-Bold',
     },
@@ -647,7 +647,7 @@ const styles = StyleSheet.create({
     emptyStateText: {
         marginTop: ms(16),
         fontSize: fs(14),
-        color: '#999',
+        color: Colors.gray,
         fontFamily: 'PlusJakartaSans-Medium',
     },
     sectionHeader: {
@@ -661,7 +661,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: fs(16),
         fontFamily: 'PlusJakartaSans-Bold',
-        color: '#1a1a1a',
+        color: Colors.white,
     },
     badge: {
         backgroundColor: '#ef4444',
@@ -682,17 +682,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: ms(40),
         marginHorizontal: ms(24),
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(20),
         borderWidth: 1,
-        borderColor: '#f0f0f0',
+        borderColor: Colors.border,
         borderStyle: 'dashed',
     },
     emptyIconBg: {
         width: ms(60),
         height: ms(60),
         borderRadius: ms(30),
-        backgroundColor: '#fff9f0',
+        backgroundColor: Colors.background,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: ms(16),
@@ -700,13 +700,13 @@ const styles = StyleSheet.create({
     emptyTitle: {
         fontSize: fs(16),
         fontFamily: 'PlusJakartaSans-Bold',
-        color: '#1a1a1a',
+        color: Colors.white,
         marginBottom: ms(8),
     },
     emptyText: {
         fontSize: fs(13),
         fontFamily: 'PlusJakartaSans-Medium',
-        color: '#888',
+        color: Colors.gray,
         textAlign: 'center',
         paddingHorizontal: ms(32),
     },
@@ -718,7 +718,7 @@ const styles = StyleSheet.create({
     emptyHistoryText: {
         marginTop: ms(12),
         fontSize: fs(14),
-        color: '#999',
+        color: Colors.gray,
         fontFamily: 'PlusJakartaSans-Medium',
     },
 });

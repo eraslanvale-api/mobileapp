@@ -39,9 +39,9 @@ export default function ReservationSuccessScreen() {
     <View style={styles.container}>
       <View style={styles.content}>
         <Ionicons name="checkmark-circle" size={ms(120)} color={Colors.primary} />
-        
+
         <Text style={styles.title}>Rezervasyon Başarılı!</Text>
-        
+
         <Text style={styles.subtitle}>
           Rezervasyonunuz başarıyla oluşturuldu.{'\n'}
           Hizmetimiz en kısa sürede size ulaşacaktır.
@@ -58,7 +58,7 @@ export default function ReservationSuccessScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: s(24),
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fs(24),
     fontWeight: 'bold',
-    color: '#333',
+    color: Colors.white,
     marginTop: vs(24),
     textAlign: 'center',
   },
   subtitle: {
     fontSize: fs(16),
-    color: '#666',
+    color: Colors.gray,
     textAlign: 'center',
     marginTop: vs(12),
     lineHeight: vs(24),
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   buttonText: {
-    color: '#fff',
+    color: Colors.black,
     fontSize: fs(16),
     fontWeight: '600',
   },

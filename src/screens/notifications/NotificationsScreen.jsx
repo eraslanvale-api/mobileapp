@@ -31,7 +31,7 @@ export default function NotificationsScreen() {
             const response = await listNotifications();
             if (response.data && Array.isArray(response.data)) {
                 setNotifications(response.data);
-                
+
                 // Eğer okunmamış bildirim varsa sessizce okundu olarak işaretle
                 const hasUnread = response.data.some(n => !n.is_read);
                 if (hasUnread) {
@@ -74,7 +74,7 @@ export default function NotificationsScreen() {
 
     const handleMarkAllRead = async () => {
         if (notifications.length === 0) return;
-        
+
         try {
             setActionLoading(true);
             await markAllRead();
@@ -94,9 +94,9 @@ export default function NotificationsScreen() {
             "Bu bildirimi silmek istediğinizden emin misiniz?",
             [
                 { text: "Vazgeç", style: "cancel" },
-                { 
-                    text: "Sil", 
-                    style: "destructive", 
+                {
+                    text: "Sil",
+                    style: "destructive",
                     onPress: async () => {
                         try {
                             await deleteNotification(id);
@@ -115,10 +115,10 @@ export default function NotificationsScreen() {
     const renderItem = ({ item }) => (
         <View style={[styles.itemContainer, !item.is_read && styles.unreadItem]}>
             <View style={styles.iconContainer}>
-                <Ionicons 
-                    name={item.is_read ? "notifications-outline" : "notifications"} 
-                    size={ms(24)} 
-                    color={item.is_read ? Colors.gray : Colors.primary} 
+                <Ionicons
+                    name={item.is_read ? "notifications-outline" : "notifications"}
+                    size={ms(24)}
+                    color={item.is_read ? Colors.gray : Colors.primary}
                 />
             </View>
             <View style={styles.textContainer}>
@@ -136,7 +136,7 @@ export default function NotificationsScreen() {
 
     const EmptyState = () => (
         <View style={styles.emptyContainer}>
-            <Ionicons name="notifications-off-outline" size={ms(64)} color={Colors.lightGray} />
+            <Ionicons name="notifications-off-outline" size={ms(64)} color={Colors.gray} />
             <Text style={styles.emptyText}>Henüz bildiriminiz yok.</Text>
         </View>
     );
@@ -145,12 +145,12 @@ export default function NotificationsScreen() {
         <View style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={ms(24)} color={Colors.darkGray} />
+                    <Ionicons name="arrow-back" size={ms(24)} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Bildirimler</Text>
                 {notifications.length > 0 && (
                     <TouchableOpacity onPress={handleMarkAllRead} disabled={actionLoading}>
-                         {actionLoading ? <ActivityIndicator size="small" color={Colors.primary} /> : <Ionicons name="checkmark-done-outline" size={ms(24)} color={Colors.primary} />}
+                        {actionLoading ? <ActivityIndicator size="small" color={Colors.primary} /> : <Ionicons name="checkmark-done-outline" size={ms(24)} color={Colors.primary} />}
                     </TouchableOpacity>
                 )}
             </View>
@@ -179,7 +179,7 @@ export default function NotificationsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: s(16),
         paddingVertical: vs(12),
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        backgroundColor: '#fff',
+        borderBottomColor: Colors.border,
+        backgroundColor: Colors.secondary,
     },
     backButton: {
         padding: s(4),
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: fs(18),
         fontWeight: '800',
-        color: Colors.black,
+        color: Colors.white,
         flex: 1,
     },
     loadingContainer: {
@@ -212,18 +212,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: s(16),
         borderBottomWidth: 1,
-        borderBottomColor: '#f5f5f5',
-        backgroundColor: '#fff',
+        borderBottomColor: Colors.border,
+        backgroundColor: Colors.secondary,
         alignItems: 'center',
     },
     unreadItem: {
-        backgroundColor: '#fffcf5', // Very light orange/yellow tint for unread
+        backgroundColor: Colors.background, // Very light orange/yellow tint for unread
     },
     iconContainer: {
         width: s(40),
         height: s(40),
         borderRadius: s(20),
-        backgroundColor: '#f9f9f9',
+        backgroundColor: Colors.background,
         justifyContent: 'center',
         alignItems: 'center',
         marginRight: s(12),
@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     itemTitle: {
         fontSize: fs(15),
         fontWeight: '700',
-        color: Colors.black,
+        color: Colors.white,
         flex: 1,
         marginRight: s(8),
     },
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     },
     itemMessage: {
         fontSize: fs(13),
-        color: Colors.darkGray,
+        color: Colors.gray,
         lineHeight: fs(18),
     },
     deleteButton: {

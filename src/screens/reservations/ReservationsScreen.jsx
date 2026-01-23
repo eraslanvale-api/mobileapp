@@ -5,11 +5,16 @@ import { useNavigation } from '@react-navigation/native';
 import { s, vs, fs, ms } from '../../utils/scale';
 import { listActiveReservations, listReservationHistory, cancelReservation } from '../../api/endpoints';
 import TopMenu from '../../components/TopMenu'
+import { Colors } from '../../constants/Colors';
+
+import { useAuth } from '../../context/AuthContext';
 
 const { width } = Dimensions.get('window');
 
 export default function ReservationsScreen() {
   const navigation = useNavigation();
+  const { user } = useAuth();
+  const isDriver = user?.role === 'driver' || user?.role === 'Şoför' || user?.role === 'sofor';
   const [active, setActive] = useState([]);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -120,16 +125,16 @@ export default function ReservationsScreen() {
     const getStatusLabel = (s) => {
       const lower = String(s).toLowerCase();
       const map = {
-          'pending': 'Bekliyor',
-          'searching': 'Sürücü Aranıyor',
-          'scheduled': 'Planlandı',
-          'active': 'Aktif',
-          'accepted': 'Kabul Edildi',
-          'assigned': 'Atandı',
-          'on_way': 'Yolda',
-          'in_progress': 'Sürüşte',
-          'completed': 'Tamamlandı',
-          'cancelled': 'İptal Edildi'
+        'pending': 'Bekliyor',
+        'searching': 'Sürücü Aranıyor',
+        'scheduled': 'Planlandı',
+        'active': 'Aktif',
+        'accepted': 'Kabul Edildi',
+        'assigned': 'Atandı',
+        'on_way': 'Yolda',
+        'in_progress': 'Sürüşte',
+        'completed': 'Tamamlandı',
+        'cancelled': 'İptal Edildi'
       };
       return map[lower] || s;
     };
@@ -138,10 +143,10 @@ export default function ReservationsScreen() {
 
     const getStatusColor = (s) => {
       const lower = String(s).toLowerCase();
-      if (['active', 'confirmed', 'pending', 'searching', 'scheduled', 'assigned', 'on_way', 'on-way', 'in_progress'].includes(lower)) return '#f4a119';
-      if (lower === 'completed') return '#10b981';
-      if (lower === 'cancelled' || lower === 'iptal edildi') return '#ef4444';
-      return '#888';
+      if (['active', 'confirmed', 'pending', 'searching', 'scheduled', 'assigned', 'on_way', 'on-way', 'in_progress'].includes(lower)) return Colors.primary;
+      if (lower === 'completed') return Colors.green;
+      if (lower === 'cancelled' || lower === 'iptal edildi') return Colors.red;
+      return Colors.gray;
     };
 
     const statusColor = getStatusColor(status);
@@ -155,8 +160,8 @@ export default function ReservationsScreen() {
         {/* Header: Service & Status */}
         <View style={styles.cardHeader}>
           <View style={styles.serviceRow}>
-            <View style={[styles.serviceIcon, { backgroundColor: isHistory ? '#f5f5f5' : '#fff9f0' }]}>
-              <Ionicons name="car-sport" size={18} color={isHistory ? '#888' : '#f4a119'} />
+            <View style={[styles.serviceIcon, { backgroundColor: isHistory ? Colors.lightGray : Colors.background }]}>
+              <Ionicons name="car-sport" size={18} color={isHistory ? Colors.gray : Colors.primary} />
             </View>
             <Text style={[styles.cardTitle, isHistory && styles.textHistory]} numberOfLines={1}>{serviceName}</Text>
           </View>
@@ -209,10 +214,10 @@ export default function ReservationsScreen() {
               <Text style={[styles.priceText, isHistory && styles.textHistory]}>{Number(price).toFixed(0)} ₺</Text>
             </View>
           )}
-          
+
           <View style={[styles.detailBtn, { marginLeft: 'auto' }]}>
             <Text style={styles.detailBtnText}>Detay</Text>
-            <Ionicons name="chevron-forward" size={14} color="#fff" />
+            <Ionicons name="chevron-forward" size={14} color={Colors.black} />
           </View>
         </View>
       </TouchableOpacity>
@@ -223,14 +228,16 @@ export default function ReservationsScreen() {
   const EmptyActive = () => (
     <View style={styles.emptyBox}>
       <View style={styles.emptyIconBg}>
-        <Ionicons name="calendar-clear-outline" size={32} color="#f4a119" />
+        <Ionicons name="calendar-clear-outline" size={32} color={Colors.primary} />
       </View>
       <Text style={styles.emptyTitle}>Aktif Rezervasyon Yok</Text>
       <Text style={styles.emptyText}>Şu anda bekleyen veya aktif bir yolculuğunuz bulunmuyor.</Text>
-      <TouchableOpacity style={styles.createBtn} onPress={onCreateReservation}>
-        <Text style={styles.createBtnText}>Yeni Rezervasyon Oluştur</Text>
-        <Ionicons name="arrow-forward" size={16} color="#fff" style={{ marginLeft: s(4) }} />
-      </TouchableOpacity>
+      {!isDriver && (
+        <TouchableOpacity style={styles.createBtn} onPress={onCreateReservation}>
+          <Text style={styles.createBtnText}>Yeni Rezervasyon Oluştur</Text>
+          <Ionicons name="arrow-forward" size={16} color={Colors.black} style={{ marginLeft: s(4) }} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 
@@ -251,8 +258,8 @@ export default function ReservationsScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor="#f4a119"
-            colors={['#f4a119']}
+            tintColor={Colors.primary}
+            colors={[Colors.primary]}
           />
         }
       >
@@ -261,7 +268,7 @@ export default function ReservationsScreen() {
         </View>
 
         {loading ? (
-          <View style={styles.loadingWrap}><ActivityIndicator size="large" color="#f4a119" /></View>
+          <View style={styles.loadingWrap}><ActivityIndicator size="large" color={Colors.primary} /></View>
         ) : active.length === 0 ? (
           <EmptyActive />
         ) : (
@@ -278,7 +285,7 @@ export default function ReservationsScreen() {
         </View>
 
         {loading ? (
-          <View style={styles.loadingWrap}><ActivityIndicator color="#f4a119" /></View>
+          <View style={styles.loadingWrap}><ActivityIndicator color={Colors.primary} /></View>
         ) : history.length === 0 ? (
           <EmptyHistory />
         ) : (
@@ -294,9 +301,11 @@ export default function ReservationsScreen() {
 
 
       {/* FAB */}
-      <TouchableOpacity style={styles.fab} onPress={onCreateReservation}>
-        <Ionicons name="add" size={32} color="#fff" />
-      </TouchableOpacity>
+      {!isDriver && (
+        <TouchableOpacity style={styles.fab} onPress={onCreateReservation}>
+          <Ionicons name="add" size={32} color="#fff" />
+        </TouchableOpacity>
+      )}
     </View >
   );
 }
@@ -304,7 +313,7 @@ export default function ReservationsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa'
+    backgroundColor: Colors.background
   },
   content: {
     flex: 1,
@@ -315,9 +324,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: s(20),
     paddingBottom: vs(100),
   },
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: s(20), paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: '#eee', backgroundColor: '#fff' },
-  backBtn: { width: s(40), height: s(40), borderRadius: s(20), backgroundColor: '#f5f5f5', alignItems: 'center', justifyContent: 'center' },
-  headerTitle: { fontSize: fs(18), fontWeight: '800', color: '#1a1a1a' },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: s(20), paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.secondary },
+  backBtn: { width: s(40), height: s(40), borderRadius: s(20), backgroundColor: Colors.lightGray, alignItems: 'center', justifyContent: 'center' },
+  headerTitle: { fontSize: fs(18), fontWeight: '800', color: Colors.white },
   sectionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -326,18 +335,18 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: fs(18),
     fontWeight: '800',
-    color: '#1a1a1a',
+    color: Colors.white,
     letterSpacing: -0.5,
   },
   badge: {
-    backgroundColor: '#f4a119',
+    backgroundColor: Colors.primary,
     paddingHorizontal: s(8),
     paddingVertical: vs(2),
     borderRadius: ms(12),
     marginLeft: s(8),
   },
   badgeText: {
-    color: '#fff',
+    color: Colors.black,
     fontSize: fs(12),
     fontWeight: '700',
   },
@@ -349,7 +358,7 @@ const styles = StyleSheet.create({
 
   // Card Styles
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderRadius: ms(20),
     padding: s(16),
     marginBottom: vs(16),
@@ -359,13 +368,13 @@ const styles = StyleSheet.create({
     shadowRadius: ms(12),
     elevation: 3,
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.03)',
+    borderColor: Colors.border,
   },
   cardHistory: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     shadowOpacity: 0.03,
     elevation: 1,
-    borderColor: '#f0f0f0',
+    borderColor: Colors.border,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -374,7 +383,7 @@ const styles = StyleSheet.create({
     marginBottom: vs(16),
     paddingBottom: vs(12),
     borderBottomWidth: 1,
-    borderBottomColor: '#f5f5f5',
+    borderBottomColor: Colors.border,
   },
   serviceRow: {
     flexDirection: 'row',
@@ -392,7 +401,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: fs(16),
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.white,
     flex: 1,
     marginRight: s(8)
   },
@@ -436,7 +445,7 @@ const styles = StyleSheet.create({
   line: {
     width: 2,
     flex: 1,
-    backgroundColor: '#e0e0e0',
+    backgroundColor: Colors.lightGray,
     marginVertical: vs(2),
   },
   routeRight: {
@@ -454,7 +463,7 @@ const styles = StyleSheet.create({
   },
   addrText: {
     fontSize: fs(14),
-    color: '#333',
+    color: Colors.white,
     fontWeight: '500'
   },
   textMuted: {
@@ -466,7 +475,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#f9fafb',
+    backgroundColor: Colors.background,
     marginHorizontal: -s(16),
     marginBottom: -s(16),
     paddingHorizontal: s(16),
@@ -474,7 +483,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: ms(20),
     borderBottomRightRadius: ms(20),
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0',
+    borderTopColor: Colors.border,
   },
   footerItem: {
     flexDirection: 'row',
@@ -487,22 +496,22 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   priceContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     paddingHorizontal: s(10),
     paddingVertical: vs(4),
     borderRadius: ms(8),
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: Colors.border,
   },
   priceText: {
     fontSize: fs(14),
     fontWeight: '800',
-    color: '#1a1a1a'
+    color: Colors.white
   },
   detailBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f4a119',
+    backgroundColor: Colors.primary,
     paddingVertical: vs(6),
     paddingHorizontal: s(12),
     borderRadius: ms(8),
@@ -511,7 +520,7 @@ const styles = StyleSheet.create({
   detailBtnText: {
     fontSize: fs(12),
     fontWeight: '700',
-    color: '#fff',
+    color: Colors.black,
     marginRight: s(2),
   },
 
@@ -521,20 +530,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: vs(32),
     paddingHorizontal: s(24),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderRadius: ms(24),
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.03)',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.03,
-    shadowRadius: ms(16),
+    borderColor: Colors.border,
   },
   emptyIconBg: {
     width: s(64),
     height: s(64),
     borderRadius: s(32),
-    backgroundColor: '#fff9f0',
+    backgroundColor: Colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: vs(16),
@@ -542,12 +547,12 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: fs(16),
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.white,
     marginBottom: vs(8),
   },
   emptyText: {
     fontSize: fs(14),
-    color: '#7a7a7a',
+    color: Colors.gray,
     textAlign: 'center',
     marginBottom: vs(24),
     lineHeight: fs(20),
@@ -555,20 +560,15 @@ const styles = StyleSheet.create({
   createBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1a1a1a',
+    backgroundColor: Colors.primary,
     borderRadius: ms(16),
     paddingVertical: vs(12),
     paddingHorizontal: s(24),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: ms(8),
-    elevation: 4,
   },
   createBtnText: {
     fontSize: fs(14),
     fontWeight: '700',
-    color: '#fff'
+    color: Colors.black
   },
   emptyHistoryBox: {
     paddingVertical: vs(32),
@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
   },
   emptyHistoryText: {
     fontSize: fs(14),
-    color: '#7a7a7a',
+    color: Colors.gray,
     marginTop: vs(8),
     fontWeight: '500',
   },
@@ -591,10 +591,10 @@ const styles = StyleSheet.create({
     width: s(56),
     height: s(56),
     borderRadius: s(28),
-    backgroundColor: '#f4a119',
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#f4a119',
+    shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: ms(8),

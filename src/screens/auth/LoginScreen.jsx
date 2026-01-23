@@ -51,10 +51,10 @@ export default function LoginScreen({ navigation, route }) {
         }
         // 3. Durum: 90 ile başlıyorsa (12 hane: 90 5XX XXX XX XX)
         else if (cleaned.startsWith('90')) {
-             const match = cleaned.slice(0, 12).match(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
-             if (match) {
-                 return `${match[1]} ${match[2]} ${match[3]} ${match[4]} ${match[5]}`.trim().replace(/\s+/g, " ");
-             }
+            const match = cleaned.slice(0, 12).match(/^(\d{0,2})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+            if (match) {
+                return `${match[1]} ${match[2]} ${match[3]} ${match[4]} ${match[5]}`.trim().replace(/\s+/g, " ");
+            }
         }
 
         return text;
@@ -64,10 +64,10 @@ export default function LoginScreen({ navigation, route }) {
         const e = {};
         const em = String(email).trim();
         const pw = String(password);
-        
+
         if (!em) e.email = "E-posta veya Telefon giriniz";
         // Email formatı kontrolünü kaldırdık çünkü telefon da girilebilir
-        
+
         if (pw.length < 6) e.password = "Parola en az 6 karakter olmalı";
         setErrors(e);
         return Object.keys(e).length === 0;
@@ -82,16 +82,16 @@ export default function LoginScreen({ navigation, route }) {
             // Backend'e göndermeden önce telefon numarasını temizle
             let loginValue = email.trim();
             if (!loginValue.includes('@') && !/[a-zA-Z]/.test(loginValue)) {
-                 // Sadece rakam içeriyorsa telefon muamelesi yap
-                 let cleanPhone = loginValue.replace(/\D/g, "");
-                 // Başındaki 90 veya 0'ı kaldır, 10 haneli (5XX...) hale getir
-                 if (cleanPhone.startsWith('90')) cleanPhone = cleanPhone.substring(2);
-                 if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
-                 
-                 // Eğer 10 haneli geçerli bir numara kaldıysa onu gönder
-                 if (cleanPhone.length === 10 && cleanPhone.startsWith('5')) {
-                     loginValue = cleanPhone;
-                 }
+                // Sadece rakam içeriyorsa telefon muamelesi yap
+                let cleanPhone = loginValue.replace(/\D/g, "");
+                // Başındaki 90 veya 0'ı kaldır, 10 haneli (5XX...) hale getir
+                if (cleanPhone.startsWith('90')) cleanPhone = cleanPhone.substring(2);
+                if (cleanPhone.startsWith('0')) cleanPhone = cleanPhone.substring(1);
+
+                // Eğer 10 haneli geçerli bir numara kaldıysa onu gönder
+                if (cleanPhone.length === 10 && cleanPhone.startsWith('5')) {
+                    loginValue = cleanPhone;
+                }
             }
 
             const response = await login({ email: loginValue, password: password });
@@ -145,6 +145,11 @@ export default function LoginScreen({ navigation, route }) {
         }
     };
 
+
+
+    // UseEffect to start with white bg for inputs but dark main bg
+    // Actually better to style container with Colors.background
+
     const onRefresh = () => {
         setRefreshing(true);
         setEmail("");
@@ -165,7 +170,7 @@ export default function LoginScreen({ navigation, route }) {
                 >
                     <View style={styles.headerRow}>
                         <TouchableOpacity style={styles.navBack} onPress={() => navigation.goBack?.()}>
-                            <Ionicons name="arrow-back" size={20} color={Colors.black} />
+                            <Ionicons name="arrow-back" size={20} color={Colors.white} />
                         </TouchableOpacity>
                     </View>
                     <Text style={styles.title}>Oturum açın</Text>
@@ -189,7 +194,7 @@ export default function LoginScreen({ navigation, route }) {
                             )}
                         </View>
                         <Text style={{ fontSize: fs(11), color: Colors.gray, marginTop: 4, marginLeft: 4 }}>
-                             * E-posta adresinizle veya telefon numaranızla giriş yapabilirsiniz.
+                            * E-posta adresinizle veya telefon numaranızla giriş yapabilirsiniz.
                         </Text>
                         {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
                     </View>
@@ -254,7 +259,7 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         paddingHorizontal: s(16),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.background,
         paddingTop: vs(60),
         paddingBottom: vs(20),
     },
@@ -267,7 +272,7 @@ const styles = StyleSheet.create({
         height: s(36),
         borderRadius: s(18),
         borderWidth: 1,
-        borderColor: Colors.lightGray,
+        borderColor: Colors.border,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: vs(12),
@@ -275,7 +280,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: fs(24),
         fontWeight: "700",
-        color: Colors.black,
+        color: Colors.white,
         marginBottom: vs(16),
     },
     field: {
@@ -285,8 +290,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderWidth: 1,
-        borderColor: Colors.lightGray,
-        backgroundColor: Colors.white,
+        borderColor: Colors.border,
+        backgroundColor: Colors.secondary,
         paddingHorizontal: s(12),
         height: vs(56),
     },
@@ -297,7 +302,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: "100%",
         fontSize: fs(16),
-        color: Colors.black,
+        color: Colors.white,
     },
     secureToggle: {
         padding: s(8),
@@ -310,7 +315,7 @@ const styles = StyleSheet.create({
     },
     forgotPass: {
         textAlign: "right",
-        color: Colors.dark,
+        color: Colors.primary,
         fontSize: fs(14),
         fontWeight: "600",
         marginBottom: vs(32),
@@ -321,7 +326,7 @@ const styles = StyleSheet.create({
         marginTop: 'auto',
     },
     footerBtn: {
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.primary,
         height: vs(56),
 
         alignItems: "center",
@@ -334,7 +339,7 @@ const styles = StyleSheet.create({
         elevation: 4,
     },
     footerBtnText: {
-        color: Colors.white,
+        color: Colors.black,
         fontSize: fs(16),
         fontWeight: "600",
     },
@@ -348,7 +353,7 @@ const styles = StyleSheet.create({
         fontSize: fs(14),
     },
     authSwitchLink: {
-        color: Colors.black,
+        color: Colors.primary,
         fontSize: fs(14),
         fontWeight: "700",
     },

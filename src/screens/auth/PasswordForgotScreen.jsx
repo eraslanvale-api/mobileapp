@@ -91,7 +91,7 @@ export default function PasswordForgotScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <View style={styles.headerRow}>
           <TouchableOpacity style={styles.navBack} onPress={() => navigation.goBack?.()}>
-            <Ionicons name="arrow-back" size={20} color={Colors.black} />
+            <Ionicons name="arrow-back" size={20} color={Colors.white} />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>Parolamı unuttum</Text>
@@ -117,7 +117,7 @@ export default function PasswordForgotScreen({ navigation }) {
       </ScrollView>
       <View style={styles.footer}>
         <TouchableOpacity style={styles.footerBtn} activeOpacity={0.85} onPress={onSubmit} disabled={loading}>
-          {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.footerBtnText}>Devam et</Text>}
+          {loading ? <ActivityIndicator color={Colors.black} /> : <Text style={styles.footerBtnText}>Devam et</Text>}
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -127,7 +127,7 @@ export default function PasswordForgotScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingTop: vs(24),
     paddingBottom: vs(120),
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fs(24),
     fontWeight: "700",
-    color: Colors.black,
+    color: Colors.white,
     marginBottom: vs(16),
   },
   headerRow: {
@@ -147,10 +147,10 @@ const styles = StyleSheet.create({
     width: s(36),
     height: s(36),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderRadius: s(18),
   },
   field: {
@@ -160,27 +160,28 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.border,
     paddingHorizontal: s(12),
     paddingVertical: vs(6),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
+    borderRadius: ms(8),
   },
   prefixContainer: {
     marginRight: s(10),
     borderRightWidth: 1,
-    borderRightColor: Colors.lightGray,
+    borderRightColor: Colors.border,
     paddingRight: s(10),
   },
   prefixText: {
     fontSize: fs(14),
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: '500',
   },
   input: {
     flex: 1,
     paddingVertical: vs(6),
     fontSize: fs(14),
-    color: Colors.black,
+    color: Colors.white,
   },
   inputError: {
     borderColor: Colors.red,
@@ -195,18 +196,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 20,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingVertical: vs(20),
   },
   footerBtn: {
     height: vs(52),
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: ms(12),
   },
   footerBtnText: {
-    color: '#fff',
+    color: Colors.black,
     fontSize: fs(16),
     fontWeight: '700',
   },

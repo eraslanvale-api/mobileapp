@@ -23,7 +23,7 @@ export default function AddEditEmergencyContactScreen() {
     useEffect(() => {
         if (isEditing && contact) {
             setFormName(contact.name);
-            
+
             // Parse phone number
             const rawInit = String(contact.phone_number || '').replace(/\D/g, '');
             let afterCc = rawInit;
@@ -88,15 +88,15 @@ export default function AddEditEmergencyContactScreen() {
     };
 
     return (
-        <KeyboardAvoidingView 
-            style={styles.container} 
+        <KeyboardAvoidingView
+            style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
         >
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#333" />
+                    <Ionicons name="arrow-back" size={24} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>{isEditing ? 'Kişiyi Düzenle' : 'Yeni Kişi Ekle'}</Text>
             </View>
@@ -110,7 +110,7 @@ export default function AddEditEmergencyContactScreen() {
                             value={formName}
                             onChangeText={(text) => {
                                 setFormName(text);
-                                if (errors.name) setErrors({...errors, name: null});
+                                if (errors.name) setErrors({ ...errors, name: null });
                             }}
                             placeholder="Örn: Ahmet Yılmaz"
                             placeholderTextColor={Colors.gray}
@@ -130,7 +130,7 @@ export default function AddEditEmergencyContactScreen() {
                             value={formatTrPhone(formPhone)}
                             onChangeText={(t) => {
                                 setFormPhone(String(t).replace(/\D/g, '').slice(0, 10));
-                                if (errors.phone) setErrors({...errors, phone: null});
+                                if (errors.phone) setErrors({ ...errors, phone: null });
                             }}
                             placeholder="5xx xxx xx xx"
                             placeholderTextColor={Colors.gray}
@@ -148,7 +148,7 @@ export default function AddEditEmergencyContactScreen() {
                             value={formRelation}
                             onChangeText={(text) => {
                                 setFormRelation(text);
-                                if (errors.relation) setErrors({...errors, relation: null});
+                                if (errors.relation) setErrors({ ...errors, relation: null });
                             }}
                             placeholder="Örn: Babam, Eşim"
                             placeholderTextColor={Colors.gray}
@@ -157,13 +157,13 @@ export default function AddEditEmergencyContactScreen() {
                     {errors.relation && <Text style={styles.errorText}>{errors.relation}</Text>}
                 </View>
 
-                <TouchableOpacity 
-                    style={[styles.saveButton, saving && styles.disabledBtn]} 
+                <TouchableOpacity
+                    style={[styles.saveButton, saving && styles.disabledBtn]}
                     onPress={handleSave}
                     disabled={saving}
                 >
                     {saving ? (
-                        <ActivityIndicator color="#fff" />
+                        <ActivityIndicator color={Colors.black} />
                     ) : (
                         <Text style={styles.saveButtonText}>{isEditing ? 'Güncelle' : 'Kaydet'}</Text>
                     )}
@@ -176,16 +176,16 @@ export default function AddEditEmergencyContactScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.background,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: s(16),
         paddingVertical: vs(12),
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        borderBottomColor: Colors.border,
         paddingTop: Platform.OS === 'android' ? vs(30) : vs(12),
     },
     backBtn: {
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: fs(18),
         fontWeight: 'bold',
-        color: '#333',
+        color: Colors.white,
     },
     form: {
         padding: s(24),
@@ -205,22 +205,22 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: fs(14),
-        color: Colors.darkGray,
+        color: Colors.gray,
         marginBottom: vs(8),
         fontWeight: '700',
     },
     inputWrapper: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: Colors.border,
         borderRadius: ms(12),
-        backgroundColor: '#f9f9f9',
+        backgroundColor: Colors.secondary,
         overflow: 'hidden',
     },
     inputError: {
-        borderColor: '#ef4444',
+        borderColor: Colors.red,
     },
     errorText: {
-        color: '#ef4444',
+        color: Colors.red,
         fontSize: fs(12),
         marginTop: vs(4),
         marginLeft: s(4),
@@ -229,30 +229,30 @@ const styles = StyleSheet.create({
         paddingHorizontal: s(16),
         paddingVertical: vs(12),
         fontSize: fs(16),
-        color: '#333',
+        color: Colors.white,
     },
     prefixBox: {
         paddingHorizontal: s(16),
         paddingVertical: vs(12),
-        backgroundColor: '#eee',
+        backgroundColor: Colors.lightGray,
         borderRightWidth: 1,
-        borderRightColor: '#ddd',
+        borderRightColor: Colors.border,
         justifyContent: 'center',
     },
     prefixText: {
         fontSize: fs(16),
-        color: '#333',
+        color: Colors.white,
         fontWeight: '600',
     },
     saveButton: {
-        backgroundColor: '#000',
+        backgroundColor: Colors.primary,
         borderRadius: ms(12),
         paddingVertical: vs(16),
         alignItems: 'center',
         marginTop: vs(8),
     },
     saveButtonText: {
-        color: '#fff',
+        color: Colors.black,
         fontSize: fs(16),
         fontWeight: 'bold',
     },

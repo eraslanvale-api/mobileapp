@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Alert, ActivityIndicator, ScrollView, Platform, Modal, Dimensions, FlatList } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
@@ -76,7 +76,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
     });
     const [uploading, setUploading] = useState(false);
     const [jobStatus, setJobStatus] = useState(null);
-    
+
     // Image Viewer State
     const [isImageViewVisible, setIsImageViewVisible] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -91,7 +91,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             const res = await getOrder(jobId);
             if (res.data) {
                 setJobStatus(res.data.status);
-                
+
                 if (res.data.handover_photos) {
                     const loadedPhotos = { ...photos };
                     res.data.handover_photos.forEach(item => {
@@ -140,7 +140,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             setIsImageViewVisible(true);
             // Slight delay to ensure Modal is rendered before scrolling
             setTimeout(() => {
-                if(galleryFlatListRef.current) {
+                if (galleryFlatListRef.current) {
                     galleryFlatListRef.current.scrollToIndex({ index: initialIndex, animated: false });
                 }
             }, 100);
@@ -203,7 +203,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
     const startCameraSequence = async (index = 0) => {
         const types = ['front', 'back', 'right', 'left'];
         const labels = { front: 'Ön', back: 'Arka', right: 'Sağ', left: 'Sol' };
-        
+
         if (index >= types.length) {
             showToast('Tüm fotoğraflar çekildi', 'success');
             return;
@@ -224,7 +224,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
                                 Alert.alert('İzin Gerekli', 'Kamera erişim izni vermeniz gerekiyor.');
                                 return;
                             }
-                
+
                             let result = await ImagePicker.launchCameraAsync({
                                 mediaTypes: ['images'],
                                 allowsEditing: false,
@@ -278,12 +278,12 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             if (!result.canceled) {
                 const types = ['front', 'back', 'right', 'left'];
                 const newPhotos = { ...photos };
-                
+
                 // Map selected assets to types sequentially
                 result.assets.slice(0, 4).forEach((asset, i) => {
                     newPhotos[types[i]] = asset;
                 });
-                
+
                 setPhotos(newPhotos);
                 showToast(`${result.assets.length} fotoğraf seçildi`, 'success');
             }
@@ -298,13 +298,13 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             'Hızlı Fotoğraf Yükleme',
             'Lütfen yöntemi seçiniz:',
             [
-                { 
-                    text: 'Kamera ile Sırayla Çek', 
-                    onPress: () => startCameraSequence(0) 
+                {
+                    text: 'Kamera ile Sırayla Çek',
+                    onPress: () => startCameraSequence(0)
                 },
-                { 
-                    text: 'Galeriden Çoklu Seç', 
-                    onPress: openMultiSelectGallery 
+                {
+                    text: 'Galeriden Çoklu Seç',
+                    onPress: openMultiSelectGallery
                 },
                 { text: 'İptal', style: 'cancel' }
             ]
@@ -331,7 +331,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             // Upload sequentially or parallel
             const uploadPromises = Object.keys(photos).map(async (type) => {
                 const photo = photos[type];
-                
+
                 // Skip if it's already a remote URL (starts with http or https)
                 if (photo.uri && (photo.uri.startsWith('http') || photo.uri.startsWith('https'))) {
                     return Promise.resolve();
@@ -340,7 +340,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
                 const formData = new FormData();
                 formData.append('order', jobId);
                 formData.append('photo_type', type);
-                
+
                 const filename = photo.uri.split('/').pop();
                 const match = /\.(\w+)$/.exec(filename);
                 const ext = match ? match[1] : 'jpg';
@@ -356,7 +356,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             });
 
             await Promise.all(uploadPromises);
-            
+
             showToast('Fotoğraflar güncellendi', 'success');
             // Navigate back or allow starting job
             if (navigation.canGoBack()) {
@@ -373,8 +373,8 @@ export default function VehicleHandoverScreen({ route, navigation }) {
     };
 
     const renderPhotoBox = (type, label) => (
-        <TouchableOpacity 
-            style={[styles.photoBox, isLocked && { borderStyle: 'solid' }]} 
+        <TouchableOpacity
+            style={[styles.photoBox, isLocked && { borderStyle: 'solid' }]}
             onPress={() => isLocked ? openViewer(type) : pickImage(type)}
             activeOpacity={0.7}
         >
@@ -382,12 +382,12 @@ export default function VehicleHandoverScreen({ route, navigation }) {
                 <Image source={{ uri: photos[type].uri }} style={styles.photo} />
             ) : (
                 <View style={styles.placeholder}>
-                    <Ionicons name="camera-outline" size={32} color="#888" />
+                    <Ionicons name="camera-outline" size={32} color={Colors.gray} />
                     <Text style={styles.placeholderText}>{label}</Text>
-                    {isLocked && <Text style={{fontSize:10, color:'#999', marginTop:4}}>(Yok)</Text>}
+                    {isLocked && <Text style={{ fontSize: 10, color: Colors.gray, marginTop: 4 }}>(Yok)</Text>}
                 </View>
             )}
-            
+
             {/* Edit Badge - Only when unlocked */}
             {photos[type] && !isLocked && (
                 <View style={styles.editBadge}>
@@ -397,7 +397,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
 
             {/* View Badge - Only when photo exists */}
             {photos[type] && (
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.viewBadge}
                     onPress={() => openViewer(type)}
                 >
@@ -410,17 +410,17 @@ export default function VehicleHandoverScreen({ route, navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={() => {
                         if (navigation.canGoBack()) {
                             navigation.goBack();
                         } else {
                             navigation.navigate('DriverJobDetail', { jobId });
                         }
-                    }} 
+                    }}
                     style={styles.backBtn}
                 >
-                    <Ionicons name="arrow-back" size={24} color="#1a1a1a" />
+                    <Ionicons name="arrow-back" size={24} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>
                     {isLocked ? 'Teslim Fotoğrafları' : 'Araç Teslim Formu'}
@@ -430,14 +430,14 @@ export default function VehicleHandoverScreen({ route, navigation }) {
 
             <ScrollView contentContainerStyle={styles.content}>
                 <Text style={styles.instruction}>
-                    {isLocked 
-                        ? 'Bu görev tamamlandığı veya iptal edildiği için fotoğraflar sadece görüntülenebilir.' 
+                    {isLocked
+                        ? 'Bu görev tamamlandığı veya iptal edildiği için fotoğraflar sadece görüntülenebilir.'
                         : 'Yolculuğa başlamadan önce lütfen aracın 4 farklı açıdan fotoğrafını çekiniz.'}
                 </Text>
 
                 {!isLocked && (
-                    <TouchableOpacity 
-                        style={styles.quickUploadBtn} 
+                    <TouchableOpacity
+                        style={styles.quickUploadBtn}
                         onPress={handleBatchPick}
                     >
                         <Ionicons name="camera-outline" size={20} color="#fff" />
@@ -453,8 +453,8 @@ export default function VehicleHandoverScreen({ route, navigation }) {
                 </View>
 
                 {!isLocked && (
-                    <TouchableOpacity 
-                        style={[styles.submitBtn, uploading && styles.disabledBtn]} 
+                    <TouchableOpacity
+                        style={[styles.submitBtn, uploading && styles.disabledBtn]}
                         onPress={handleUpload}
                         disabled={uploading}
                     >
@@ -479,10 +479,10 @@ export default function VehicleHandoverScreen({ route, navigation }) {
             >
                 <GestureHandlerRootView style={{ flex: 1 }}>
                     <View style={styles.lightboxOverlay}>
-                        <TouchableOpacity 
-                            style={styles.lightboxCloseBtn} 
+                        <TouchableOpacity
+                            style={styles.lightboxCloseBtn}
                             onPress={() => setIsImageViewVisible(false)}
-                            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+                            hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                         >
                             <Ionicons name="close" size={32} color="#fff" />
                         </TouchableOpacity>
@@ -496,7 +496,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
                             onMomentumScrollEnd={handleMomentumScrollEnd}
                             keyExtractor={(_, index) => index.toString()}
                             getItemLayout={(data, index) => (
-                                {length: SCREEN_WIDTH, offset: SCREEN_WIDTH * index, index}
+                                { length: SCREEN_WIDTH, offset: SCREEN_WIDTH * index, index }
                             )}
                             renderItem={({ item }) => (
                                 <View style={styles.lightboxItemContainer}>
@@ -522,7 +522,7 @@ export default function VehicleHandoverScreen({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: Colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -530,14 +530,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingVertical: 15,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: Colors.border,
     },
     headerTitle: {
         fontSize: fs(18),
         fontFamily: 'PlusJakartaSans-Bold',
-        color: '#1a1a1a',
+        color: Colors.white,
     },
     backBtn: {
         padding: 4,
@@ -547,7 +547,7 @@ const styles = StyleSheet.create({
     },
     instruction: {
         fontSize: fs(14),
-        color: '#666',
+        color: Colors.gray,
         fontFamily: 'PlusJakartaSans-Regular',
         marginBottom: vs(24),
         textAlign: 'center',
@@ -581,10 +581,10 @@ const styles = StyleSheet.create({
     photoBox: {
         width: '47%',
         aspectRatio: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(12),
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: Colors.border,
         borderStyle: 'dashed',
         overflow: 'hidden',
         marginBottom: vs(16),
@@ -596,7 +596,7 @@ const styles = StyleSheet.create({
     },
     placeholderText: {
         marginTop: 8,
-        color: '#888',
+        color: Colors.gray,
         fontSize: fs(14),
         fontFamily: 'PlusJakartaSans-Medium',
     },

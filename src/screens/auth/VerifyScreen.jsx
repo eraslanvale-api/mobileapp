@@ -154,7 +154,7 @@ export default function VerifyScreen({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <View style={styles.headerRow}>
           <TouchableOpacity style={styles.navBack} onPress={() => navigation.goBack?.()}>
-            <Ionicons name="arrow-back" size={20} color={Colors.black} />
+            <Ionicons name="arrow-back" size={20} color={Colors.white} />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>Doğrulama kodunu girin</Text>
@@ -200,7 +200,7 @@ export default function VerifyScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingTop: vs(24),
     paddingBottom: vs(120),
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fs(24),
     fontWeight: "700",
-    color: Colors.black,
+    color: Colors.white,
     marginBottom: vs(16),
   },
   infoText: {
@@ -225,10 +225,10 @@ const styles = StyleSheet.create({
     width: s(36),
     height: s(36),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderRadius: s(18),
   },
   field: {
@@ -243,12 +243,12 @@ const styles = StyleSheet.create({
     width: s(60),
     height: vs(60),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
-    backgroundColor: '#fff',
+    borderColor: Colors.border,
+    backgroundColor: Colors.secondary,
     borderRadius: ms(16),
     textAlign: 'center',
     fontSize: fs(24),
-    color: Colors.black,
+    color: Colors.white,
   },
   inputError: {
     borderColor: Colors.red,
@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
   },
   resendText: {
     fontSize: fs(13),
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: '700',
     textDecorationLine: 'underline',
   },
@@ -282,20 +282,19 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingVertical: vs(20),
     borderTopWidth: 0,
   },
   footerBtn: {
     height: vs(52),
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   footerBtnText: {
-    color: '#fff',
+    color: Colors.black,
     fontSize: fs(16),
     fontWeight: '700',
   },

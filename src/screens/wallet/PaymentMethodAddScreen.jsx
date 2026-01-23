@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, Alert, ScrollView, Modal, Pressable } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Colors } from '../../constants/Colors';
 import { s, vs, fs, ms } from '../../utils/scale';
 import { useConfig } from '../../context/ConfigContext';
 import { useToast } from '../../context/ToastContext';
@@ -125,163 +126,163 @@ export default function AddPaymentMethodScreen({ navigation }) {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.headerBtn} onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={ms(24)} color="#111" />
+          <MaterialIcons name="arrow-back" size={ms(24)} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Ödeme yöntemi ekle</Text>
       </View>
 
-      <ScrollView 
-        contentContainerStyle={{ flexGrow: 1 ,backgroundColor:'#fff', paddingBottom: vs(24) }}
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, backgroundColor: Colors.background, paddingBottom: vs(24) }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
         {/* Card Preview */}
         <View style={styles.cardPreview}>
-        <View style={styles.cardVisual}>
-          <View style={styles.cardChip}>
-            <View style={styles.chipInner} />
-          </View>
-          <View style={styles.cardNumberDisplay}>
-            <Text style={styles.cardNumberText}>
-              {number || "•••• •••• •••• ••••"}
-            </Text>
-          </View>
-          <View style={styles.cardFooter}>
-            <View style={styles.cardNameRow}>
-              <Text style={styles.cardLabel}>KART SAHİBİ</Text>
-              <Text style={styles.cardName} numberOfLines={1}>
-                {name || "İSİM SOYİSİM"}
+          <View style={styles.cardVisual}>
+            <View style={styles.cardChip}>
+              <View style={styles.chipInner} />
+            </View>
+            <View style={styles.cardNumberDisplay}>
+              <Text style={styles.cardNumberText}>
+                {number || "•••• •••• •••• ••••"}
               </Text>
             </View>
-            <View style={styles.cardExpiryRow}>
-              <Text style={styles.cardLabel}>SKT</Text>
-              <Text style={styles.cardExpiry}>{expiry || "AA/YY"}</Text>
-            </View>
-            <View style={styles.cardBrandBadge}>
-              <Text style={styles.cardBrandText}>{number.replace(/\D/g, '').length === 16 ? detectBrand(number) : ''}</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.form}>
-        <View style={styles.inputGroup}>
-          <View style={[styles.inputContainer, touched.name && errors.name && styles.inputError]}>
-            <MaterialIcons name="person-outline" size={ms(20)} color="#6B7280" />
-            <TextInput
-              style={styles.input}
-              value={name}
-              onChangeText={setName}
-              onBlur={() => setTouched((t) => ({ ...t, name: true }))}
-              placeholder="Kart üzerindeki isim"
-              placeholderTextColor="#9CA3AF"
-              autoCapitalize="words"
-              returnKeyType="next"
-            />
-          </View>
-          {touched.name && !!errors.name && (
-            <View style={styles.errorRow}>
-              <MaterialIcons name="error-outline" size={ms(14)} color="#DC2626" />
-              <Text style={styles.errorText}>{errors.name}</Text>
-            </View>
-          )}
-        </View>
-
-        <View style={styles.inputGroup}>
-          <View style={[styles.inputContainer, touched.number && errors.number && styles.inputError]}>
-            <MaterialIcons name="credit-card" size={ms(20)} color="#6B7280" />
-            <TextInput
-              style={styles.input}
-              value={number}
-              onChangeText={(t) => setNumber(formatNumber(t))}
-              onBlur={() => setTouched((t) => ({ ...t, number: true }))}
-              placeholder="Kart numarası"
-              placeholderTextColor="#9CA3AF"
-              keyboardType="number-pad"
-              returnKeyType="next"
-            />
-            {number.replace(/\D/g, '').length === 16 && (
-              <View style={styles.brandPill}>
-                <Text style={styles.brandText}>{detectBrand(number)}</Text>
+            <View style={styles.cardFooter}>
+              <View style={styles.cardNameRow}>
+                <Text style={styles.cardLabel}>KART SAHİBİ</Text>
+                <Text style={styles.cardName} numberOfLines={1}>
+                  {name || "İSİM SOYİSİM"}
+                </Text>
               </View>
-            )}
-          </View>
-          {touched.number && !!errors.number && (
-            <View style={styles.errorRow}>
-              <MaterialIcons name="error-outline" size={ms(14)} color="#DC2626" />
-              <Text style={styles.errorText}>{errors.number}</Text>
+              <View style={styles.cardExpiryRow}>
+                <Text style={styles.cardLabel}>SKT</Text>
+                <Text style={styles.cardExpiry}>{expiry || "AA/YY"}</Text>
+              </View>
+              <View style={styles.cardBrandBadge}>
+                <Text style={styles.cardBrandText}>{number.replace(/\D/g, '').length === 16 ? detectBrand(number) : ''}</Text>
+              </View>
             </View>
-          )}
+          </View>
         </View>
 
-        <View style={styles.row}>
+        <View style={styles.form}>
           <View style={styles.inputGroup}>
-            <View style={[styles.inputContainer, touched.expiry && errors.expiry && styles.inputError]}>
-            <MaterialIcons name="event" size={ms(20)} color="#6B7280" />
+            <View style={[styles.inputContainer, touched.name && errors.name && styles.inputError]}>
+              <MaterialIcons name="person-outline" size={ms(20)} color={Colors.gray} />
               <TextInput
                 style={styles.input}
-                value={expiry}
-                onChangeText={(t) => setExpiry(formatExpiry(t))}
-                onBlur={() => setTouched((t) => ({ ...t, expiry: true }))}
-                placeholder="AA/YY"
-                placeholderTextColor="#9CA3AF"
-                keyboardType="number-pad"
+                value={name}
+                onChangeText={setName}
+                onBlur={() => setTouched((t) => ({ ...t, name: true }))}
+                placeholder="Kart üzerindeki isim"
+                placeholderTextColor={Colors.gray}
+                autoCapitalize="words"
                 returnKeyType="next"
               />
             </View>
-            {touched.expiry && !!errors.expiry && (
+            {touched.name && !!errors.name && (
               <View style={styles.errorRow}>
-              <MaterialIcons name="error-outline" size={ms(14)} color="#DC2626" />
-                <Text style={styles.errorText}>{errors.expiry}</Text>
+                <MaterialIcons name="error-outline" size={ms(14)} color={Colors.red} />
+                <Text style={styles.errorText}>{errors.name}</Text>
               </View>
             )}
           </View>
+
           <View style={styles.inputGroup}>
-            <View style={[styles.inputContainer, touched.cvc && errors.cvc && styles.inputError]}>
-            <MaterialIcons name="lock-outline" size={ms(20)} color="#6B7280" />
+            <View style={[styles.inputContainer, touched.number && errors.number && styles.inputError]}>
+              <MaterialIcons name="credit-card" size={ms(20)} color={Colors.gray} />
               <TextInput
                 style={styles.input}
-                value={cvc}
-                onChangeText={(t) => setCvc(t.replace(/\D/g, "").slice(0, 3))}
-                onBlur={() => setTouched((t) => ({ ...t, cvc: true }))}
-                placeholder="CVC"
-                placeholderTextColor="#9CA3AF"
+                value={number}
+                onChangeText={(t) => setNumber(formatNumber(t))}
+                onBlur={() => setTouched((t) => ({ ...t, number: true }))}
+                placeholder="Kart numarası"
+                placeholderTextColor={Colors.gray}
                 keyboardType="number-pad"
-                secureTextEntry
-                returnKeyType="done"
+                returnKeyType="next"
               />
+              {number.replace(/\D/g, '').length === 16 && (
+                <View style={styles.brandPill}>
+                  <Text style={styles.brandText}>{detectBrand(number)}</Text>
+                </View>
+              )}
             </View>
-            {touched.cvc && !!errors.cvc && (
+            {touched.number && !!errors.number && (
               <View style={styles.errorRow}>
-              <MaterialIcons name="error-outline" size={ms(14)} color="#DC2626" />
-                <Text style={styles.errorText}>{errors.cvc}</Text>
+                <MaterialIcons name="error-outline" size={ms(14)} color={Colors.red} />
+                <Text style={styles.errorText}>{errors.number}</Text>
               </View>
             )}
           </View>
-        </View>
 
-        <View style={styles.securityNotice}>
-          <MaterialIcons name="verified-user" size={ms(16)} color="#059669" />
-          <Text style={styles.securityText}>Kart bilgileriniz güvenli şekilde saklanır</Text>
-        </View>
+          <View style={styles.row}>
+            <View style={styles.inputGroup}>
+              <View style={[styles.inputContainer, touched.expiry && errors.expiry && styles.inputError]}>
+                <MaterialIcons name="event" size={ms(20)} color={Colors.gray} />
+                <TextInput
+                  style={styles.input}
+                  value={expiry}
+                  onChangeText={(t) => setExpiry(formatExpiry(t))}
+                  onBlur={() => setTouched((t) => ({ ...t, expiry: true }))}
+                  placeholder="AA/YY"
+                  placeholderTextColor={Colors.gray}
+                  keyboardType="number-pad"
+                  returnKeyType="next"
+                />
+              </View>
+              {touched.expiry && !!errors.expiry && (
+                <View style={styles.errorRow}>
+                  <MaterialIcons name="error-outline" size={ms(14)} color={Colors.red} />
+                  <Text style={styles.errorText}>{errors.expiry}</Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.inputGroup}>
+              <View style={[styles.inputContainer, touched.cvc && errors.cvc && styles.inputError]}>
+                <MaterialIcons name="lock-outline" size={ms(20)} color={Colors.gray} />
+                <TextInput
+                  style={styles.input}
+                  value={cvc}
+                  onChangeText={(t) => setCvc(t.replace(/\D/g, "").slice(0, 3))}
+                  onBlur={() => setTouched((t) => ({ ...t, cvc: true }))}
+                  placeholder="CVC"
+                  placeholderTextColor={Colors.gray}
+                  keyboardType="number-pad"
+                  secureTextEntry
+                  returnKeyType="done"
+                />
+              </View>
+              {touched.cvc && !!errors.cvc && (
+                <View style={styles.errorRow}>
+                  <MaterialIcons name="error-outline" size={ms(14)} color={Colors.red} />
+                  <Text style={styles.errorText}>{errors.cvc}</Text>
+                </View>
+              )}
+            </View>
+          </View>
 
-        <View style={styles.checkRow}>
-          <TouchableOpacity onPress={() => setTerm(!term)} style={[styles.checkBox, term && styles.checkBoxActive]}>
-             {term && <MaterialIcons name="check" size={ms(16)} color="#f4a119" />}
-          </TouchableOpacity>
-          <Text style={styles.checkLabel}>
-            <Text onPress={() => openWeb('Üyelik Sözleşmesi', String(config?.termsUrl ?? ''))} style={styles.linkInlineUnderline}>Üyelik Sözleşmesi</Text>’ni kabul ediyorum.
-          </Text>
+          <View style={styles.securityNotice}>
+            <MaterialIcons name="verified-user" size={ms(16)} color="#059669" />
+            <Text style={styles.securityText}>Kart bilgileriniz güvenli şekilde saklanır</Text>
+          </View>
+
+          <View style={styles.checkRow}>
+            <TouchableOpacity onPress={() => setTerm(!term)} style={[styles.checkBox, term && styles.checkBoxActive]}>
+              {term && <MaterialIcons name="check" size={ms(16)} color={Colors.black} />}
+            </TouchableOpacity>
+            <Text style={styles.checkLabel}>
+              <Text onPress={() => openWeb('Üyelik Sözleşmesi', String(config?.termsUrl ?? ''))} style={styles.linkInlineUnderline}>Üyelik Sözleşmesi</Text>’ni kabul ediyorum.
+            </Text>
+          </View>
+          <View style={styles.checkRow}>
+            <TouchableOpacity onPress={() => setKvkk(!kvkk)} style={[styles.checkBox, kvkk && styles.checkBoxActive]}>
+              {kvkk && <MaterialIcons name="check" size={ms(16)} color={Colors.black} />}
+            </TouchableOpacity>
+            <Text style={styles.checkLabel}>
+              <Text onPress={() => openWeb('KVKK Sözleşmesi', String(config?.kvkkUrl ?? ''))} style={styles.linkInlineUnderline}>KVKK Sözleşmesi</Text>’ni kabul ediyorum.
+            </Text>
+          </View>
         </View>
-        <View style={styles.checkRow}>
-          <TouchableOpacity onPress={() => setKvkk(!kvkk)} style={[styles.checkBox, kvkk && styles.checkBoxActive]}>
-             {kvkk && <MaterialIcons name="check" size={ms(16)} color="#f4a119" />}
-          </TouchableOpacity>
-          <Text style={styles.checkLabel}>
-            <Text onPress={() => openWeb('KVKK Sözleşmesi', String(config?.kvkkUrl ?? ''))} style={styles.linkInlineUnderline}>KVKK Sözleşmesi</Text>’ni kabul ediyorum.
-          </Text>
-        </View>
-      </View>
       </ScrollView>
 
       <View style={styles.footer}>
@@ -294,52 +295,52 @@ export default function AddPaymentMethodScreen({ navigation }) {
           {saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.saveBtnText}>Kartı Kaydet</Text>}
         </TouchableOpacity>
       </View>
-    <Modal visible={webOpen} animationType="slide" onRequestClose={() => setWebOpen(false)}>
-      <View style={{ flex: 1, backgroundColor: '#fff' }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: s(16), paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: '#f0f0f0' }}>
-          <TouchableOpacity onPress={() => setWebOpen(false)} style={{ padding: s(6), marginRight: s(6) }}>
-            <MaterialIcons name="arrow-back" size={ms(22)} color="#333" />
-          </TouchableOpacity>
-          <Text style={{ flex: 1, fontSize: fs(18), fontWeight: '800', color: '#333' }} numberOfLines={1}>{webTitle}</Text>
+      <Modal visible={webOpen} animationType="slide" onRequestClose={() => setWebOpen(false)}>
+        <View style={{ flex: 1, backgroundColor: '#fff' }}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: s(16), paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: '#f0f0f0' }}>
+            <TouchableOpacity onPress={() => setWebOpen(false)} style={{ padding: s(6), marginRight: s(6) }}>
+              <MaterialIcons name="arrow-back" size={ms(22)} color="#333" />
+            </TouchableOpacity>
+            <Text style={{ flex: 1, fontSize: fs(18), fontWeight: '800', color: '#333' }} numberOfLines={1}>{webTitle}</Text>
+          </View>
+          {webUrl ? (
+            <WebView
+              source={{ uri: webUrl }}
+              startInLoadingState
+              renderLoading={() => (
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                  <ActivityIndicator size="small" color="#f4a119" />
+                  <Text style={{ marginTop: vs(8), color: '#666' }}>Yükleniyor...</Text>
+                </View>
+              )}
+            />
+          ) : (
+            <View style={{ flex: 1 }} />
+          )}
         </View>
-        {webUrl ? (
-          <WebView
-            source={{ uri: webUrl }}
-            startInLoadingState
-            renderLoading={() => (
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <ActivityIndicator size="small" color="#f4a119" />
-                <Text style={{ marginTop: vs(8), color: '#666' }}>Yükleniyor...</Text>
-              </View>
-            )}
-          />
-        ) : (
-          <View style={{ flex: 1 }} />
-        )}
-      </View>
-    </Modal>
+      </Modal>
     </View>
 
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#F9FAFB" },
+  container: { flex: 1, backgroundColor: Colors.background },
   header: {
     height: vs(56),
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: s(16),
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.secondary,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: Colors.border,
   },
   headerBtn: { width: s(40), height: s(40), alignItems: "center", justifyContent: "center" },
   headerTitle: {
     flex: 1,
     textAlign: "left",
     fontWeight: "800",
-    color: "#111",
+    color: Colors.white,
     fontSize: fs(18),
     marginLeft: s(8),
   },
@@ -347,8 +348,8 @@ const styles = StyleSheet.create({
     padding: s(20),
     paddingTop: vs(24),
     paddingBottom: vs(16),
-    
-    
+
+
   },
   cardVisual: {
     height: vs(200),
@@ -435,9 +436,9 @@ const styles = StyleSheet.create({
     gap: s(12),
     paddingHorizontal: s(16),
     paddingVertical: vs(14),
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.secondary,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
+    borderColor: Colors.border,
     borderRadius: ms(12),
   },
   inputError: {
@@ -447,7 +448,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: fs(15),
-    color: "#111",
+    color: Colors.white,
     padding: 0,
     fontWeight: '500',
   },
@@ -508,17 +509,18 @@ const styles = StyleSheet.create({
     height: s(20),
     borderRadius: ms(4),
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    backgroundColor: '#fff',
+    borderColor: Colors.border,
+    backgroundColor: Colors.white,
     alignItems: 'center',
     justifyContent: 'center',
   },
   checkBoxActive: {
-    borderColor: '#f4a119',
+    borderColor: Colors.primary,
+    backgroundColor: Colors.primary,
   },
   checkLabel: {
     flex: 1,
-    color: '#374151',
+    color: Colors.white,
     fontSize: fs(14),
     fontWeight: '600',
   },
@@ -529,14 +531,14 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: s(16),
-    backgroundColor: "#FFFFFF",
+    backgroundColor: Colors.secondary,
     borderTopWidth: 1,
-    borderTopColor: "#F3F4F6",
+    borderTopColor: Colors.border,
   },
   saveBtn: {
     height: vs(52),
     borderRadius: ms(16),
-    backgroundColor: "#1a1a1a",
+    backgroundColor: Colors.primary,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -545,7 +547,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   saveBtnText: {
-    color: "#fff",
+    color: Colors.black,
     fontWeight: "800",
     fontSize: fs(15),
   },

@@ -83,10 +83,10 @@ export default function ReservationTime() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={22} color={Colors.darkGray} />
+          <Ionicons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Rezervasyon Saati</Text>
       </View>
@@ -108,7 +108,7 @@ export default function ReservationTime() {
 
         {selected === 'custom' && (
           <View style={styles.pickers}>
-            <View style={styles.pickerRow}> 
+            <View style={styles.pickerRow}>
               <TouchableOpacity style={styles.pickerPill} onPress={() => setShowDate(true)}>
                 <Ionicons name="calendar-outline" size={20} color={Colors.primary} />
                 <Text style={styles.pickerPillText}>{fmtDate(customDate)}</Text>
@@ -150,54 +150,54 @@ export default function ReservationTime() {
 }
 
 const styles = StyleSheet.create({
-  headerRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingTop: vs(12), 
-    paddingHorizontal: s(16), 
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: vs(12),
+    paddingHorizontal: s(16),
     paddingBottom: vs(12),
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0'
+    borderBottomColor: Colors.border
   },
   backButton: {
     padding: s(6),
     marginRight: s(8),
   },
-  headerTitle: { 
-    fontSize: fs(18), 
-    fontWeight: '800', 
-    color: Colors.black 
+  headerTitle: {
+    fontSize: fs(18),
+    fontWeight: '800',
+    color: Colors.white
   },
-  list: { 
+  list: {
     paddingHorizontal: s(16),
     paddingTop: vs(8)
   },
-  item: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: vs(16),
     paddingHorizontal: s(12),
     borderRadius: ms(12),
     marginVertical: vs(4)
   },
   itemSelected: {
-    backgroundColor: '#fffcf5', // Very light orange/yellow tint
+    backgroundColor: Colors.secondary,
     borderWidth: 1,
-    borderColor: 'rgba(244,161,25,0.2)'
+    borderColor: Colors.primary
   },
-  itemLabel: { 
-    marginLeft: s(12), 
-    fontSize: fs(16), 
-    fontWeight: '600', 
-    color: Colors.darkGray, 
-    flex: 1 
+  itemLabel: {
+    marginLeft: s(12),
+    fontSize: fs(16),
+    fontWeight: '600',
+    color: Colors.gray,
+    flex: 1
   },
   itemLabelSelected: {
-    color: Colors.black,
+    color: Colors.white,
     fontWeight: '700'
   },
-  itemValue: { 
-    fontSize: fs(14), 
+  itemValue: {
+    fontSize: fs(14),
     color: Colors.gray,
     fontWeight: '500'
   },
@@ -205,49 +205,49 @@ const styles = StyleSheet.create({
     color: Colors.primary,
     fontWeight: '700'
   },
-  separator: { 
-    height: 1, 
-    backgroundColor: '#f0f0f0',
+  separator: {
+    height: 1,
+    backgroundColor: Colors.border,
     marginVertical: vs(4)
   },
-  pickers: { 
-    paddingHorizontal: s(12), 
+  pickers: {
+    paddingHorizontal: s(12),
     paddingBottom: vs(16),
     gap: vs(12)
   },
-  pickerRow: { 
-    marginTop: vs(4) 
+  pickerRow: {
+    marginTop: vs(4)
   },
-  pickerPill: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    borderWidth: 1, 
-    borderColor: Colors.lightGray, 
-    borderRadius: ms(12), 
-    paddingVertical: vs(12), 
-    paddingHorizontal: s(16), 
-    backgroundColor: '#f9f9f9' 
+  pickerPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: ms(12),
+    paddingVertical: vs(12),
+    paddingHorizontal: s(16),
+    backgroundColor: Colors.secondary
   },
-  pickerPillText: { 
-    marginLeft: s(12), 
-    fontSize: fs(16), 
-    color: Colors.black, 
-    fontWeight: '600' 
+  pickerPillText: {
+    marginLeft: s(12),
+    fontSize: fs(16),
+    color: Colors.white,
+    fontWeight: '600'
   },
-  footer: { 
-    position: 'absolute', 
-    left: 0, 
-    right: 0, 
-    bottom: 0, 
-    padding: s(16), 
-    backgroundColor: '#fff',
+  footer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: s(16),
+    backgroundColor: Colors.background,
     borderTopWidth: 1,
-    borderTopColor: '#f0f0f0'
+    borderTopColor: Colors.border
   },
-  footerBtn: { 
-    backgroundColor: Colors.darkGray, 
-    paddingVertical: vs(16), 
-    
+  footerBtn: {
+    backgroundColor: Colors.primary,
+    paddingVertical: vs(16),
+
     alignItems: 'center',
     shadowColor: Colors.primary,
     shadowOffset: {
@@ -258,9 +258,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4.65,
     elevation: 8,
   },
-  footerBtnText: { 
-    color: '#fff', 
-    fontWeight: '800', 
-    fontSize: fs(16) 
+  footerBtnText: {
+    color: Colors.black,
+    fontWeight: '800',
+    fontSize: fs(16)
   },
 });

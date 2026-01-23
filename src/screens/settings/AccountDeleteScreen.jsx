@@ -25,7 +25,7 @@ export default function AccountDeleteScreen() {
       // console.log("Silinecek Kullanıcı ID:", user?.id);
       const payload = { KullaniciID: user.id };
       // console.log("Delete Payload:", JSON.stringify(payload));
-      
+
       const response = await deleteAccount(payload);
       // console.log("Delete Response:", JSON.stringify(response.data));
 
@@ -44,7 +44,7 @@ export default function AccountDeleteScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => nav.goBack()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={ms(22)} color={Colors.darkGray} />
+          <Ionicons name="arrow-back" size={ms(22)} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Üyelik iptali</Text>
       </View>
@@ -96,31 +96,31 @@ export default function AccountDeleteScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  header: { flexDirection: 'row', alignItems: 'center', padding: s(16), borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-  backButton: { width: s(36), height: vs(36), borderRadius: s(18), borderWidth: 1, borderColor: Colors.lightGray, alignItems: 'center', justifyContent: 'center', marginRight: s(8), backgroundColor: '#fff' },
-  headerTitle: { fontSize: fs(18), fontWeight: '800', color: Colors.black },
+  container: { flex: 1, backgroundColor: Colors.background },
+  header: { flexDirection: 'row', alignItems: 'center', padding: s(16), borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.secondary },
+  backButton: { width: s(36), height: vs(36), borderRadius: s(18), borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginRight: s(8), backgroundColor: Colors.secondary },
+  headerTitle: { fontSize: fs(18), fontWeight: '800', color: Colors.white },
   scrollContent: { flexGrow: 1, paddingHorizontal: s(24), paddingVertical: vs(12) },
   content: { flex: 1, alignItems: 'center', justifyContent: 'center' },
-  iconCircle: { width: s(72), height: vs(72), borderRadius: ms(36), backgroundColor: 'rgba(244,161,25,0.16)', alignItems: 'center', justifyContent: 'center', marginBottom: vs(16) },
-  title: { fontSize: fs(24), fontWeight: '800', color: Colors.black, marginBottom: vs(8) },
-  desc: { textAlign: 'center', color: Colors.darkGray, lineHeight: fs(20) },
+  iconCircle: { width: s(72), height: vs(72), borderRadius: ms(36), backgroundColor: 'rgba(212,175,55,0.2)', alignItems: 'center', justifyContent: 'center', marginBottom: vs(16) },
+  title: { fontSize: fs(24), fontWeight: '800', color: Colors.white, marginBottom: vs(8) },
+  desc: { textAlign: 'center', color: Colors.gray, lineHeight: fs(20) },
   bottomGlow: { position: 'absolute', bottom: 0, left: 0, right: 0, height: vs(200), backgroundColor: 'transparent', overflow: 'visible', alignItems: 'center' },
   glowLayer1: { position: 'absolute', bottom: -vs(60), width: s(480), height: vs(480), borderRadius: ms(240), backgroundColor: Colors.primary, opacity: 0.12 },
   glowLayer2: { position: 'absolute', bottom: -vs(30), width: s(420), height: vs(420), borderRadius: ms(210), backgroundColor: Colors.primary, opacity: 0.08 },
-  footer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: s(16) },
-  cancelBtn: { flex: 1, height: vs(52), borderRadius: ms(12), backgroundColor: '#fff', borderWidth: 1, borderColor: Colors.lightGray, alignItems: 'center', justifyContent: 'center', marginRight: s(8) },
-  cancelText: { color: Colors.darkGray, fontWeight: '700' },
-  deleteBtn: { flex: 1, height: vs(52), borderRadius: ms(12), backgroundColor: Colors.secondary, alignItems: 'center', justifyContent: 'center', marginLeft: s(8) },
-  deleteText: { color: '#fff', fontWeight: '700' },
-  modalBackdrop: { flex:1, backgroundColor:'rgba(0,0,0,0.35)', alignItems:'center', justifyContent:'center' },
-  modalCard: { width: '88%', borderRadius: ms(16), backgroundColor: '#fff', padding: s(16) },
-  modalTitle: { fontSize: fs(18), fontWeight: '800', color: Colors.black, marginBottom: vs(8) },
-  modalDesc: { color: Colors.darkGray, marginBottom: vs(12) },
+  footer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: s(16), backgroundColor: Colors.background },
+  cancelBtn: { flex: 1, height: vs(52), borderRadius: ms(12), backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center', marginRight: s(8) },
+  cancelText: { color: Colors.white, fontWeight: '700' },
+  deleteBtn: { flex: 1, height: vs(52), borderRadius: ms(12), backgroundColor: Colors.red, alignItems: 'center', justifyContent: 'center', marginLeft: s(8) },
+  deleteText: { color: Colors.white, fontWeight: '700' },
+  modalBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', alignItems: 'center', justifyContent: 'center' },
+  modalCard: { width: '88%', borderRadius: ms(16), backgroundColor: Colors.secondary, padding: s(16) },
+  modalTitle: { fontSize: fs(18), fontWeight: '800', color: Colors.white, marginBottom: vs(8) },
+  modalDesc: { color: Colors.gray, marginBottom: vs(12) },
   checkRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: vs(8) },
-  checkRowActive: { },
-  checkBox: { width: s(18), height: vs(18), borderRadius: ms(4), borderWidth: 1, borderColor: Colors.lightGray, marginRight: s(8), backgroundColor: '#fff' },
+  checkRowActive: {},
+  checkBox: { width: s(18), height: vs(18), borderRadius: ms(4), borderWidth: 1, borderColor: Colors.border, marginRight: s(8), backgroundColor: Colors.background },
   checkBoxChecked: { backgroundColor: Colors.primary, borderColor: Colors.primary },
-  checkLabel: { color: Colors.black, fontWeight: '600' },
+  checkLabel: { color: Colors.white, fontWeight: '600' },
   modalFooter: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: vs(12) }
 });

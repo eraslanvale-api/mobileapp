@@ -7,6 +7,7 @@ import { useJourney } from '../../context/JourneyContext';
 import { s, vs, fs, ms } from '../../utils/scale';
 import AppIcon from '../../../assets/icon.png';
 import TopMenu from '../../components/TopMenu';
+import { Colors } from '../../constants/Colors';
 
 export default function ServicesScreen() {
   const navigation = useNavigation();
@@ -24,7 +25,7 @@ export default function ServicesScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <TopMenu />
 
 
@@ -56,10 +57,10 @@ const styles = StyleSheet.create({
   headerTitle: { fontSize: fs(18), fontWeight: '800', color: '#333' },
   searchBox: { marginHorizontal: s(16), marginBottom: vs(8), borderWidth: 1, borderColor: '#eee', borderRadius: ms(14), paddingVertical: vs(8), paddingHorizontal: s(12), flexDirection: 'row', alignItems: 'center' },
   searchInput: { marginLeft: s(8), fontSize: fs(14), color: '#333', flex: 1 },
-  serviceCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: ms(16), borderWidth: 1, borderColor: '#eee', padding: s(16), width: '100%', minHeight: vs(72), marginBottom: vs(10) },
+  serviceCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.secondary, borderRadius: ms(16), borderWidth: 1, borderColor: Colors.border, padding: s(16), width: '100%', minHeight: vs(72), marginBottom: vs(10) },
   content: { flex: 1, marginTop: vs(80) },
-  cardIcon: { width: s(56), height: s(56), borderRadius: ms(14), backgroundColor: '#f7f7f7', alignItems: 'center', justifyContent: 'center' },
+  cardIcon: { width: s(56), height: s(56), borderRadius: ms(14), backgroundColor: Colors.lightGray, alignItems: 'center', justifyContent: 'center' },
   cardImage: { width: s(48), height: s(36) },
-  cardTitle: { fontSize: fs(16), fontWeight: '700', color: '#1a1a1a' },
-  cardSubtitle: { fontSize: fs(13), color: '#666' },
+  cardTitle: { fontSize: fs(16), fontWeight: '700', color: Colors.white },
+  cardSubtitle: { fontSize: fs(13), color: Colors.gray },
 });

@@ -57,7 +57,7 @@ export default function InvoiceScreen() {
     const name = isCorporate ? (item?.company_name || '') : (item?.full_name || '');
     const idNum = isCorporate ? (item?.tax_number || '') : (item?.citizen_id || '');
     const subtitle = [name, idNum].filter(Boolean).join(' - ');
-    
+
     return (
       <TouchableOpacity
         style={styles.itemRow}
@@ -75,16 +75,16 @@ export default function InvoiceScreen() {
           </View>
           <Text style={styles.itemValue} numberOfLines={1}>{subtitle}</Text>
         </View>
-        <Ionicons name="chevron-forward" size={18} color="#bbb" />
+        <Ionicons name="chevron-forward" size={18} color={Colors.gray} />
       </TouchableOpacity>
     );
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: s(6) }}>
-          <Ionicons name="arrow-back" size={22} color="#333" />
+          <Ionicons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Faturalarım</Text>
       </View>
@@ -95,9 +95,9 @@ export default function InvoiceScreen() {
         </View>
       ) : list.length === 0 ? (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: s(16) }}>
-          <Ionicons name="receipt-outline" size={ms(64)} color="#bdbdbd" />
-          <Text style={{ marginTop: vs(14), fontSize: fs(20), fontWeight: '800', color: Colors.black }}>Fatura bilgisi ekle</Text>
-          <Text style={{ marginTop: vs(6), fontSize: fs(13), color: Colors.darkGray, textAlign: 'center' }}>Henüz kayıtlı bir fatura bilginiz bulunmamaktadır. İlk fatura bilginizi oluşturun.</Text>
+          <Ionicons name="receipt-outline" size={ms(64)} color={Colors.gray} />
+          <Text style={{ marginTop: vs(14), fontSize: fs(20), fontWeight: '800', color: Colors.white }}>Fatura bilgisi ekle</Text>
+          <Text style={{ marginTop: vs(6), fontSize: fs(13), color: Colors.gray, textAlign: 'center' }}>Henüz kayıtlı bir fatura bilginiz bulunmamaktadır. İlk fatura bilginizi oluşturun.</Text>
           <TouchableOpacity style={styles.emptyAddBtn} onPress={onAddNew}>
             <Ionicons name="add" size={18} color={Colors.black} />
             <Text style={styles.emptyAddText}>Yeni fatura ekle</Text>
@@ -113,11 +113,11 @@ export default function InvoiceScreen() {
           refreshing={refreshing}
         />
       )}
-      
+
       {(!loading && list.length > 0) ? (
         <View style={styles.footer}>
           <TouchableOpacity style={styles.footerBtn} onPress={onAddNew} activeOpacity={0.85}>
-            <Ionicons name="add" size={18} color="#fff" />
+            <Ionicons name="add" size={18} color={Colors.black} />
             <Text style={styles.footerBtnText}>Yeni fatura ekle</Text>
           </TouchableOpacity>
         </View>
@@ -127,49 +127,55 @@ export default function InvoiceScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingTop: vs(10), 
-    paddingHorizontal: s(16), 
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: vs(10),
+    paddingHorizontal: s(16),
     paddingBottom: vs(8),
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
-    marginBottom: s(10)
+    borderBottomColor: Colors.border,
+    marginBottom: s(10),
+    backgroundColor: Colors.secondary
   },
-  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: '#333', flex: 1 },
-  itemRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
-    paddingVertical: vs(14), 
-    borderBottomWidth: 1, 
-    borderBottomColor: '#f1f1f1'
+  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: Colors.white, flex: 1 },
+  itemRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: vs(14),
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    backgroundColor: Colors.secondary,
+    paddingHorizontal: s(12),
+    borderRadius: 8,
+    marginBottom: 8,
   },
-  itemTitle: { fontSize: fs(16), fontWeight: '700', color: '#333' },
-  defaultBadge: { marginLeft: s(8), backgroundColor: '#e3f2fd', paddingHorizontal: s(6), paddingVertical: vs(2), borderRadius: ms(4) },
+  itemTitle: { fontSize: fs(16), fontWeight: '700', color: Colors.white },
+  defaultBadge: { marginLeft: s(8), backgroundColor: Colors.background, paddingHorizontal: s(6), paddingVertical: vs(2), borderRadius: ms(4) },
   defaultBadgeText: { fontSize: fs(10), color: Colors.primary, fontWeight: '600' },
-  itemValue: { fontSize: fs(13), color: '#666', marginTop: vs(4) },
-  emptyAddBtn: { marginTop: vs(18), paddingVertical: vs(12), paddingHorizontal: s(14), borderWidth: 1, borderColor: '#e0e0e0', borderRadius: ms(12), flexDirection: 'row', alignItems: 'center' },
+  itemValue: { fontSize: fs(13), color: Colors.gray, marginTop: vs(4) },
+  emptyAddBtn: { marginTop: vs(18), paddingVertical: vs(12), paddingHorizontal: s(14), borderWidth: 1, borderColor: Colors.border, borderRadius: ms(12), flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.primary },
   emptyAddText: { marginLeft: s(8), fontSize: fs(15), color: Colors.black, fontWeight: '700' },
   footer: {
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 16,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     borderTopWidth: 0,
   },
   footerBtn: {
     height: vs(52),
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderRadius: 12
   },
   footerBtnText: {
-    color: '#fff',
+    color: Colors.black,
     fontSize: fs(16),
     fontWeight: '700',
   },

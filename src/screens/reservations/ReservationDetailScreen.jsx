@@ -9,6 +9,7 @@ import { useConfig } from '../../context/ConfigContext';
 import Constants from 'expo-constants';
 import { computeRoutes } from '../../api/googleMaps';
 import { cancelReservation, getReservation } from '../../api/endpoints';
+import { Colors } from '../../constants/Colors';
 
 const { width, height } = Dimensions.get('window');
 
@@ -230,7 +231,7 @@ export default function ReservationDetailScreen() {
                 desc: `${brand || ''} ${model || ''} ${color ? '(' + color + ')' : ''}`.trim() || 'Araç Bilgisi Yok'
             };
         }
-        
+
         // 2. Sürücünün varsayılan aracı (driver objesi içinde)
         if (reservation?.driver) {
             const plate = reservation.driver.vehicle_plate || reservation.driver.plate;
@@ -251,13 +252,13 @@ export default function ReservationDetailScreen() {
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#1a1a1a" />
+                    <Ionicons name="arrow-back" size={24} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Rezervasyon Detayı</Text>
                 <View style={{ width: 24 }} />
             </View>
 
-            <ScrollView 
+            <ScrollView
                 style={styles.content}
                 refreshControl={
                     <RefreshControl refreshing={loadingDetails} onRefresh={loadDetails} colors={['#f4a119']} />
@@ -365,8 +366,8 @@ export default function ReservationDetailScreen() {
                                         {status === 'cancelled' ? 'İptal Edildi' : 'Sürücü Atanmadı'}
                                     </Text>
                                     <Text style={styles.noDriverText}>
-                                        {status === 'cancelled' 
-                                            ? 'Bu rezervasyon için sürücü ataması yapılmayacak.' 
+                                        {status === 'cancelled'
+                                            ? 'Bu rezervasyon için sürücü ataması yapılmayacak.'
                                             : 'Sürücü ataması yapıldığında bilgiler burada görünecek.'}
                                     </Text>
                                 </View>
@@ -405,13 +406,13 @@ export default function ReservationDetailScreen() {
                         </View>
 
                         {/* Emergency Button (Inline) */}
-                            <TouchableOpacity 
-                                style={styles.inlineEmergencyBtn}
-                                onPress={() => navigation.navigate('EmergencySOS', { reservationId: reservation.id, reservation })}
-                            >
-                                <Ionicons name="warning" size={18} color="#fff" style={{ marginRight: 8 }} />
-                                <Text style={styles.inlineEmergencyText}>Acil Yardım</Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.inlineEmergencyBtn}
+                            onPress={() => navigation.navigate('EmergencySOS', { reservationId: reservation.id, reservation })}
+                        >
+                            <Ionicons name="warning" size={18} color="#fff" style={{ marginRight: 8 }} />
+                            <Text style={styles.inlineEmergencyText}>Acil Yardım</Text>
+                        </TouchableOpacity>
                     </View>
 
                     {/* Info Grid */}
@@ -449,8 +450,8 @@ export default function ReservationDetailScreen() {
                 {/* Cancel Button */}
                 {canCancel && (
                     <View style={styles.actionsContainer}>
-                        <TouchableOpacity 
-                            style={[styles.cancelBtn, cancelling && styles.disabledBtn]} 
+                        <TouchableOpacity
+                            style={[styles.cancelBtn, cancelling && styles.disabledBtn]}
                             onPress={handleCancel}
                             disabled={cancelling}
                         >
@@ -465,7 +466,7 @@ export default function ReservationDetailScreen() {
                         </TouchableOpacity>
                     </View>
                 )}
-                
+
                 <View style={{ height: 40 }} />
             </ScrollView>
         </View>
@@ -475,7 +476,7 @@ export default function ReservationDetailScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: Colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -483,9 +484,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: s(16),
         paddingVertical: vs(12),
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: Colors.border,
     },
     backBtn: {
         padding: s(4),
@@ -493,11 +494,11 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: fs(18),
         fontWeight: '700',
-        color: '#1a1a1a',
+        color: Colors.white,
     },
     headerEmergencyBtn: {
         padding: s(8),
-        backgroundColor: '#fee2e2',
+        backgroundColor: 'rgba(239,68,68,0.2)',
         borderRadius: s(20),
     },
     content: {
@@ -505,7 +506,7 @@ const styles = StyleSheet.create({
     },
     mapContainer: {
         height: vs(300),
-        backgroundColor: '#e0e0e0',
+        backgroundColor: Colors.secondary,
     },
     map: {
         flex: 1,
@@ -516,26 +517,21 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(255,255,255,0.7)',
+        backgroundColor: 'rgba(0,0,0,0.5)',
         alignItems: 'center',
         justifyContent: 'center',
     },
     driverCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         marginHorizontal: s(16),
         marginTop: -vs(40),
         marginBottom: vs(16),
         padding: s(16),
         borderRadius: ms(16),
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.1,
-        shadowRadius: 12,
-        elevation: 5,
         borderWidth: 1,
-        borderColor: '#f0f0f0',
+        borderColor: Colors.border,
     },
     driverInfo: {
         flex: 1,
@@ -543,12 +539,12 @@ const styles = StyleSheet.create({
     driverName: {
         fontSize: fs(16),
         fontWeight: '700',
-        color: '#1a1a1a',
+        color: Colors.white,
         marginBottom: vs(4),
     },
     driverVehicle: {
         fontSize: fs(13),
-        color: '#666',
+        color: Colors.gray,
         fontWeight: '600',
     },
     callBtn: {
@@ -581,15 +577,12 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     detailsCard: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         margin: s(16),
         borderRadius: ms(20),
         padding: s(20),
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.06,
-        shadowRadius: ms(12),
-        elevation: 3,
+        borderWidth: 1,
+        borderColor: Colors.border,
     },
     cardHeader: {
         flexDirection: 'row',
@@ -598,7 +591,7 @@ const styles = StyleSheet.create({
         marginBottom: vs(20),
         paddingBottom: vs(16),
         borderBottomWidth: 1,
-        borderBottomColor: '#f5f5f5',
+        borderBottomColor: Colors.border,
     },
     serviceRow: {
         flexDirection: 'row',
@@ -609,7 +602,7 @@ const styles = StyleSheet.create({
         width: s(40),
         height: s(40),
         borderRadius: ms(12),
-        backgroundColor: '#fff9f0',
+        backgroundColor: 'rgba(212,175,55,0.2)',
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: s(12),
@@ -617,7 +610,7 @@ const styles = StyleSheet.create({
     serviceName: {
         fontSize: fs(18),
         fontWeight: '700',
-        color: '#1a1a1a',
+        color: Colors.white,
         flex: 1,
     },
     statusChip: {
@@ -646,7 +639,7 @@ const styles = StyleSheet.create({
         top: vs(14),
         bottom: vs(-20),
         width: s(2),
-        backgroundColor: '#f0f0f0',
+        backgroundColor: Colors.border,
         zIndex: 0,
     },
     routeDot: {
@@ -655,7 +648,7 @@ const styles = StyleSheet.create({
         borderRadius: s(8),
         borderWidth: 4,
         marginRight: s(12),
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         zIndex: 1,
     },
     routeTextContainer: {
@@ -663,12 +656,12 @@ const styles = StyleSheet.create({
     },
     routeLabel: {
         fontSize: fs(12),
-        color: '#888',
+        color: Colors.gray,
         marginBottom: vs(4),
     },
     routeAddress: {
         fontSize: fs(14),
-        color: '#1a1a1a',
+        color: Colors.white,
         lineHeight: fs(20),
     },
     driverSection: {
@@ -677,7 +670,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: fs(14),
         fontWeight: '600',
-        color: '#888',
+        color: Colors.gray,
         marginBottom: vs(12),
         textTransform: 'uppercase',
         letterSpacing: 0.5,
@@ -685,7 +678,7 @@ const styles = StyleSheet.create({
     driverCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f8f9fa',
+        backgroundColor: Colors.lightGray,
         padding: s(12),
         borderRadius: ms(12),
     },
@@ -693,7 +686,7 @@ const styles = StyleSheet.create({
         width: s(48),
         height: s(48),
         borderRadius: s(24),
-        backgroundColor: '#d1d5db',
+        backgroundColor: Colors.border,
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: s(12),
@@ -704,12 +697,12 @@ const styles = StyleSheet.create({
     driverName: {
         fontSize: fs(16),
         fontWeight: '600',
-        color: '#1a1a1a',
+        color: Colors.white,
         marginBottom: vs(2),
     },
     driverVehicle: {
         fontSize: fs(13),
-        color: '#6b7280',
+        color: Colors.gray,
     },
     callDriverBtn: {
         width: s(40),
@@ -722,11 +715,11 @@ const styles = StyleSheet.create({
     noDriverCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff9f0',
+        backgroundColor: Colors.lightGray,
         padding: s(16),
         borderRadius: ms(12),
         borderWidth: 1,
-        borderColor: '#fee2e2',
+        borderColor: Colors.border,
     },
     noDriverIcon: {
         marginRight: s(12),
@@ -737,12 +730,12 @@ const styles = StyleSheet.create({
     noDriverTitle: {
         fontSize: fs(15),
         fontWeight: '600',
-        color: '#1a1a1a',
+        color: Colors.white,
         marginBottom: vs(2),
     },
     noDriverText: {
         fontSize: fs(13),
-        color: '#6b7280',
+        color: Colors.gray,
         lineHeight: fs(18),
     },
     infoGrid: {
@@ -757,14 +750,14 @@ const styles = StyleSheet.create({
     },
     infoLabel: {
         fontSize: fs(12),
-        color: '#888',
+        color: Colors.gray,
         marginTop: vs(4),
         marginBottom: vs(2),
     },
     infoValue: {
         fontSize: fs(14),
         fontWeight: '600',
-        color: '#1a1a1a',
+        color: Colors.white,
     },
     actionsContainer: {
         paddingHorizontal: s(16),
@@ -774,11 +767,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fee2e2',
+        backgroundColor: 'rgba(239,68,68,0.2)',
         paddingVertical: vs(14),
         borderRadius: ms(12),
         borderWidth: 1,
-        borderColor: '#fecaca',
+        borderColor: '#ef4444',
     },
     disabledBtn: {
         opacity: 0.7,

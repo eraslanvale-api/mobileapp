@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import TopMenu from '../../components/TopMenu';
 import { s, vs, fs, ms } from '../../utils/scale';
 import { useConfig } from '../../context/ConfigContext';
+import { Colors } from '../../constants/Colors';
 import { WebView } from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../context/AuthContext';
@@ -20,7 +21,7 @@ const Section = ({ title, children }) => (
 
 const Item = ({ icon, label, onPress }) => (
     <TouchableOpacity style={styles.item} onPress={onPress}>
-        <Ionicons name={icon} size={24} color="#333" style={styles.itemIcon} />
+        <Ionicons name={icon} size={24} color={Colors.primary} style={styles.itemIcon} />
         <Text style={styles.itemLabel}>{label}</Text>
     </TouchableOpacity>
 );
@@ -119,21 +120,21 @@ export default function SettingsScreen() {
 
             </ScrollView>
             <Modal visible={webOpen} animationType="slide" onRequestClose={() => setWebOpen(false)}>
-                <View style={{ flex: 1, backgroundColor: '#fff' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: s(16), paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: '#f0f0f0' }}>
+                <View style={{ flex: 1, backgroundColor: Colors.background }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: s(16), paddingVertical: vs(12), borderBottomWidth: 1, borderBottomColor: Colors.border }}>
                         <TouchableOpacity onPress={() => setWebOpen(false)} style={{ padding: s(6), marginRight: s(6) }}>
-                            <Ionicons name="arrow-back" size={ms(22)} color="#333" />
+                            <Ionicons name="arrow-back" size={ms(22)} color={Colors.white} />
                         </TouchableOpacity>
-                        <Text style={{ flex: 1, fontSize: fs(18), fontWeight: '800', color: '#333' }} numberOfLines={1}>{webTitle}</Text>
+                        <Text style={{ flex: 1, fontSize: fs(18), fontWeight: '800', color: Colors.white }} numberOfLines={1}>{webTitle}</Text>
                     </View>
                     {webUrl ? (
                         <WebView
                             source={{ uri: webUrl }}
                             startInLoadingState
                             renderLoading={() => (
-                                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                                    <ActivityIndicator size="small" color="#f4a119" />
-                                    <Text style={{ marginTop: vs(8), color: '#666' }}>Yükleniyor...</Text>
+                                <View style={{ ...StyleSheet.absoluteFillObject, alignItems: 'center', justifyContent: 'center', backgroundColor: Colors.background }}>
+                                    <ActivityIndicator size="small" color={Colors.primary} />
+                                    <Text style={{ marginTop: vs(8), color: Colors.gray }}>Yükleniyor...</Text>
                                 </View>
                             )}
                         />
@@ -147,18 +148,18 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#fff' },
-    header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
-    logoIcon: { width: 28, height: 28, backgroundColor: '#F5A623', borderRadius: 8, alignItems: 'center', justifyContent: 'center', marginRight: 8 },
-    logoText: { color: '#fff', fontWeight: 'bold', fontSize: 18 },
-    headerTitle: { fontSize: 20, fontWeight: '800', color: '#4b2c14', flex: 1 },
+    container: { flex: 1, backgroundColor: Colors.background },
+    header: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: Colors.border },
+    logoIcon: { width: 28, height: 28, backgroundColor: Colors.primary, borderRadius: 8, alignItems: 'center', justifyContent: 'center', marginRight: 8 },
+    logoText: { color: Colors.white, fontWeight: 'bold', fontSize: 18 },
+    headerTitle: { fontSize: 20, fontWeight: '800', color: Colors.primary, flex: 1 },
     notificationButton: { padding: 4 },
-    searchBar: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', margin: 16, paddingHorizontal: 12, height: 48, borderRadius: 12, borderWidth: 1, borderColor: '#eee' },
-    searchText: { marginLeft: 8, color: '#999', fontSize: 15 },
+    searchBar: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.secondary, margin: 16, paddingHorizontal: 12, height: 48, borderRadius: 12, borderWidth: 1, borderColor: Colors.border },
+    searchText: { marginLeft: 8, color: Colors.gray, fontSize: 15 },
     content: { flex: 1, marginTop: vs(80) },
     section: { marginBottom: 24 },
-    sectionTitle: { paddingHorizontal: 16, paddingVertical: 8, backgroundColor: '#f9f9f9', color: '#666', fontSize: 13, fontWeight: '600', letterSpacing: 0.5 },
-    item: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: '#f0f0f0' },
+    sectionTitle: { paddingHorizontal: 16, paddingVertical: 8, backgroundColor: Colors.secondary, color: Colors.primary, fontSize: 13, fontWeight: '600', letterSpacing: 0.5 },
+    item: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 16, borderBottomWidth: 1, borderBottomColor: Colors.border },
     itemIcon: { marginRight: 16, width: 24 },
-    itemLabel: { fontSize: 16, color: '#333' },
+    itemLabel: { fontSize: 16, color: Colors.white },
 });

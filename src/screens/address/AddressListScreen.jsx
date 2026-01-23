@@ -20,7 +20,7 @@ export default function AddressListScreen() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  
+
   const load = async () => {
     setLoading(true);
     try {
@@ -39,7 +39,7 @@ export default function AddressListScreen() {
     } catch (error) {
       // console.log('Adres listesi hatası:', error);
       // Hata durumunda boş liste göster veya kullanıcıya bildir
-      setItems([]); 
+      setItems([]);
       showToast('Adresler yüklenemedi', 'error');
     } finally {
       setLoading(false);
@@ -67,7 +67,7 @@ export default function AddressListScreen() {
       const id = selectFor.replace('stop_', '');
       updateStop(id, data);
     }
-    
+
     navigation.goBack();
   };
 
@@ -88,7 +88,7 @@ export default function AddressListScreen() {
       await deleteAddress(id);
       setItems((prev) => prev.filter((x) => x.id !== id));
       showToast('Adres silindi', 'success');
-    } catch (_) {}
+    } catch (_) { }
   };
 
   const renderItem = ({ item }) => (
@@ -100,7 +100,7 @@ export default function AddressListScreen() {
       }}
       activeOpacity={0.85}
     >
-      <View style={{ flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={styles.itemTitle}>{item.title}</Text>
           {item.isDefault && (
@@ -111,27 +111,27 @@ export default function AddressListScreen() {
         </View>
         <Text style={styles.itemValue} numberOfLines={1}>{item.address}</Text>
       </View>
-      <Ionicons name="chevron-forward" size={18} color="#bbb" />
+      <Ionicons name="chevron-forward" size={18} color={Colors.gray} />
     </TouchableOpacity>
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: s(6) }}>
-          <Ionicons name="arrow-back" size={22} color="#333" />
+          <Ionicons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Adreslerim</Text>
       </View>
 
       {loading ? (
-        <View style={{ paddingTop: vs(20),flex:1,justifyContent:'center' ,alignItems: 'center' }}>
-          <ActivityIndicator color="#f4a119" />
+        <View style={{ paddingTop: vs(20), flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <ActivityIndicator color={Colors.primary} />
         </View>
       ) : items.length === 0 ? (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: s(16) }}>
-          <Ionicons name="bookmark-outline" size={ms(64)} color="#bdbdbd" />
-          <Text style={{ marginTop: vs(14), fontSize: fs(20), fontWeight: '800', color: Colors.black }}>Kayıtlı adres oluştur</Text>
+          <Ionicons name="bookmark-outline" size={ms(64)} color={Colors.gray} />
+          <Text style={{ marginTop: vs(14), fontSize: fs(20), fontWeight: '800', color: Colors.white }}>Kayıtlı adres oluştur</Text>
           <Text style={{ marginTop: vs(6), fontSize: fs(13), color: Colors.darkGray, textAlign: 'center' }}>Henüz bir kayıtlı adresiniz bulunmamaktadır. İlk kayıtlı adresinizi oluşturun.</Text>
           <TouchableOpacity style={styles.emptyAddBtn} onPress={() => navigation.navigate('AddressCreate')}>
             <Ionicons name="add" size={18} color={Colors.black} />
@@ -151,7 +151,7 @@ export default function AddressListScreen() {
       {(!loading && items.length > 0) ? (
         <View style={styles.footer}>
           <TouchableOpacity style={styles.footerBtn} onPress={() => navigation.navigate('AddressCreate')} activeOpacity={0.85}>
-            <Ionicons name="add" size={18} color="#fff" />
+            <Ionicons name="add" size={18} color={Colors.black} />
             <Text style={styles.footerBtnText}>Yeni adres ekle</Text>
           </TouchableOpacity>
         </View>
@@ -161,41 +161,45 @@ export default function AddressListScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerRow: { flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8),marginBottom:30,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        marginBottom:s(10)
+  headerRow: {
+    flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8), marginBottom: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    backgroundColor: Colors.secondary,
+    marginBottom: s(10)
 
 
   },
-  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: '#333', flex: 1 },
-  addBtn: { width: s(32), height: s(32), borderRadius: s(16), backgroundColor: '#f4a119', alignItems: 'center', justifyContent: 'center' },
-  itemRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: vs(14), borderBottomWidth: 1, borderBottomColor: '#f1f1f1'},
-  itemTitle: { fontSize: fs(16), fontWeight: '700', color: '#333' },
-  defaultBadge: { marginLeft: s(8), backgroundColor: '#e3f2fd', paddingHorizontal: s(6), paddingVertical: vs(2), borderRadius: ms(4) },
+  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: Colors.white, flex: 1 },
+  addBtn: { width: s(32), height: s(32), borderRadius: s(16), backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center' },
+  itemRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: vs(14), borderBottomWidth: 1, borderBottomColor: Colors.border, backgroundColor: Colors.secondary, paddingHorizontal: s(12), borderRadius: 8, marginBottom: 8 },
+  itemTitle: { fontSize: fs(16), fontWeight: '700', color: Colors.white },
+  defaultBadge: { marginLeft: s(8), backgroundColor: Colors.background, paddingHorizontal: s(6), paddingVertical: vs(2), borderRadius: ms(4) },
   defaultBadgeText: { fontSize: fs(10), color: Colors.primary, fontWeight: '600' },
-  itemValue: { fontSize: fs(13), color: '#666', marginTop: vs(4) },
+  itemValue: { fontSize: fs(13), color: Colors.gray, marginTop: vs(4) },
   deleteBtn: { marginRight: s(6), padding: s(4) },
-  emptyAddBtn: { marginTop: vs(18), paddingVertical: vs(12), paddingHorizontal: s(14), borderWidth: 1, borderColor: '#e0e0e0', borderRadius: ms(12), flexDirection: 'row', alignItems: 'center' },
+  emptyAddBtn: { marginTop: vs(18), paddingVertical: vs(12), paddingHorizontal: s(14), borderWidth: 1, borderColor: Colors.border, borderRadius: ms(12), flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.primary },
   emptyAddText: { marginLeft: s(8), fontSize: fs(15), color: Colors.black, fontWeight: '700' },
-    footer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 16,
-        backgroundColor: '#fff',
-        paddingHorizontal: s(16),
-        borderTopWidth: 0,
-    },
-    footerBtn: {
-        height: vs(52),
-        backgroundColor: Colors.secondary,
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection:'row'
-    },
-    footerBtnText: {
-        color: '#fff',
-        fontSize: fs(16),
-        fontWeight: '700',
-    },});
+  footer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 16,
+    backgroundColor: Colors.background,
+    paddingHorizontal: s(16),
+    borderTopWidth: 0,
+  },
+  footerBtn: {
+    height: vs(52),
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    borderRadius: 12
+  },
+  footerBtnText: {
+    color: Colors.black,
+    fontSize: fs(16),
+    fontWeight: '700',
+  },
+});

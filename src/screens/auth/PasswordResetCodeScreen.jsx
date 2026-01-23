@@ -123,7 +123,7 @@ export default function PasswordResetCodeScreen({ navigation, route }) {
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <View style={styles.headerRow}>
           <TouchableOpacity style={styles.navBack} onPress={() => navigation.goBack?.()}>
-            <Ionicons name="arrow-back" size={20} color={Colors.black} />
+            <Ionicons name="arrow-back" size={20} color={Colors.white} />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>Doğrulama kodunu girin</Text>
@@ -157,7 +157,7 @@ export default function PasswordResetCodeScreen({ navigation, route }) {
       </ScrollView>
       <View style={styles.footer}>
         <TouchableOpacity style={styles.footerBtn} activeOpacity={0.85} onPress={onSubmit} disabled={loading}>
-          {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.footerBtnText}>Kodu onayla</Text>}
+          {loading ? <ActivityIndicator color={Colors.black} /> : <Text style={styles.footerBtnText}>Kodu onayla</Text>}
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -167,7 +167,7 @@ export default function PasswordResetCodeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingTop: vs(24),
     paddingBottom: vs(120),
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fs(24),
     fontWeight: "700",
-    color: Colors.black,
+    color: Colors.white,
     marginBottom: vs(16),
   },
   headerRow: {
@@ -187,10 +187,10 @@ const styles = StyleSheet.create({
     width: s(36),
     height: s(36),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.border,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderRadius: s(18),
   },
   inputError: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     fontSize: fs(13),
-    color: Colors.darkGray,
+    color: Colors.gray,
     marginBottom: vs(12),
   },
   codeRow: {
@@ -215,12 +215,12 @@ const styles = StyleSheet.create({
     width: s(60),
     height: vs(60),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
-    backgroundColor: '#fff',
+    borderColor: Colors.border,
+    backgroundColor: Colors.secondary,
     borderRadius: ms(16),
     textAlign: 'center',
     fontSize: fs(24),
-    color: Colors.black,
+    color: Colors.white,
   },
   resendWrap: {
     marginTop: vs(16),
@@ -228,16 +228,16 @@ const styles = StyleSheet.create({
   },
   resendHint: {
     fontSize: fs(13),
-    color: Colors.darkGray,
+    color: Colors.gray,
     marginBottom: vs(6),
   },
   cooldownText: {
     fontSize: fs(13),
-    color: Colors.darkGray,
+    color: Colors.gray,
   },
   resendText: {
     fontSize: fs(13),
-    color: Colors.black,
+    color: Colors.primary,
     fontWeight: '700',
     textDecorationLine: 'underline',
   },
@@ -246,19 +246,20 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingVertical: vs(20),
     borderTopWidth: 0,
   },
   footerBtn: {
     height: vs(52),
-    backgroundColor: Colors.secondary,
+    backgroundColor: Colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: ms(12),
   },
   footerBtnText: {
-    color: '#fff',
+    color: Colors.black,
     fontSize: fs(16),
     fontWeight: '700',
   },

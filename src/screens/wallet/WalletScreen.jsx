@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Modal, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Colors } from '../../constants/Colors';
 import { useNavigation } from "@react-navigation/native";
 
 const CARDS_KEY = "wallet_cards";
@@ -83,7 +84,7 @@ const WalletScreen = () => {
           style={styles.headerBtn}
           onPress={() => navigation.goBack()}
         >
-          <MaterialIcons name="arrow-back" size={22} color="#111" />
+          <MaterialIcons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Cüzdan</Text>
         <View style={styles.headerRight} />
@@ -99,7 +100,7 @@ const WalletScreen = () => {
           <Text style={styles.cardTitle}>CÜZDAN</Text>
           {activeCard && <MaterialIcons name="nfc" size={24} color="rgba(255,255,255,0.6)" />}
         </View>
-        
+
         {activeCard ? (
           <View style={{ marginTop: 24, gap: 20 }}>
             <Text style={{ color: '#fff', fontSize: 22, fontWeight: '800', letterSpacing: 2 }}>
@@ -133,19 +134,19 @@ const WalletScreen = () => {
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingHorizontal: 12, paddingBottom: 80, gap: 10 }}
           renderItem={({ item }) => (
-            <TouchableOpacity 
-              activeOpacity={0.8} 
-              onPress={() => setActiveCard(item)} 
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setActiveCard(item)}
               style={[
                 styles.cardItem,
-                activeCard?.id === item.id && { borderColor: "#F2A900", borderWidth: 2 }
+                activeCard?.id === item.id && { borderColor: Colors.primary, borderWidth: 2 }
               ]}
             >
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                <MaterialIcons name="credit-card" size={20} color="#111" />
+                <MaterialIcons name="credit-card" size={20} color={Colors.white} />
                 <Text style={styles.cardItemTitle}>{item.brand} •••• {item.last4}</Text>
               </View>
-              <Text style={styles.cardItemSub}>SKT {String(item.expiry).slice(0,2)}/{String(item.expiry).slice(2)}</Text>
+              <Text style={styles.cardItemSub}>SKT {String(item.expiry).slice(0, 2)}/{String(item.expiry).slice(2)}</Text>
             </TouchableOpacity>
           )}
         />
@@ -156,7 +157,7 @@ const WalletScreen = () => {
         activeOpacity={0.9}
         onPress={() => navigation.navigate("PaymentMethodAdd")}
       >
-        <MaterialIcons name="add" size={18} color="#111" />
+        <MaterialIcons name="add" size={18} color={Colors.black} />
         <Text style={styles.addText}>Ödeme yöntemi ekle</Text>
       </TouchableOpacity>
       <Modal
@@ -165,37 +166,37 @@ const WalletScreen = () => {
         animationType="fade"
         onRequestClose={() => setShowModal(false)}
       >
-        <View style={{ flex:1, backgroundColor:"rgba(0,0,0,0.35)", justifyContent:"flex-end" }}>
-          <View style={{ backgroundColor:"#fff", borderTopLeftRadius:16, borderTopRightRadius:16, paddingBottom: 8 }}>
-            <View style={{ alignItems:"center", paddingTop:8 }}>
-              <View style={{ width:40, height:4, borderRadius:2, backgroundColor:'#E5E7EB' }} />
+        <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.35)", justifyContent: "flex-end" }}>
+          <View style={{ backgroundColor: "#fff", borderTopLeftRadius: 16, borderTopRightRadius: 16, paddingBottom: 8 }}>
+            <View style={{ alignItems: "center", paddingTop: 8 }}>
+              <View style={{ width: 40, height: 4, borderRadius: 2, backgroundColor: '#E5E7EB' }} />
             </View>
-            <View style={{ paddingHorizontal:16, paddingTop:12, paddingBottom:8, flexDirection:'row', alignItems:'center', justifyContent:'space-between' }}>
-              <Text style={{ fontWeight:'800', color:'#111', fontSize:16 }}>Kart detayları</Text>
-              <TouchableOpacity onPress={() => setShowModal(false)} style={{ padding:6 }}>
+            <View style={{ paddingHorizontal: 16, paddingTop: 12, paddingBottom: 8, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Text style={{ fontWeight: '800', color: '#111', fontSize: 16 }}>Kart detayları</Text>
+              <TouchableOpacity onPress={() => setShowModal(false)} style={{ padding: 6 }}>
                 <MaterialIcons name="close" size={22} color="#6B7280" />
               </TouchableOpacity>
             </View>
             {selected && (
-              <View style={{ paddingHorizontal:16, gap:8, paddingBottom:12 }}>
-                <View style={{ padding:14, borderRadius:12, borderWidth:StyleSheet.hairlineWidth, borderColor:'#E5E7EB', backgroundColor:'#fff', gap:6 }}>
-                  <View style={{ flexDirection:'row', alignItems:'center', gap:10 }}>
-                    <View style={{ width:36, height:36, borderRadius:8, backgroundColor:'#F3F4F6', alignItems:'center', justifyContent:'center' }}>
+              <View style={{ paddingHorizontal: 16, gap: 8, paddingBottom: 12 }}>
+                <View style={{ padding: 14, borderRadius: 12, borderWidth: StyleSheet.hairlineWidth, borderColor: '#E5E7EB', backgroundColor: '#fff', gap: 6 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                    <View style={{ width: 36, height: 36, borderRadius: 8, backgroundColor: '#F3F4F6', alignItems: 'center', justifyContent: 'center' }}>
                       <MaterialIcons name="credit-card" size={20} color="#111" />
                     </View>
-                    <View style={{ flex:1 }}>
-                      <Text style={{ color:'#111', fontWeight:'800' }}>{selected.brand} •••• {selected.last4}</Text>
-                      <Text style={{ color:'#6B7280', marginTop:2, fontSize:12 }}>SKT {String(selected.expiry).slice(0,2)}/{String(selected.expiry).slice(2)}</Text>
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: '#111', fontWeight: '800' }}>{selected.brand} •••• {selected.last4}</Text>
+                      <Text style={{ color: '#6B7280', marginTop: 2, fontSize: 12 }}>SKT {String(selected.expiry).slice(0, 2)}/{String(selected.expiry).slice(2)}</Text>
                     </View>
                   </View>
                 </View>
                 <TouchableOpacity
-                  style={{ padding:14, borderRadius:12, borderWidth:StyleSheet.hairlineWidth, borderColor:'#FCA5A5', backgroundColor:'#FEF2F2', flexDirection:'row', alignItems:'center', gap:12 }}
+                  style={{ padding: 14, borderRadius: 12, borderWidth: StyleSheet.hairlineWidth, borderColor: '#FCA5A5', backgroundColor: '#FEF2F2', flexDirection: 'row', alignItems: 'center', gap: 12 }}
                   onPress={handleDelete}
                   activeOpacity={0.8}
                 >
                   <MaterialIcons name="delete" size={20} color="#DC2626" />
-                  <Text style={{ color:'#DC2626', fontWeight:'800' }}>Kartı sil</Text>
+                  <Text style={{ color: '#DC2626', fontWeight: '800' }}>Kartı sil</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -208,22 +209,22 @@ const WalletScreen = () => {
 export default WalletScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#fff" },
-    header: {
+  container: { flex: 1, backgroundColor: Colors.background },
+  header: {
     height: 56,
     flexDirection: "row",
     alignItems: "center",
     paddingHorizontal: 16,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.secondary,
     borderBottomWidth: 1,
-    borderBottomColor: '#F3F4F6',
+    borderBottomColor: Colors.border,
   },
   headerBtn: { width: 40, height: 40, alignItems: "center", justifyContent: "center" },
   headerTitle: {
     flex: 1,
     textAlign: "left",
     fontWeight: "800",
-    color: "#111",
+    color: Colors.white,
     fontSize: 18,
     marginLeft: 8,
   },
@@ -234,18 +235,21 @@ const styles = StyleSheet.create({
     margin: 12,
     padding: 16,
     borderRadius: 14,
-    backgroundColor: "#F2A900",
+    backgroundColor: Colors.secondary,
+    borderRadius: 14,
+    borderColor: Colors.border,
+    borderWidth: 1,
     gap: 10,
   },
   cardTitle: { color: "#fff", fontWeight: "900", letterSpacing: 0.5 },
-  
+
   emptyWrap: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     gap: 10,
   },
-  emptyText: { color: "#8A8A8A" },
+  emptyText: { color: Colors.gray },
 
   addBtn: {
     position: "absolute",
@@ -255,15 +259,15 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "#E5E5E5",
+    borderColor: Colors.border,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     gap: 8,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.primary,
   },
-  addText: { fontWeight: "800", color: "#111" },
-  cardItem: { padding: 12, borderRadius: 12, borderWidth: StyleSheet.hairlineWidth, borderColor: "#E5E5E5", backgroundColor: "#fff" },
-  cardItemTitle: { color: "#111", fontWeight: "800" },
-  cardItemSub: { color: "#8A8A8A", marginTop: 4 },
+  addText: { fontWeight: "800", color: Colors.black },
+  cardItem: { padding: 12, borderRadius: 12, borderWidth: StyleSheet.hairlineWidth, borderColor: Colors.border, backgroundColor: Colors.secondary },
+  cardItemTitle: { color: Colors.white, fontWeight: "800" },
+  cardItemSub: { color: Colors.gray, marginTop: 4 },
 });

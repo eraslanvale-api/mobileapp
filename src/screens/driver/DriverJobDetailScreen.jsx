@@ -116,7 +116,7 @@ export default function DriverJobDetailScreen({ route, navigation }) {
 
             if (data.error) {
                 console.error('Routes API Error:', data.error);
-                
+
                 // Show user-friendly error for invalid coordinates
                 if (data.error.code === 400 && data.error.status === 'INVALID_ARGUMENT') {
                     showToast('Rota hesaplanamadı: Konum koordinatları geçersiz.', 'error');
@@ -236,7 +236,7 @@ export default function DriverJobDetailScreen({ route, navigation }) {
 
     const handleAction = async () => {
         if (!job) return;
-        
+
         setLoadingAction(true);
         try {
             if (modalType === 'ACCEPT') {
@@ -355,8 +355,8 @@ export default function DriverJobDetailScreen({ route, navigation }) {
     if (!job) {
         return (
             <View style={[styles.container, { justifyContent: 'center', alignItems: 'center' }]}>
-                <Text style={{ color: 'black' }}>İş detayları bulunamadı.</Text>
-                <TouchableOpacity 
+                <Text style={{ color: Colors.white }}>İş detayları bulunamadı.</Text>
+                <TouchableOpacity
                     onPress={() => {
                         if (navigation.canGoBack()) {
                             navigation.goBack();
@@ -364,9 +364,9 @@ export default function DriverJobDetailScreen({ route, navigation }) {
                             navigation.navigate('HomeTab');
                         }
                     }}
-                    style={{ marginTop: 20, padding: 10, backgroundColor: 'white', borderRadius: 8 }}
+                    style={{ marginTop: 20, padding: 10, backgroundColor: Colors.secondary, borderRadius: 8 }}
                 >
-                    <Text>Geri Dön</Text>
+                    <Text style={{ color: Colors.white }}>Geri Dön</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -379,7 +379,7 @@ export default function DriverJobDetailScreen({ route, navigation }) {
 
                 {/* Header */}
                 <View style={[styles.header]}>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={() => {
                             if (navigation.canGoBack()) {
                                 navigation.goBack();
@@ -471,7 +471,7 @@ export default function DriverJobDetailScreen({ route, navigation }) {
                 >
                     <BottomSheetScrollView contentContainerStyle={styles.scrollContent}>
                         <View style={[styles.headerRow, { alignItems: 'center' }]}>
-                            <Text style={[styles.customerName, { marginBottom: 0, flex: 1 }]}>{job.customerName || 'Müşteri İsmi Yok'}</Text>
+                            <Text style={[styles.customerName, { marginBottom: 0, flex: 1, color: Colors.black }]}>{job.customerName || 'Müşteri İsmi Yok'}</Text>
                             <View style={[styles.statusChip, { borderColor: statusColor, backgroundColor: statusColor + '15', marginTop: 0, marginLeft: 10 }]}>
                                 <Text style={[styles.statusChipText, { color: statusColor }]}>
                                     {job.statusLabel || getStatusLabel(job.status)}
@@ -604,11 +604,11 @@ export default function DriverJobDetailScreen({ route, navigation }) {
                                 />
                             </View>
 
-                            <Text style={styles.modalTitle}>
+                            <Text style={[styles.modalTitle, { color: Colors.black }]}>
                                 {modalType === 'ACCEPT' ? 'Kabul Et' : 'Tamamla'}
                             </Text>
 
-                            <Text style={styles.modalText}>
+                            <Text style={[styles.modalText, { color: Colors.gray }]}>
                                 {modalType === 'ACCEPT'
                                     ? 'Müşteriye doğru yola çıkmak üzeresiniz. Onaylıyor musunuz?'
                                     : 'Hizmeti başarıyla tamamladığınızı onaylıyor musunuz?'}
@@ -652,7 +652,7 @@ export default function DriverJobDetailScreen({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.background,
     },
     header: {
         flexDirection: 'row',
@@ -660,9 +660,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         paddingVertical: 15,
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+        borderBottomColor: Colors.border,
         zIndex: 10,
     },
     headerBackBtn: {
@@ -671,7 +671,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#1a1a1a',
+        color: Colors.white,
         fontFamily: 'PlusJakartaSans-Bold',
     },
     mapContainer: {
@@ -783,7 +783,7 @@ const styles = StyleSheet.create({
     addressText: {
         fontSize: fs(14),
         fontFamily: 'PlusJakartaSans-Medium',
-        color: '#333',
+        color: Colors.black,
         lineHeight: ms(20),
     },
     navButton: {

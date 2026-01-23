@@ -10,30 +10,42 @@ import { useAuth } from '../context/AuthContext';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { s, vs, ms, fs } from '../utils/scale';
+import { Colors } from '../constants/Colors';
+
+import { View, ActivityIndicator } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigation() {
   const insets = useSafeAreaInsets();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: Colors.background }}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
   return (
     <Tab.Navigator
+      initialRouteName={(user?.role === 'driver' || user?.role === 'Şoför' || user?.role === 'sofor') ? "DriverPanel" : "Home"}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
           height: ms(60),
           paddingBottom: ms(10),
+          backgroundColor: Colors.secondary,
           borderTopWidth: 1,
-          borderTopColor: '#f0f0f0',
+          borderTopColor: Colors.border,
           elevation: 8,
           shadowColor: '#000',
-          shadowOpacity: 0.1,
+          shadowOpacity: 0.3,
           shadowRadius: 4,
           shadowOffset: { width: 0, height: -2 },
         },
-        tabBarActiveTintColor: '#f4a119',
-        tabBarInactiveTintColor: '#999',
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: Colors.gray,
         tabBarHideOnKeyboard: true,
 
         tabBarIcon: ({ focused, color, size }) => {
@@ -57,12 +69,16 @@ export default function BottomTabNavigation() {
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Ana Sayfa' }} />
-      <Tab.Screen name="Services" component={ServicesScreen} options={{ title: 'Hizmetler' }} />
-      {(user?.role === 'driver' || user?.role === 'Şoför' || user?.role === 'sofor') && (
-          <Tab.Screen name="DriverPanel" component={DriverHomeScreen} options={{ title: 'Sürücü' }} />
+      {!(user?.role === 'driver' || user?.role === 'Şoför' || user?.role === 'sofor') && (
+        <>
+          <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Ana Sayfa' }} />
+          <Tab.Screen name="Services" component={ServicesScreen} options={{ title: 'Hizmetler' }} />
+          <Tab.Screen name="Reservations" component={ReservationsScreen} options={{ title: 'Rezervasyon' }} />
+        </>
       )}
-      <Tab.Screen name="Reservations" component={ReservationsScreen} options={{ title: 'Rezervasyon' }} />
+      {(user?.role === 'driver' || user?.role === 'Şoför' || user?.role === 'sofor') && (
+        <Tab.Screen name="DriverPanel" component={DriverHomeScreen} options={{ title: 'Sürücü' }} />
+      )}
       <Tab.Screen name="Settings" component={SettingsScreen} options={{ title: 'Ayarlar' }} />
     </Tab.Navigator>
   );

@@ -34,10 +34,10 @@ export default function DistrictSelect() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.white }}>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: s(6) }}>
-          <Ionicons name="arrow-back" size={22} color={Colors.darkGray} />
+          <Ionicons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>İlçe seç</Text>
       </View>
@@ -56,13 +56,13 @@ export default function DistrictSelect() {
 }
 
 const styles = StyleSheet.create({
-  headerRow: { flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8) },
-  headerTitle: { marginLeft: s(8), fontSize: fs(18), fontWeight: '700', color: Colors.darkGray },
-  search: { borderWidth: 1, borderColor: Colors.lightGray, borderRadius: ms(12), paddingVertical: vs(10), paddingHorizontal: s(12), fontSize: fs(14), color: Colors.darkGray, marginTop: vs(8) },
-  itemRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: vs(12), paddingHorizontal: s(12), backgroundColor: Colors.white, borderRadius: ms(12), borderWidth: 1, borderColor: Colors.lightGray },
+  headerRow: { flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8), backgroundColor: Colors.secondary, borderBottomWidth: 1, borderBottomColor: Colors.border },
+  headerTitle: { marginLeft: s(8), fontSize: fs(18), fontWeight: '700', color: Colors.white },
+  search: { borderWidth: 1, borderColor: Colors.border, borderRadius: ms(12), paddingVertical: vs(10), paddingHorizontal: s(12), fontSize: fs(14), color: Colors.white, marginTop: vs(8), backgroundColor: Colors.secondary },
+  itemRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: vs(12), paddingHorizontal: s(12), backgroundColor: Colors.secondary, borderRadius: ms(12), borderWidth: 1, borderColor: Colors.border },
   itemLeft: { flexDirection: 'row', alignItems: 'center', flex: 1 },
-  pinCircle: { width: s(28), height: s(28), borderRadius: s(14), backgroundColor: '#fff6e0', alignItems: 'center', justifyContent: 'center' },
-  itemTitle: { fontSize: fs(15), fontWeight: '800', color: Colors.secondary },
+  pinCircle: { width: s(28), height: s(28), borderRadius: s(14), backgroundColor: 'rgba(212,175,55,0.2)', alignItems: 'center', justifyContent: 'center' },
+  itemTitle: { fontSize: fs(15), fontWeight: '800', color: Colors.white },
   itemSubtitle: { fontSize: fs(12), color: Colors.gray, marginTop: vs(2) },
 });
 

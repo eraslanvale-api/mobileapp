@@ -58,14 +58,14 @@ export default function RegisterScreen({ navigation }) {
     const phoneOk = /^5[0-9]{9}$/.test(ph);
     // Email opsiyonel, ama girildiyse valid olmalı
     const mailOk = em ? /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) : true;
-    
+
     // Apple Review: Ad Soyad ve Email zorunlu değil
     // if (!fn) e.fullName = "Ad Soyad zorunlu";
-    
+
     if (!phoneOk) e.phone = "Geçerli bir telefon numarası girin (5XX XXX XXXX)";
-    
+
     if (em && !mailOk) e.email = "Geçerli bir e-posta girin";
-    
+
     if (!pw) e.password = "Parola zorunlu";
     else if (pw.length < 6) e.password = "En az 6 karakter";
     if (!term) e.term = "Kullanım şartları onaylanmalı";
@@ -87,10 +87,10 @@ export default function RegisterScreen({ navigation }) {
         phone_number: fullPhone,
         password: password,
       };
-      
+
       // Email varsa ekle
       if (email.trim()) {
-          payload.email = email.trim();
+        payload.email = email.trim();
       }
 
       const response = await register(payload);
@@ -177,7 +177,7 @@ export default function RegisterScreen({ navigation }) {
       >
         <View style={styles.headerRow}>
           <TouchableOpacity style={styles.navBack} onPress={() => navigation.goBack?.()}>
-            <Ionicons name="arrow-back" size={20} color={Colors.black} />
+            <Ionicons name="arrow-back" size={20} color={Colors.white} />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>Hesap oluşturun</Text>
@@ -199,7 +199,7 @@ export default function RegisterScreen({ navigation }) {
 
         <View style={styles.field}>
           <View style={[styles.inputWrapper, errors.phone && styles.inputError, { flexDirection: 'row', alignItems: 'center' }]}>
-            <Text style={{ fontSize: fs(14), color: Colors.black, fontWeight: '700', marginRight: s(4) }}>+90</Text>
+            <Text style={{ fontSize: fs(14), color: Colors.white, fontWeight: '700', marginRight: s(4) }}>+90</Text>
             <TextInput
               style={[styles.input, { flex: 1 }]}
               keyboardType="phone-pad"
@@ -211,7 +211,7 @@ export default function RegisterScreen({ navigation }) {
             />
           </View>
           <Text style={{ fontSize: fs(11), color: Colors.gray, marginTop: 4, marginLeft: 4 }}>
-             * Telefon numarası, hesabın SMS ile doğrulanması için gereklidir.
+            * Telefon numarası, hesabın SMS ile doğrulanması için gereklidir.
           </Text>
           {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
         </View>
@@ -275,7 +275,7 @@ export default function RegisterScreen({ navigation }) {
 
         <View style={styles.footer}>
           <TouchableOpacity style={styles.footerBtn} activeOpacity={0.85} onPress={onSubmit} disabled={loading}>
-            {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.footerBtnText}>Devam et</Text>}
+            {loading ? <ActivityIndicator color={Colors.black} /> : <Text style={styles.footerBtnText}>Devam et</Text>}
           </TouchableOpacity>
           <View style={styles.authSwitchRow}>
             <Text style={styles.authSwitchText}>Hesabınız var mı? </Text>
@@ -317,7 +317,7 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.background,
     paddingHorizontal: s(16),
     paddingTop: vs(60),
     paddingBottom: vs(20),
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: fs(24),
     fontWeight: "700",
-    color: Colors.black,
+    color: Colors.white,
     marginBottom: vs(16),
   },
   headerRow: {
@@ -337,10 +337,10 @@ const styles = StyleSheet.create({
     height: s(36),
     borderRadius: s(18),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.border,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.secondary,
     marginBottom: vs(12),
   },
   field: {
@@ -348,16 +348,16 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     borderWidth: 1,
-    borderColor: Colors.lightGray,
+    borderColor: Colors.border,
 
     paddingHorizontal: s(12),
     paddingVertical: vs(6),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
   },
   input: {
     paddingVertical: vs(6),
     fontSize: fs(14),
-    color: Colors.black,
+    color: Colors.white,
   },
   inputError: {
     borderColor: Colors.red,
@@ -389,8 +389,8 @@ const styles = StyleSheet.create({
     height: s(18),
     borderRadius: ms(4),
     borderWidth: 1,
-    borderColor: Colors.lightGray,
-    backgroundColor: "#fff",
+    borderColor: Colors.border,
+    backgroundColor: Colors.secondary,
     marginRight: s(8),
   },
   checkBoxActive: {
@@ -399,8 +399,7 @@ const styles = StyleSheet.create({
   },
   checkLabel: {
     fontSize: fs(14),
-    color: Colors.darkGray,
-
+    color: Colors.gray,
   },
   linksRowCentered: {
     marginTop: vs(10),
@@ -413,7 +412,7 @@ const styles = StyleSheet.create({
     marginTop: 'auto',
   },
   footerBtn: {
-    backgroundColor: Colors.black,
+    backgroundColor: Colors.primary,
     height: vs(56),
     alignItems: "center",
     justifyContent: "center",
@@ -425,7 +424,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   footerBtnText: {
-    color: Colors.white,
+    color: Colors.black,
     fontSize: fs(16),
     fontWeight: "600",
   },
@@ -439,7 +438,7 @@ const styles = StyleSheet.create({
     fontSize: fs(14),
   },
   authSwitchLink: {
-    color: Colors.black,
+    color: Colors.primary,
     fontSize: fs(14),
     fontWeight: "700",
   },
@@ -455,5 +454,5 @@ const styles = StyleSheet.create({
     color: Colors.darkGray,
     lineHeight: vs(18),
   },
-  linkInlineUnderline: { color: Colors.black, fontWeight: "700", textDecorationLine: 'underline' },
+  linkInlineUnderline: { color: Colors.primary, fontWeight: "700", textDecorationLine: 'underline' },
 });

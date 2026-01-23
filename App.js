@@ -16,6 +16,7 @@ import CustomSplashScreen from './src/screens/splash/SplashScreen';
 import * as Updates from 'expo-updates';
 import { ToastProvider } from './src/context/ToastContext';
 import PushTokenManager from './src/screens/home/NotificationConfig';
+import { Colors } from './src/constants/Colors';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -90,7 +91,7 @@ export default function App() {
 
                   <SafeAreaProvider>
                     <SafeAreaView edges={["top", "bottom"]} style={styles.container}>
-                      <StatusBar style="light" animated backgroundColor="#000" />
+                      <StatusBar style="light" animated backgroundColor={Colors.background} />
                       <NavigationContainer>
                         <StackNavigation />
                       </NavigationContainer>
@@ -111,6 +112,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
 });

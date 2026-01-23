@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useCallback, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../constants/Colors';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { s, vs, fs, ms } from '../../utils/scale';
 import { useToast } from '../../context/ToastContext';
@@ -40,13 +41,13 @@ const InputItem = React.memo(({ icon, placeholder, value, keyboardType, maxLengt
   return (
     <View style={styles.fieldContainer}>
       <View style={[styles.inputRow, errorText && styles.inputError]}>
-        <Ionicons name={icon} size={20} color="#1a1a1a" style={styles.inputIcon} />
-        <TextInput 
-          style={styles.input} 
-          placeholder={placeholder} 
-          placeholderTextColor="#999"
-          value={value} 
-          onChangeText={handleChange} 
+        <Ionicons name={icon} size={20} color={Colors.gray} style={styles.inputIcon} />
+        <TextInput
+          style={styles.input}
+          placeholder={placeholder}
+          placeholderTextColor={Colors.gray}
+          value={value}
+          onChangeText={handleChange}
           keyboardType={keyboardType}
           maxLength={maxLength}
           autoCapitalize={autoCapitalize}
@@ -82,17 +83,17 @@ const PhoneInputItem = React.memo(({ value, onFieldChange, errorText }) => {
         </View>
 
         <View style={[styles.inputRow, { flex: 1, marginLeft: s(12) }, errorText && styles.inputError]}>
-           <Text style={styles.prefix}>+90</Text>
-           <TextInput 
-              style={styles.input} 
-              placeholder="Telefon Numarası" 
-              placeholderTextColor="#999"
-              value={value} 
-              onChangeText={handleChange} 
-              keyboardType="phone-pad"
-              maxLength={14}
-              blurOnSubmit={false}
-            />
+          <Text style={styles.prefix}>+90</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Telefon Numarası"
+            placeholderTextColor={Colors.gray}
+            value={value}
+            onChangeText={handleChange}
+            keyboardType="phone-pad"
+            maxLength={14}
+            blurOnSubmit={false}
+          />
         </View>
       </View>
       {errorText ? <Text style={styles.errorText}>{errorText}</Text> : null}
@@ -173,9 +174,9 @@ export default function InvoiceUpdateScreen() {
         phone: formattedPhone.trim(),
         address: data.description || '',
         tckn: data.citizen_id || '',
-        vkn: data.tax_number || '', 
+        vkn: data.tax_number || '',
         taxOffice: data.tax_office || '',
-        postalCode: data.postal_code || '', 
+        postalCode: data.postal_code || '',
         city: data.city || '',
         district: data.district || ''
       }
@@ -265,9 +266,9 @@ export default function InvoiceUpdateScreen() {
       'Bu faturayı silmek istediğinizden emin misiniz?',
       [
         { text: 'Vazgeç', style: 'cancel' },
-        { 
-          text: 'Sil', 
-          style: 'destructive', 
+        {
+          text: 'Sil',
+          style: 'destructive',
           onPress: async () => {
             setDeleting(true);
             try {
@@ -297,267 +298,270 @@ export default function InvoiceUpdateScreen() {
     <View style={styles.container}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: s(6) }}>
-          <Ionicons name="arrow-back" size={22} color="#333" />
+          <Ionicons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Fatura Düzenle</Text>
       </View>
 
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 24 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
-        
-        <View style={styles.segmentContainer}>
-          <TouchableOpacity style={[styles.segment, type === 'personal' && styles.segmentActive]} onPress={() => { setType('personal'); setErrors({}); }}>
-            <Text style={[styles.segmentText, type === 'personal' && styles.segmentTextActive]}>Bireysel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.segment, type === 'corporate' && styles.segmentActive]} onPress={() => { setType('corporate'); setErrors({}); }}>
-            <Text style={[styles.segmentText, type === 'corporate' && styles.segmentTextActive]}>Kurumsal</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView contentContainerStyle={{ paddingBottom: 24 }} keyboardShouldPersistTaps="handled" keyboardDismissMode="on-drag">
 
-        {type === 'personal' ? (
-          <>
-            <InputItem 
-              icon="person-outline" 
-              placeholder="Tam isminiz" 
-              value={form.fullName} 
-              fieldKey="fullName"
-              onFieldChange={onFieldChange}
-              errorText={errors.fullName}
-            />
-            <InputItem 
-              icon="mail-outline" 
-              placeholder="E-posta" 
-              value={form.email} 
-              fieldKey="email"
-              onFieldChange={onFieldChange}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              errorText={errors.email}
-            />
-            
-            <PhoneInputItem 
-              value={form.phone}
-              onFieldChange={onFieldChange}
-              errorText={errors.phone}
-            />
+          <View style={styles.segmentContainer}>
+            <TouchableOpacity style={[styles.segment, type === 'personal' && styles.segmentActive]} onPress={() => { setType('personal'); setErrors({}); }}>
+              <Text style={[styles.segmentText, type === 'personal' && styles.segmentTextActive]}>Bireysel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.segment, type === 'corporate' && styles.segmentActive]} onPress={() => { setType('corporate'); setErrors({}); }}>
+              <Text style={[styles.segmentText, type === 'corporate' && styles.segmentTextActive]}>Kurumsal</Text>
+            </TouchableOpacity>
+          </View>
 
-            <InputItem 
-              icon="location-outline" 
-              placeholder="Adres" 
-              value={form.address} 
-              fieldKey="address"
-              onFieldChange={onFieldChange}
-              errorText={errors.address}
-            />
-            <InputItem 
-              icon="id-card-outline" 
-              placeholder="T.C. Kimlik Numarası" 
-              value={form.tckn} 
-              fieldKey="tckn"
-              onFieldChange={onFieldChange}
-              keyboardType="number-pad"
-              maxLength={11}
-              errorText={errors.tckn}
-            />
-            <InputItem 
-              icon="barcode-outline" 
-              placeholder="Posta Kodu" 
-              value={form.postalCode} 
-              fieldKey="postalCode"
-              onFieldChange={onFieldChange}
-              keyboardType="number-pad"
-              errorText={errors.postalCode}
-            />
-          </>
-        ) : (
-          <>
-            <InputItem 
-              icon="business-outline" 
-              placeholder="Şirket adı" 
-              value={form.companyName} 
-              fieldKey="companyName"
-              onFieldChange={onFieldChange}
-              errorText={errors.companyName}
-            />
-            <InputItem 
-              icon="mail-outline" 
-              placeholder="E-posta" 
-              value={form.email} 
-              fieldKey="email"
-              onFieldChange={onFieldChange}
-              keyboardType="email-address"
-              autoCapitalize="none"
-              errorText={errors.email}
-            />
-            
-            <PhoneInputItem 
-              value={form.phone}
-              onFieldChange={onFieldChange}
-              errorText={errors.phone}
-            />
+          {type === 'personal' ? (
+            <>
+              <InputItem
+                icon="person-outline"
+                placeholder="Tam isminiz"
+                value={form.fullName}
+                fieldKey="fullName"
+                onFieldChange={onFieldChange}
+                errorText={errors.fullName}
+              />
+              <InputItem
+                icon="mail-outline"
+                placeholder="E-posta"
+                value={form.email}
+                fieldKey="email"
+                onFieldChange={onFieldChange}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                errorText={errors.email}
+              />
 
-            <InputItem 
-              icon="location-outline" 
-              placeholder="Adres" 
-              value={form.address} 
-              fieldKey="address"
-              onFieldChange={onFieldChange}
-              errorText={errors.address}
-            />
-            <InputItem 
-              icon="receipt-outline" 
-              placeholder="Vergi Numarası" 
-              value={form.vkn} 
-              fieldKey="vkn"
-              onFieldChange={onFieldChange}
-              keyboardType="number-pad"
-              maxLength={10}
-              errorText={errors.vkn}
-            />
-            <InputItem 
-              icon="library-outline" 
-              placeholder="Vergi Dairesi" 
-              value={form.taxOffice} 
-              fieldKey="taxOffice"
-              onFieldChange={onFieldChange}
-              errorText={errors.taxOffice}
-            />
-            <InputItem 
-              icon="barcode-outline" 
-              placeholder="Posta Kodu" 
-              value={form.postalCode} 
-              fieldKey="postalCode"
-              onFieldChange={onFieldChange}
-              keyboardType="number-pad"
-              errorText={errors.postalCode}
-            />
-          </>
-        )}
+              <PhoneInputItem
+                value={form.phone}
+                onFieldChange={onFieldChange}
+                errorText={errors.phone}
+              />
 
-        {/* City Select */}
-        <View style={styles.fieldContainer}>
-          <TouchableOpacity 
-            style={[styles.selectRow, errors.city && styles.inputError]} 
-            onPress={() => navigation.navigate('CitySelect', { 
-              onSelect: (it) => { 
-                onFieldChange('city', it.name); 
-                setCityId(String(it.id)); 
-                onFieldChange('district', ''); 
-              } 
-            })}
-          >
-            <Text style={[styles.selectLabel, !form.city && { color: '#999' }]}>
-              {form.city || 'İl seç'}
-            </Text>
-            <Ionicons name="chevron-down" size={20} color="#1a1a1a" />
-          </TouchableOpacity>
-          {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
-        </View>
+              <InputItem
+                icon="location-outline"
+                placeholder="Adres"
+                value={form.address}
+                fieldKey="address"
+                onFieldChange={onFieldChange}
+                errorText={errors.address}
+              />
+              <InputItem
+                icon="id-card-outline"
+                placeholder="T.C. Kimlik Numarası"
+                value={form.tckn}
+                fieldKey="tckn"
+                onFieldChange={onFieldChange}
+                keyboardType="number-pad"
+                maxLength={11}
+                errorText={errors.tckn}
+              />
+              <InputItem
+                icon="barcode-outline"
+                placeholder="Posta Kodu"
+                value={form.postalCode}
+                fieldKey="postalCode"
+                onFieldChange={onFieldChange}
+                keyboardType="number-pad"
+                errorText={errors.postalCode}
+              />
+            </>
+          ) : (
+            <>
+              <InputItem
+                icon="business-outline"
+                placeholder="Şirket adı"
+                value={form.companyName}
+                fieldKey="companyName"
+                onFieldChange={onFieldChange}
+                errorText={errors.companyName}
+              />
+              <InputItem
+                icon="mail-outline"
+                placeholder="E-posta"
+                value={form.email}
+                fieldKey="email"
+                onFieldChange={onFieldChange}
+                keyboardType="email-address"
+                autoCapitalize="none"
+                errorText={errors.email}
+              />
 
-        {/* District Select */}
-        <View style={styles.fieldContainer}>
-          <TouchableOpacity 
-            style={[styles.selectRow, !form.city && { opacity: 0.5 }, errors.district && styles.inputError]} 
-            disabled={!form.city}
-            onPress={() => navigation.navigate('DistrictSelect', { 
-              cityId: cityId, 
-              onSelect: (it) => onFieldChange('district', it.ilce_adi) 
-            })}
-          >
-            <Text style={[styles.selectLabel, !form.district && { color: '#999' }]}>
-              {form.district || 'İlçe seç'}
-            </Text>
-            <Ionicons name="chevron-down" size={20} color="#1a1a1a" />
-          </TouchableOpacity>
-          {errors.district && <Text style={styles.errorText}>{errors.district}</Text>}
-        </View>
+              <PhoneInputItem
+                value={form.phone}
+                onFieldChange={onFieldChange}
+                errorText={errors.phone}
+              />
 
-        <TouchableOpacity 
-            style={styles.defaultRow} 
+              <InputItem
+                icon="location-outline"
+                placeholder="Adres"
+                value={form.address}
+                fieldKey="address"
+                onFieldChange={onFieldChange}
+                errorText={errors.address}
+              />
+              <InputItem
+                icon="receipt-outline"
+                placeholder="Vergi Numarası"
+                value={form.vkn}
+                fieldKey="vkn"
+                onFieldChange={onFieldChange}
+                keyboardType="number-pad"
+                maxLength={10}
+                errorText={errors.vkn}
+              />
+              <InputItem
+                icon="library-outline"
+                placeholder="Vergi Dairesi"
+                value={form.taxOffice}
+                fieldKey="taxOffice"
+                onFieldChange={onFieldChange}
+                errorText={errors.taxOffice}
+              />
+              <InputItem
+                icon="barcode-outline"
+                placeholder="Posta Kodu"
+                value={form.postalCode}
+                fieldKey="postalCode"
+                onFieldChange={onFieldChange}
+                keyboardType="number-pad"
+                errorText={errors.postalCode}
+              />
+            </>
+          )}
+
+          {/* City Select */}
+          <View style={styles.fieldContainer}>
+            <TouchableOpacity
+              style={[styles.selectRow, errors.city && styles.inputError]}
+              onPress={() => navigation.navigate('CitySelect', {
+                onSelect: (it) => {
+                  onFieldChange('city', it.name);
+                  setCityId(String(it.id));
+                  onFieldChange('district', '');
+                }
+              })}
+            >
+              <Text style={[styles.selectLabel, !form.city && { color: Colors.gray }]}>
+                {form.city || 'İl seç'}
+              </Text>
+              <Ionicons name="chevron-down" size={20} color={Colors.white} />
+            </TouchableOpacity>
+            {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
+          </View>
+
+          {/* District Select */}
+          <View style={styles.fieldContainer}>
+            <TouchableOpacity
+              style={[styles.selectRow, !form.city && { opacity: 0.5 }, errors.district && styles.inputError]}
+              disabled={!form.city}
+              onPress={() => navigation.navigate('DistrictSelect', {
+                cityId: cityId,
+                onSelect: (it) => onFieldChange('district', it.ilce_adi)
+              })}
+            >
+              <Text style={[styles.selectLabel, !form.district && { color: Colors.gray }]}>
+                {form.district || 'İlçe seç'}
+              </Text>
+              <Ionicons name="chevron-down" size={20} color={Colors.white} />
+            </TouchableOpacity>
+            {errors.district && <Text style={styles.errorText}>{errors.district}</Text>}
+          </View>
+
+          <TouchableOpacity
+            style={styles.defaultRow}
             activeOpacity={0.8}
             onPress={() => setIsDefault(!isDefault)}
-        >
+          >
             <View style={{ flex: 1 }}>
-                <Text style={styles.defaultLabel}>Varsayılan olarak işaretle</Text>
-                <Text style={styles.defaultSub}>Bu fatura bilgilerini varsayılan olarak kullan</Text>
+              <Text style={styles.defaultLabel}>Varsayılan olarak işaretle</Text>
+              <Text style={styles.defaultSub}>Bu fatura bilgilerini varsayılan olarak kullan</Text>
             </View>
-            <Ionicons 
-                name={isDefault ? "checkbox" : "square-outline"} 
-                size={24} 
-                color={isDefault ? "#1a1a1a" : "#999"} 
+            <Ionicons
+              name={isDefault ? "checkbox" : "square-outline"}
+              size={24}
+              color={isDefault ? Colors.primary : Colors.gray}
             />
-        </TouchableOpacity>
-
-        <View style={styles.footer}>
-          <TouchableOpacity 
-            style={[styles.saveButton, (loading || deleting) && { opacity: 0.7 }]} 
-            onPress={onSave}
-            disabled={loading || deleting}
-          >
-            {loading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <Text style={styles.saveText}>Güncelle</Text>
-            )}
           </TouchableOpacity>
 
-          <TouchableOpacity 
-            style={[styles.deleteButton, (loading || deleting) && { opacity: 0.7 }]} 
-            onPress={onDelete}
-            disabled={loading || deleting}
-          >
-            {deleting ? (
-               <ActivityIndicator color="#ff4d4f" />
-            ) : (
-               <Text style={styles.deleteText}>Faturayı Sil</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+          <View style={styles.footer}>
+            <TouchableOpacity
+              style={[styles.saveButton, (loading || deleting) && { opacity: 0.7 }]}
+              onPress={onSave}
+              disabled={loading || deleting}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.saveText}>Güncelle</Text>
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.deleteButton, (loading || deleting) && { opacity: 0.7 }]}
+              onPress={onDelete}
+              disabled={loading || deleting}
+            >
+              {deleting ? (
+                <ActivityIndicator color="#ff4d4f" />
+              ) : (
+                <Text style={styles.deleteText}>Faturayı Sil</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff' },
-  headerRow: { flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8),
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        marginBottom:s(10)
-
-   },
-  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: '#333' },
-  backButton: { padding: s(4) },  
-  segmentContainer: { 
-    flexDirection: 'row', 
-    margin: s(16), 
-    backgroundColor: '#f5f5f5', 
-    borderRadius: ms(12), 
+  container: { flex: 1, backgroundColor: Colors.background },
+  headerRow: {
+    flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8),
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    marginBottom: s(10),
+    backgroundColor: Colors.secondary
+  },
+  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: Colors.white },
+  backButton: { padding: s(4) },
+  segmentContainer: {
+    flexDirection: 'row',
+    margin: s(16),
+    backgroundColor: Colors.secondary,
+    borderRadius: ms(12),
     padding: 4,
-    height: vs(48)
+    height: vs(48),
+    borderWidth: 1,
+    borderColor: Colors.border
   },
-  segment: { 
-    flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center', 
-    borderRadius: ms(10) 
+  segment: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: ms(10)
   },
-  segmentActive: { 
-    backgroundColor: '#fff', 
-    shadowColor: '#000', 
-    shadowOpacity: 0.1, 
-    shadowRadius: 3, 
-    elevation: 2 
+  segmentActive: {
+    backgroundColor: Colors.primary,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2
   },
-  segmentText: { color: '#999', fontWeight: '500', fontSize: fs(15) },
-  segmentTextActive: { color: '#1a1a1a', fontWeight: '600' },
+  segmentText: { color: Colors.gray, fontWeight: '500', fontSize: fs(15) },
+  segmentTextActive: { color: Colors.black, fontWeight: '600' },
 
   fieldContainer: {
     marginHorizontal: s(16),
     marginBottom: vs(16),
   },
-  
+
   phoneRowContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -567,28 +571,28 @@ const styles = StyleSheet.create({
     height: vs(56),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: Colors.border,
     borderRadius: ms(12),
   },
 
-  inputRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    backgroundColor: '#fff', 
-    borderWidth: 1, 
-    borderColor: '#eee', 
-    borderRadius: ms(12), 
+  inputRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.secondary,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: ms(12),
     height: vs(56),
     paddingHorizontal: s(12)
   },
   inputError: {
-    borderColor: '#ff4d4f'
+    borderColor: Colors.red
   },
   inputIcon: { marginRight: s(12) },
-  prefix: { marginRight: s(8), fontSize: fs(16), color: '#1a1a1a', fontWeight: '500' },
-  input: { flex: 1, color: '#1a1a1a', fontSize: fs(16), height: '100%' },
+  prefix: { marginRight: s(8), fontSize: fs(16), color: Colors.white, fontWeight: '500' },
+  input: { flex: 1, color: Colors.white, fontSize: fs(16), height: '100%' },
   errorText: {
     color: '#ff4d4f',
     fontSize: fs(12),
@@ -596,18 +600,18 @@ const styles = StyleSheet.create({
     marginLeft: s(4)
   },
 
-  selectRow: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
-    backgroundColor: '#fff', 
-    borderWidth: 1, 
-    borderColor: '#eee', 
-    borderRadius: ms(12), 
-    height: vs(56), 
-    paddingHorizontal: s(16) 
+  selectRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: Colors.secondary,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    borderRadius: ms(12),
+    height: vs(56),
+    paddingHorizontal: s(16)
   },
-  selectLabel: { color: '#1a1a1a', fontSize: fs(16) },
+  selectLabel: { color: Colors.white, fontSize: fs(16) },
 
   defaultRow: {
     flexDirection: 'row',
@@ -616,15 +620,15 @@ const styles = StyleSheet.create({
     marginHorizontal: s(16),
     marginTop: vs(8)
   },
-  defaultLabel: { color: '#1a1a1a', fontSize: fs(16), fontWeight: '500' },
-  defaultSub: { color: '#666', fontSize: fs(13), marginTop: 2 },
-  
+  defaultLabel: { color: Colors.white, fontSize: fs(16), fontWeight: '500' },
+  defaultSub: { color: Colors.gray, fontSize: fs(13), marginTop: 2 },
+
   footer: { paddingHorizontal: s(16), paddingVertical: vs(24) },
-  saveButton: { 
-    backgroundColor: '#1a1a1a', 
-    height: vs(56), 
-    borderRadius: ms(12), 
-    alignItems: 'center', 
+  saveButton: {
+    backgroundColor: Colors.primary,
+    height: vs(56),
+    borderRadius: ms(12),
+    alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.2,
@@ -632,16 +636,16 @@ const styles = StyleSheet.create({
     elevation: 4,
     marginBottom: vs(12)
   },
-  saveText: { color: '#fff', fontSize: fs(16), fontWeight: '600' },
+  saveText: { color: Colors.black, fontSize: fs(16), fontWeight: '600' },
 
   deleteButton: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     height: vs(56),
     borderRadius: ms(12),
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: '#ffebee'
+    borderColor: Colors.red
   },
-  deleteText: { color: '#ff4d4f', fontSize: fs(16), fontWeight: '600' }
+  deleteText: { color: Colors.red, fontSize: fs(16), fontWeight: '600' }
 });

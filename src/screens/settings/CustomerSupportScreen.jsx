@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { s, vs, fs, ms } from '../../utils/scale';
 import { useConfig } from '../../context/ConfigContext';
 import { useToast } from '../../context/ToastContext';
@@ -13,8 +12,8 @@ export default function CustomerSupport() {
   const { config } = useConfig();
   const { showToast } = useToast();
 
-  const phone = config?.customerServicePhone || '+90 850 000 0000';
-  const whatsapp = config?.customerServiceWhatsapp || '+90 530 000 0000';
+  const phone = config?.customerServicePhone || '+90 850 777 0174';
+  const whatsapp = config?.customerServiceWhatsapp || '+90 850 777 0174';
 
   const normalizeDigits = (str) => (str || '').replace(/[^0-9]/g, '');
 
@@ -28,7 +27,16 @@ export default function CustomerSupport() {
 
   const onPressWhatsApp = async () => {
     try {
-      const p = normalizeDigits(whatsapp);
+      let p = normalizeDigits(whatsapp);
+      // Eğer numara 90 ile başlamıyorsa ve 0 ile başlıyorsa 0'ı atıp 90 ekle
+      // Eğer hiç ülke kodu yoksa (örn: 850...) başına 90 ekle
+      if (p.startsWith('0')) {
+        p = '9' + p; // 0850... -> 90850...
+      } else if (!p.startsWith('90') && p.length <= 10) {
+        // Basit kontrol: 10 hane veya daha kısaysa muhtemelen ülke kodu yoktur
+        p = '90' + p;
+      }
+
       const url = `whatsapp://send?phone=${p}&text=${encodeURIComponent('Merhaba, destek almak istiyorum.')}`;
       await Linking.openURL(url);
     } catch (e) {
@@ -37,22 +45,22 @@ export default function CustomerSupport() {
   };
 
   const SupportCard = ({ title, subtitle, icon, color, onPress }) => (
-    <TouchableOpacity 
-      style={styles.card} 
+    <TouchableOpacity
+      style={styles.card}
       onPress={onPress}
       activeOpacity={0.9}
     >
-      <View style={[styles.iconContainer, { backgroundColor: color + '15' }]}> 
+      <View style={[styles.iconContainer, { backgroundColor: color + '15' }]}>
         <Ionicons name={icon} size={28} color={color} />
       </View>
-      
+
       <View style={styles.cardContent}>
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.cardSubtitle}>{subtitle}</Text>
       </View>
 
       <View style={styles.arrowContainer}>
-         <Ionicons name="chevron-forward" size={20} color="#ccc" />
+        <Ionicons name="chevron-forward" size={20} color={Colors.gray} />
       </View>
     </TouchableOpacity>
   );
@@ -61,14 +69,14 @@ export default function CustomerSupport() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={24} color="#1a1a1a" />
+          <Ionicons name="arrow-back" size={24} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Müşteri Hizmetleri</Text>
         <View style={styles.backBtnPlaceholder} />
       </View>
 
       <ScrollView style={styles.content} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        
+
         <View style={styles.hero}>
           <View style={styles.heroImageContainer}>
             <Ionicons name="headset" size={64} color={Colors.primary} />
@@ -81,7 +89,7 @@ export default function CustomerSupport() {
 
         <Text style={styles.sectionTitle}>İletişim Kanalları</Text>
 
-        <SupportCard 
+        <SupportCard
           title="Çağrı Merkezi"
           subtitle={phone}
           icon="call"
@@ -89,7 +97,7 @@ export default function CustomerSupport() {
           onPress={onPressCall}
         />
 
-        <SupportCard 
+        <SupportCard
           title="WhatsApp Destek Hattı"
           subtitle={whatsapp}
           icon="logo-whatsapp"
@@ -104,38 +112,38 @@ export default function CustomerSupport() {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: '#fff' 
+  container: {
+    flex: 1,
+    backgroundColor: Colors.background
   },
-  header: { 
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    justifyContent: 'space-between', 
-    paddingHorizontal: s(16), 
-    paddingVertical: vs(12), 
-    backgroundColor: '#fff',
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: s(16),
+    paddingVertical: vs(12),
+    backgroundColor: Colors.secondary,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: Colors.border,
   },
-  backBtn: { 
-    width: s(40), 
-    height: s(40), 
-    borderRadius: s(20), 
-    backgroundColor: '#f5f5f5', 
-    alignItems: 'center', 
-    justifyContent: 'center' 
+  backBtn: {
+    width: s(40),
+    height: s(40),
+    borderRadius: s(20),
+    backgroundColor: Colors.lightGray,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   backBtnPlaceholder: {
     width: s(40)
   },
-  headerTitle: { 
-    fontSize: fs(17), 
-    fontWeight: '700', 
-    color: '#1a1a1a' 
+  headerTitle: {
+    fontSize: fs(17),
+    fontWeight: '700',
+    color: Colors.white
   },
-  content: { 
-    flex: 1 
+  content: {
+    flex: 1
   },
   scrollContent: {
     padding: s(20),
@@ -150,26 +158,23 @@ const styles = StyleSheet.create({
     width: s(100),
     height: s(100),
     borderRadius: s(50),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: vs(16),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 10,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: Colors.border,
   },
   heroTitle: {
     fontSize: fs(20),
     fontWeight: '800',
-    color: '#1a1a1a',
+    color: Colors.white,
     marginBottom: vs(8),
     textAlign: 'center'
   },
   heroDescription: {
     fontSize: fs(14),
-    color: '#666',
+    color: Colors.gray,
     textAlign: 'center',
     lineHeight: fs(20),
     maxWidth: '90%'
@@ -177,7 +182,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: fs(14),
     fontWeight: '600',
-    color: '#8f8f8f',
+    color: Colors.gray,
     marginBottom: vs(12),
     marginLeft: s(4),
     textTransform: 'uppercase',
@@ -186,17 +191,12 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     borderRadius: ms(16),
     padding: s(16),
     marginBottom: vs(16),
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.03,
-    shadowRadius: 8,
-    elevation: 2,
     borderWidth: 1,
-    borderColor: '#f0f0f0'
+    borderColor: Colors.border
   },
   iconContainer: {
     width: s(52),
@@ -212,12 +212,12 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: fs(16),
     fontWeight: '700',
-    color: '#1a1a1a',
+    color: Colors.white,
     marginBottom: vs(4)
   },
   cardSubtitle: {
     fontSize: fs(14),
-    color: '#666',
+    color: Colors.gray,
     fontWeight: '500'
   },
   arrowContainer: {
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontSize: fs(13),
-    color: '#8f8f8f',
+    color: Colors.gray,
     fontWeight: '500'
   }
 });

@@ -1,6 +1,7 @@
 import React, { useReducer, useState, useCallback } from 'react';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Switch, ScrollView, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Colors } from '../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
 import { s, vs, fs, ms } from '../../utils/scale';
 import { useToast } from '../../context/ToastContext';
@@ -38,11 +39,11 @@ const InputItem = React.memo(({ icon, placeholder, value, keyboardType, maxLengt
     return (
         <View style={styles.fieldContainer}>
             <View style={[styles.inputRow, errorText && styles.inputError]}>
-                <Ionicons name={icon} size={20} color="#1a1a1a" style={styles.inputIcon} />
+                <Ionicons name={icon} size={20} color={Colors.gray} style={styles.inputIcon} />
                 <TextInput
                     style={styles.input}
                     placeholder={placeholder}
-                    placeholderTextColor="#999"
+                    placeholderTextColor={Colors.gray}
                     value={value}
                     onChangeText={handleChange}
                     keyboardType={keyboardType}
@@ -85,7 +86,7 @@ const PhoneInputItem = React.memo(({ value, onFieldChange, errorText }) => {
                     <TextInput
                         style={styles.input}
                         placeholder="Telefon Numarası"
-                        placeholderTextColor="#999"
+                        placeholderTextColor={Colors.gray}
                         value={value}
                         onChangeText={handleChange}
                         keyboardType="phone-pad"
@@ -192,7 +193,7 @@ export default function InvoiceAddScreen() {
         <View style={styles.container}>
             <View style={styles.headerRow}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: s(6) }}>
-                    <Ionicons name="arrow-back" size={22} color="#333" />
+                    <Ionicons name="arrow-back" size={22} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Fatura Bilgisi Ekle</Text>
             </View>
@@ -341,10 +342,10 @@ export default function InvoiceAddScreen() {
                                 }
                             })}
                         >
-                            <Text style={[styles.selectLabel, !form.city && { color: '#999' }]}>
+                            <Text style={[styles.selectLabel, !form.city && { color: Colors.gray }]}>
                                 {form.city || 'İl seç'}
                             </Text>
-                            <Ionicons name="chevron-down" size={20} color="#1a1a1a" />
+                            <Ionicons name="chevron-down" size={20} color={Colors.white} />
                         </TouchableOpacity>
                         {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
                     </View>
@@ -360,16 +361,16 @@ export default function InvoiceAddScreen() {
 
                             })}
                         >
-                            <Text style={[styles.selectLabel, !form.district && { color: '#999' }]}>
+                            <Text style={[styles.selectLabel, !form.district && { color: Colors.gray }]}>
                                 {form.district || 'İlçe seç'}
                             </Text>
-                            <Ionicons name="chevron-down" size={20} color="#1a1a1a" />
+                            <Ionicons name="chevron-down" size={20} color={Colors.white} />
                         </TouchableOpacity>
                         {errors.district && <Text style={styles.errorText}>{errors.district}</Text>}
                     </View>
 
-                    <TouchableOpacity 
-                        style={styles.defaultRow} 
+                    <TouchableOpacity
+                        style={styles.defaultRow}
                         activeOpacity={0.8}
                         onPress={() => setIsDefault(!isDefault)}
                     >
@@ -377,10 +378,10 @@ export default function InvoiceAddScreen() {
                             <Text style={styles.defaultLabel}>Varsayılan olarak işaretle</Text>
                             <Text style={styles.defaultSub}>Bu fatura bilgilerini varsayılan olarak kullan</Text>
                         </View>
-                        <Ionicons 
-                            name={isDefault ? "checkbox" : "square-outline"} 
-                            size={24} 
-                            color={isDefault ? "#1a1a1a" : "#999"} 
+                        <Ionicons
+                            name={isDefault ? "checkbox" : "square-outline"}
+                            size={24}
+                            color={isDefault ? Colors.primary : Colors.gray}
                         />
                     </TouchableOpacity>
 
@@ -404,23 +405,25 @@ export default function InvoiceAddScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#fff' },
+    container: { flex: 1, backgroundColor: Colors.background },
     headerRow: {
         flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8),
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        marginBottom: s(10)
-
+        borderBottomColor: Colors.border,
+        marginBottom: s(10),
+        backgroundColor: Colors.secondary
     },
-    headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: '#333' },
+    headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: Colors.white },
     backButton: { padding: s(4) },
     segmentContainer: {
         flexDirection: 'row',
         margin: s(16),
-        backgroundColor: '#f5f5f5',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(12),
         padding: 4,
-        height: vs(48)
+        height: vs(48),
+        borderWidth: 1,
+        borderColor: Colors.border
     },
     segment: {
         flex: 1,
@@ -429,14 +432,14 @@ const styles = StyleSheet.create({
         borderRadius: ms(10)
     },
     segmentActive: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.primary,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 2
     },
-    segmentText: { color: '#999', fontWeight: '500', fontSize: fs(15) },
-    segmentTextActive: { color: '#1a1a1a', fontWeight: '600' },
+    segmentText: { color: Colors.gray, fontWeight: '500', fontSize: fs(15) },
+    segmentTextActive: { color: Colors.black, fontWeight: '600' },
 
     fieldContainer: {
         marginHorizontal: s(16),
@@ -452,28 +455,28 @@ const styles = StyleSheet.create({
         height: vs(56),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: Colors.border,
         borderRadius: ms(12),
     },
 
     inputRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: Colors.border,
         borderRadius: ms(12),
         height: vs(56),
         paddingHorizontal: s(12)
     },
     inputError: {
-        borderColor: '#ff4d4f'
+        borderColor: Colors.red
     },
     inputIcon: { marginRight: s(12) },
-    prefix: { marginRight: s(8), fontSize: fs(16), color: '#1a1a1a', fontWeight: '500' },
-    input: { flex: 1, color: '#1a1a1a', fontSize: fs(16), height: '100%' },
+    prefix: { marginRight: s(8), fontSize: fs(16), color: Colors.white, fontWeight: '500' },
+    input: { flex: 1, color: Colors.white, fontSize: fs(16), height: '100%' },
     errorText: {
         color: '#ff4d4f',
         fontSize: fs(12),
@@ -485,14 +488,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: Colors.border,
         borderRadius: ms(12),
         height: vs(56),
         paddingHorizontal: s(16)
     },
-    selectLabel: { color: '#1a1a1a', fontSize: fs(16) },
+    selectLabel: { color: Colors.white, fontSize: fs(16) },
 
     defaultRow: {
         flexDirection: 'row',
@@ -501,12 +504,12 @@ const styles = StyleSheet.create({
         marginHorizontal: s(16),
         marginTop: vs(8)
     },
-    defaultLabel: { color: '#1a1a1a', fontSize: fs(16), fontWeight: '500' },
-    defaultSub: { color: '#666', fontSize: fs(13), marginTop: 2 },
+    defaultLabel: { color: Colors.white, fontSize: fs(16), fontWeight: '500' },
+    defaultSub: { color: Colors.gray, fontSize: fs(13), marginTop: 2 },
 
     footer: { paddingHorizontal: s(16), paddingVertical: vs(24) },
     saveButton: {
-        backgroundColor: '#1a1a1a',
+        backgroundColor: Colors.primary,
         height: vs(56),
         borderRadius: ms(12),
         alignItems: 'center',
@@ -516,5 +519,5 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 4
     },
-    saveText: { color: '#fff', fontSize: fs(16), fontWeight: '600' },
+    saveText: { color: Colors.black, fontSize: fs(16), fontWeight: '600' },
 });

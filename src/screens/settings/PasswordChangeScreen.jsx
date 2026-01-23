@@ -97,7 +97,7 @@ export default function PasswordChangeScreen() {
             <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
                 <View style={styles.headerRow}>
                     <TouchableOpacity style={styles.navBack} onPress={() => navigation.goBack()}>
-                        <Ionicons name="arrow-back" size={20} color={Colors.black} />
+                        <Ionicons name="arrow-back" size={20} color={Colors.white} />
                     </TouchableOpacity>
                 </View>
 
@@ -203,7 +203,7 @@ export default function PasswordChangeScreen() {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        backgroundColor: "#fff",
+        backgroundColor: Colors.background,
         paddingHorizontal: s(16),
         paddingTop: vs(24),
         paddingBottom: vs(40),
@@ -218,20 +218,20 @@ const styles = StyleSheet.create({
         height: s(36),
         borderRadius: s(18),
         borderWidth: 1,
-        borderColor: Colors.lightGray,
+        borderColor: Colors.border,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#fff",
+        backgroundColor: Colors.secondary,
     },
     title: {
         fontSize: fs(24),
         fontWeight: "700",
-        color: Colors.black,
+        color: Colors.white,
         marginBottom: vs(8),
     },
     subtitle: {
         fontSize: fs(14),
-        color: Colors.darkGray,
+        color: Colors.gray,
         marginBottom: vs(24),
         lineHeight: vs(20),
     },
@@ -241,16 +241,16 @@ const styles = StyleSheet.create({
     label: {
         fontSize: fs(14),
         fontWeight: "600",
-        color: Colors.black,
+        color: Colors.white,
         marginBottom: vs(6),
     },
     inputWrapper: {
         borderWidth: 1,
-        borderColor: Colors.lightGray,
+        borderColor: Colors.border,
         borderRadius: ms(8),
         paddingHorizontal: s(12),
         paddingVertical: vs(4),
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingVertical: vs(10),
         fontSize: fs(14),
-        color: Colors.black,
+        color: Colors.white,
     },
     inputError: {
         borderColor: Colors.red,
@@ -273,14 +273,14 @@ const styles = StyleSheet.create({
     },
     submitBtn: {
         height: vs(52),
-        backgroundColor: Colors.secondary,
+        backgroundColor: Colors.primary,
         borderRadius: ms(8),
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: vs(16),
     },
     submitBtnText: {
-        color: '#fff',
+        color: Colors.black,
         fontSize: fs(16),
         fontWeight: '700',
     },

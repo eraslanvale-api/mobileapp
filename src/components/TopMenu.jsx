@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../context/AuthContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { listNotifications } from '../api/endpoints';
+import { Colors } from '../constants/Colors';
 
 const { width } = Dimensions.get('window');
 
@@ -24,7 +25,7 @@ export default function TopMenu() {
   const { services, collapsed, toggleCollapsed, selected, selectService } = useServices();
   const { config } = useConfig();
   const navigation = useNavigation();
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const [unread, setUnread] = React.useState(0);
   const normalizeBool = (v) => {
     if (typeof v === 'boolean') return v;
@@ -32,7 +33,9 @@ export default function TopMenu() {
     if (typeof v === 'string') return v.toLowerCase() === 'true';
     return undefined;
   };
-  const menuEnabled = normalizeBool(config?.topMenuEnabled) ?? true;
+
+  const isDriver = user?.role === 'driver' || user?.role === 'Şoför' || user?.role === 'sofor';
+  const menuEnabled = (normalizeBool(config?.topMenuEnabled) ?? true) && !isDriver;
 
   // Shared values for animations
   const heightSv = useSharedValue(collapsed ? 0 : 120);
@@ -117,7 +120,7 @@ export default function TopMenu() {
             })}
             style={styles.menuToggleBtn}
           >
-            <Ionicons name={collapsed ? 'menu' : 'close'} size={22} color="#1a1a1a" />
+            <Ionicons name={collapsed ? 'menu' : 'close'} size={22} color={Colors.white} />
           </TouchableOpacity>
         ) : (
           <View style={styles.menuToggleBtn} />
@@ -138,7 +141,7 @@ export default function TopMenu() {
             navigation.navigate('Notifications');
           }}
         >
-          <Ionicons name="notifications-outline" size={22} color="#1a1a1a" />
+          <Ionicons name="notifications-outline" size={22} color={Colors.white} />
           {isAuthenticated && unread > 0 && (
             <View style={styles.badge}><Text style={styles.badgeText}>{Math.min(unread, 9)}</Text></View>
           )}
@@ -209,12 +212,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: s(20),
     paddingVertical: vs(12),
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    backgroundColor: Colors.secondary,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0,0,0,0.05)',
+    borderBottomColor: Colors.border,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.1,
     shadowRadius: ms(8),
     elevation: 3,
   },
@@ -222,7 +225,7 @@ const styles = StyleSheet.create({
     width: s(40),
     height: s(40),
     borderRadius: s(20),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.lightGray,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -233,17 +236,17 @@ const styles = StyleSheet.create({
   brandText: {
     fontSize: fs(24),
     fontWeight: '800',
-    color: '#1a1a1a',
+    color: Colors.white,
     letterSpacing: -0.5,
   },
   brandHighlight: {
-    color: '#f4a119',
+    color: Colors.primary,
   },
   notificationButton: {
     width: s(40),
     height: s(40),
     borderRadius: s(20),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.lightGray,
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -265,7 +268,7 @@ const styles = StyleSheet.create({
   },
   badgeText: { color: '#fff', fontSize: fs(10), fontWeight: '800' },
   menuContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.secondary,
     overflow: 'hidden',
     borderBottomLeftRadius: ms(24),
     borderBottomRightRadius: ms(24),
@@ -286,29 +289,29 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: Colors.background,
     borderRadius: ms(16),
     marginRight: s(12),
     paddingHorizontal: s(8),
     borderWidth: 1,
-    borderColor: '#f0f0f0',
+    borderColor: Colors.border,
   },
   serviceItemActive: {
-    backgroundColor: '#fff9f0',
-    borderColor: '#f4a119',
+    backgroundColor: Colors.secondary,
+    borderColor: Colors.primary,
     transform: [{ scale: 1.02 }], // Subtle scale up
   },
   iconContainer: {
     width: s(40),
     height: s(40),
     borderRadius: ms(12),
-    backgroundColor: '#e9ecef',
+    backgroundColor: Colors.lightGray,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: s(8),
   },
   iconContainerActive: {
-    backgroundColor: '#f4a119',
+    backgroundColor: Colors.primary,
   },
   serviceImage: {
     width: s(28),
@@ -318,12 +321,12 @@ const styles = StyleSheet.create({
   serviceLabel: {
     fontSize: fs(14),
     fontWeight: '600',
-    color: '#6c757d',
+    color: Colors.gray,
     flex: 1,
     flexWrap: 'wrap',
   },
   serviceLabelActive: {
-    color: '#1a1a1a',
+    color: Colors.white,
     fontWeight: '700',
   },
   activeDot: {
@@ -333,6 +336,6 @@ const styles = StyleSheet.create({
     width: s(6),
     height: s(6),
     borderRadius: s(3),
-    backgroundColor: '#f4a119',
+    backgroundColor: Colors.primary,
   },
 });

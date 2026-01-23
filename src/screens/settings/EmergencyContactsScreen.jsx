@@ -11,11 +11,11 @@ export default function EmergencyContactsScreen() {
     const navigation = useNavigation();
     const isFocused = useIsFocused();
     const { showToast } = useToast();
-    
+
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-    
+
     const loadContacts = async () => {
         setLoading(true);
         try {
@@ -75,9 +75,9 @@ export default function EmergencyContactsScreen() {
         let clean = raw;
         if (raw.startsWith('90')) clean = raw.slice(2);
         else if (raw.startsWith('0')) clean = raw.slice(1);
-        
+
         clean = clean.slice(0, 10);
-        
+
         if (clean.length < 3) return phone;
 
         return `+90 ${clean.slice(0, 3)} ${clean.slice(3, 6)} ${clean.slice(6, 8)} ${clean.slice(8, 10)}`;
@@ -89,7 +89,7 @@ export default function EmergencyContactsScreen() {
                 <View style={styles.cardHeader}>
                     <Text style={styles.cardTitle}>{item.name}</Text>
                 </View>
-                    <Text style={styles.relationshipText}>{item.relationship}</Text>
+                <Text style={styles.relationshipText}>{item.relationship}</Text>
                 <Text style={styles.cardPhone}>{formatDisplayPhone(item.phone_number)}</Text>
             </View>
             <View style={styles.cardActions}>
@@ -108,7 +108,7 @@ export default function EmergencyContactsScreen() {
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-                    <Ionicons name="arrow-back" size={24} color="#333" />
+                    <Ionicons name="arrow-back" size={24} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>Acil Durum Kişileri</Text>
             </View>
@@ -121,7 +121,7 @@ export default function EmergencyContactsScreen() {
             ) : contacts.length === 0 ? (
                 <View style={styles.emptyContainer}>
                     <View style={styles.emptyIcon}>
-                        <Ionicons name="people-outline" size={48} color="#ccc" />
+                        <Ionicons name="people-outline" size={48} color={Colors.gray} />
                     </View>
                     <Text style={styles.emptyTitle}>Henüz kişi eklenmemiş</Text>
                     <Text style={styles.emptyDesc}>Acil durumlarda ulaşılacak kişileri ekleyin.</Text>
@@ -141,8 +141,8 @@ export default function EmergencyContactsScreen() {
                         onRefresh={onRefresh}
                     />
                     <View style={styles.fabContainer}>
-                         <TouchableOpacity style={styles.fabButton} onPress={() => handleAddEdit()}>
-                            <Ionicons name="add" size={30} color="#fff" />
+                        <TouchableOpacity style={styles.fabButton} onPress={() => handleAddEdit()}>
+                            <Ionicons name="add" size={30} color={Colors.black} />
                         </TouchableOpacity>
                     </View>
                 </>
@@ -154,16 +154,16 @@ export default function EmergencyContactsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f9fa',
+        backgroundColor: Colors.background,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: s(16),
         paddingVertical: vs(12),
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        borderBottomColor: Colors.border,
     },
     backBtn: {
         padding: s(8),
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: fs(18),
         fontWeight: 'bold',
-        color: '#333',
+        color: Colors.white,
     },
     center: {
         flex: 1,
@@ -181,20 +181,17 @@ const styles = StyleSheet.create({
     },
     listContent: {
         padding: s(16),
-        paddingBottom: vs(100), // Space for fixed footer
+        paddingBottom: vs(100),
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(12),
         padding: s(16),
         marginBottom: vs(12),
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.05,
-        shadowRadius: 4,
-        elevation: 2,
+        borderWidth: 1,
+        borderColor: Colors.border,
     },
     cardContent: {
         flex: 1,
@@ -207,17 +204,17 @@ const styles = StyleSheet.create({
     cardTitle: {
         fontSize: fs(16),
         fontWeight: '600',
-        color: '#333',
+        color: Colors.white,
         marginRight: s(8),
     },
     relationshipText: {
         fontSize: fs(14),
-        color: '#666',
+        color: Colors.gray,
         fontWeight: '400',
     },
     cardPhone: {
         fontSize: fs(14),
-        color: '#666',
+        color: Colors.gray,
     },
     cardActions: {
         flexDirection: 'row',
@@ -225,7 +222,7 @@ const styles = StyleSheet.create({
     },
     actionBtn: {
         padding: s(8),
-        backgroundColor: '#f5f5f5',
+        backgroundColor: Colors.lightGray,
         borderRadius: ms(8),
     },
     emptyContainer: {
@@ -238,7 +235,7 @@ const styles = StyleSheet.create({
         width: s(80),
         height: s(80),
         borderRadius: s(40),
-        backgroundColor: '#f0f0f0',
+        backgroundColor: Colors.secondary,
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: vs(16),
@@ -246,12 +243,12 @@ const styles = StyleSheet.create({
     emptyTitle: {
         fontSize: fs(18),
         fontWeight: 'bold',
-        color: '#333',
+        color: Colors.white,
         marginBottom: vs(8),
     },
     emptyDesc: {
         fontSize: fs(14),
-        color: '#666',
+        color: Colors.gray,
         textAlign: 'center',
         marginBottom: vs(24),
     },
@@ -260,10 +257,11 @@ const styles = StyleSheet.create({
         paddingVertical: vs(12),
         paddingHorizontal: s(14),
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: Colors.border,
         borderRadius: ms(12),
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: Colors.primary,
     },
     addButtonText: {
         marginLeft: s(8),
@@ -283,7 +281,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: Colors.primary,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 4.65,

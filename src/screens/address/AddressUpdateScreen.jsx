@@ -34,7 +34,7 @@ export default function AddressUpdateScreen() {
         setAddress(data?.description ?? data?.address ?? data?.detail ?? '');
         setLocation({ lat: data?.lat ?? data?.location?.lat, lng: data?.lng ?? data?.location?.lng });
         setIsDefault(!!data.is_default);
-      } catch (_) {}
+      } catch (_) { }
       setBootLoading(false);
     };
     load();
@@ -82,10 +82,10 @@ export default function AddressUpdateScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#fff' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+    <KeyboardAvoidingView style={{ flex: 1, backgroundColor: Colors.background }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <View style={styles.headerRow}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: s(6) }}>
-          <Ionicons name="arrow-back" size={22} color="#333" />
+          <Ionicons name="arrow-back" size={22} color={Colors.white} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Adresi düzenle</Text>
       </View>
@@ -106,43 +106,43 @@ export default function AddressUpdateScreen() {
               </View>
             )}
           >
-          <View style={{ paddingHorizontal: s(16), paddingVertical: vs(6),marginTop:s(30) }}>
-            <Text style={styles.label}>Başlık</Text>
-            <View style={styles.inputWrapper}>
-              <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Örn: Ev, İş" placeholderTextColor={Colors.gray} />
-            </View>
+            <View style={{ paddingHorizontal: s(16), paddingVertical: vs(6), marginTop: s(30) }}>
+              <Text style={styles.label}>Başlık</Text>
+              <View style={styles.inputWrapper}>
+                <TextInput style={styles.input} value={title} onChangeText={setTitle} placeholder="Örn: Ev, İş" placeholderTextColor={Colors.gray} />
+              </View>
 
-            <Text style={[styles.label, { marginTop: vs(14) }]}>Adres</Text>
-            <AddressAutocomplete
-              placeholder="Adres arayın veya konum seçin"
-              value={{ address }}
-              onSelect={onAutoSelect}
-              onClear={() => { setAddress(''); setLocation(null); }}
-              enableCurrent={true}
-            />
-          </View>
+              <Text style={[styles.label, { marginTop: vs(14) }]}>Adres</Text>
+              <AddressAutocomplete
+                placeholder="Adres arayın veya konum seçin"
+                value={{ address }}
+                onSelect={onAutoSelect}
+                onClear={() => { setAddress(''); setLocation(null); }}
+                enableCurrent={true}
+              />
+            </View>
           </Swipeable>
 
-          
-      <View style={{ paddingHorizontal: s(16), marginTop: vs(10) }}>
-        <TouchableOpacity style={styles.mapSelectBtn} onPress={() => navigation.navigate('LocationPicker', { target: 'address_update', onSelect: onMapSelect })}>
-          <Ionicons name="map-outline" size={18} color="#fff" />
-          <Text style={styles.mapSelectText}>Haritadan seç</Text>
-        </TouchableOpacity>
-      </View>
 
-      <TouchableOpacity 
-        style={styles.checkboxRow} 
-        onPress={() => setIsDefault(!isDefault)} 
-        activeOpacity={0.8}
-      >
-        <Ionicons 
-          name={isDefault ? "checkbox" : "square-outline"} 
-          size={24} 
-          color={isDefault ? Colors.primary : Colors.gray} 
-        />
-        <Text style={styles.checkboxLabel}>Varsayılan adres olarak ayarla</Text>
-      </TouchableOpacity>
+          <View style={{ paddingHorizontal: s(16), marginTop: vs(10) }}>
+            <TouchableOpacity style={styles.mapSelectBtn} onPress={() => navigation.navigate('LocationPicker', { target: 'address_update', onSelect: onMapSelect })}>
+              <Ionicons name="map-outline" size={18} color="#fff" />
+              <Text style={styles.mapSelectText}>Haritadan seç</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity
+            style={styles.checkboxRow}
+            onPress={() => setIsDefault(!isDefault)}
+            activeOpacity={0.8}
+          >
+            <Ionicons
+              name={isDefault ? "checkbox" : "square-outline"}
+              size={24}
+              color={isDefault ? Colors.primary : Colors.gray}
+            />
+            <Text style={styles.checkboxLabel}>Varsayılan adres olarak ayarla</Text>
+          </TouchableOpacity>
 
           <View style={styles.footer}>
             <TouchableOpacity
@@ -152,7 +152,7 @@ export default function AddressUpdateScreen() {
               activeOpacity={(loading || !validate()) ? 1 : 0.85}
             >
               {loading ? (
-                <ActivityIndicator color="#fff" />
+                <ActivityIndicator color={Colors.black} />
               ) : (
                 <Text style={[styles.footerBtnText, (!validate() || loading) && styles.footerBtnTextDisabled]}>Kaydet</Text>
               )}
@@ -165,50 +165,53 @@ export default function AddressUpdateScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerRow: { flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8) ,       
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        marginBottom:s(10)
-},
-  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: '#333' },
-  label: { fontSize: fs(14), fontWeight: '700', color: '#333', marginBottom: vs(6) },
-  inputWrapper: { borderWidth: 1, borderColor: '#eee', paddingHorizontal: s(10), paddingVertical: vs(8), backgroundColor: '#fff'},
-  input: { paddingVertical: vs(6), fontSize: fs(14), color: Colors.black },
+  headerRow: {
+    flexDirection: 'row', alignItems: 'center', paddingTop: vs(10), paddingHorizontal: s(16), paddingBottom: vs(8),
+    borderBottomWidth: 1,
+    borderBottomColor: Colors.border,
+    backgroundColor: Colors.secondary,
+    marginBottom: s(10)
+  },
+  headerTitle: { marginLeft: s(8), fontSize: fs(20), fontWeight: '800', color: Colors.white },
+  label: { fontSize: fs(14), fontWeight: '700', color: Colors.gray, marginBottom: vs(6) },
+  inputWrapper: { borderWidth: 1, borderColor: Colors.border, paddingHorizontal: s(10), paddingVertical: vs(8), backgroundColor: Colors.secondary, borderRadius: 8 },
+  input: { paddingVertical: vs(6), fontSize: fs(14), color: Colors.white },
   mapLink: { marginTop: vs(12), flexDirection: 'row', alignItems: 'center' },
   mapLinkText: { marginLeft: s(8), color: Colors.primary, fontSize: fs(14), fontWeight: '700' },
   swipeDeleteWrapper: { justifyContent: 'center', alignItems: 'flex-end' },
-  swipeDeleteBtn: { backgroundColor: '#d33', paddingHorizontal: s(16), justifyContent: 'center', alignItems: 'center', flexDirection: 'row', height: '100%' },
-  swipeDeleteText: { marginLeft: s(8), color: '#fff', fontSize: fs(14), fontWeight: '700' },
-    mapSelectBtn: { marginTop: vs(12), backgroundColor: Colors.secondary, paddingVertical: vs(12), alignItems: 'center', justifyContent: 'center', flexDirection: 'row' },
-  mapSelectText: { marginLeft: s(8), color: '#fff', fontSize: fs(14), fontWeight: '700' },
+  swipeDeleteBtn: { backgroundColor: Colors.red, paddingHorizontal: s(16), justifyContent: 'center', alignItems: 'center', flexDirection: 'row', height: '100%' },
+  swipeDeleteText: { marginLeft: s(8), color: Colors.white, fontSize: fs(14), fontWeight: '700' },
+  mapSelectBtn: { marginTop: vs(12), backgroundColor: Colors.lightGray, paddingVertical: vs(12), alignItems: 'center', justifyContent: 'center', flexDirection: 'row', borderRadius: 8 },
+  mapSelectText: { marginLeft: s(8), color: Colors.white, fontSize: fs(14), fontWeight: '700' },
   checkboxRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: s(16), marginTop: vs(20) },
-  checkboxLabel: { marginLeft: s(10), fontSize: fs(14), color: '#333', fontWeight: '600' },
-  
+  checkboxLabel: { marginLeft: s(10), fontSize: fs(14), color: Colors.white, fontWeight: '600' },
+
   footer: {
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        bottom: 16,
-        backgroundColor: '#fff',
-        paddingHorizontal: s(16),
-        paddingVertical:s(16),
-        borderTopWidth: 0,
-    },
-    footerBtn: {
-        height: vs(52),
-        backgroundColor: Colors.secondary,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    footerBtnText: {
-        color: '#fff',
-        fontSize: fs(16),
-        fontWeight: '700',
-    },
-    footerBtnDisabled: {
-        backgroundColor: Colors.lightGray,
-    },
-    footerBtnTextDisabled: {
-        opacity: 0.9,
-    },
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 16,
+    backgroundColor: Colors.background,
+    paddingHorizontal: s(16),
+    paddingVertical: s(16),
+    borderTopWidth: 0,
+  },
+  footerBtn: {
+    height: vs(52),
+    backgroundColor: Colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+  },
+  footerBtnText: {
+    color: Colors.black,
+    fontSize: fs(16),
+    fontWeight: '700',
+  },
+  footerBtnDisabled: {
+    backgroundColor: Colors.lightGray,
+  },
+  footerBtnTextDisabled: {
+    opacity: 0.9,
+  },
 });

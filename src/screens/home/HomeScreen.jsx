@@ -1,4 +1,5 @@
-import { StyleSheet, View,  } from 'react-native'
+import { StyleSheet, View, } from 'react-native'
+import { Colors } from '../../constants/Colors'
 import { useEffect } from 'react'
 import TopMenu from '../../components/TopMenu'
 import MapScreen from './MapScreen'
@@ -35,7 +36,7 @@ const HomeScreen = ({ navigation, route }) => {
     <View style={styles.container}>
       <TopMenu />
       <MapScreen />
-      <BottomSheetMenu/>
+      <BottomSheetMenu />
     </View>
   )
 }
@@ -45,6 +46,6 @@ export default HomeScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
 })

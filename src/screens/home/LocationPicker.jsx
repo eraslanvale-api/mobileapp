@@ -5,6 +5,7 @@ import { useRoute, useNavigation, useFocusEffect } from '@react-navigation/nativ
 import * as Location from 'expo-location';
 import { Ionicons } from '@expo/vector-icons';
 import { s, vs, fs, ms } from '../../utils/scale';
+import { Colors } from '../../constants/Colors';
 
 const FALLBACK_REGION = {
   latitude: 41.015137,
@@ -55,7 +56,7 @@ export default function LocationPicker() {
           const addr = parts.length > 0 ? parts.join(', ') : 'Seçilen Konum';
           if (mounted) setAddress(addr);
         }
-      } catch (_) {}
+      } catch (_) { }
       if (mounted) { setLoading(false); setResolving(false); }
     })();
     return () => { mounted = false; };
@@ -72,7 +73,7 @@ export default function LocationPicker() {
         const addr = parts.length > 0 ? parts.join(', ') : 'Seçilen Konum';
         setAddress(addr);
       }
-    } catch (_) {}
+    } catch (_) { }
     setResolving(false);
   };
 
@@ -104,7 +105,7 @@ export default function LocationPicker() {
   }, [navigation]));
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <View style={{ flex: 1, backgroundColor: Colors.background }}>
       <MapView
         ref={mapRef}
         style={StyleSheet.absoluteFill}
@@ -116,16 +117,16 @@ export default function LocationPicker() {
       />
 
       <View style={styles.centerPinContainer} pointerEvents="none">
-        <Ionicons name="pin" size={s(36)} color="#f4a119" />
+        <Ionicons name="pin" size={s(36)} color={Colors.primary} />
       </View>
 
-      
+
 
       <TouchableOpacity style={styles.backBtn} onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={s(20)} color="#333" />
+        <Ionicons name="arrow-back" size={s(20)} color={Colors.white} />
       </TouchableOpacity>
       <TouchableOpacity style={styles.locateFab} onPress={locateMe}>
-        <Ionicons name="navigate-outline" size={s(22)} color="#fff" />
+        <Ionicons name="navigate-outline" size={s(22)} color={Colors.white} />
       </TouchableOpacity>
 
       <View style={styles.footer}>
@@ -133,7 +134,7 @@ export default function LocationPicker() {
           <Ionicons
             name={String(target || '').startsWith('stop_') ? 'bookmark-outline' : (target === 'dropoff' ? 'flag-outline' : 'navigate')}
             size={s(18)}
-            color="#f4a119"
+            color={Colors.primary}
             style={{ marginRight: s(8) }}
           />
           <Text style={styles.headerText} numberOfLines={1}>
@@ -145,7 +146,7 @@ export default function LocationPicker() {
         </View>
         <TouchableOpacity style={[styles.confirmBtn, (loading || resolving || !address) && styles.confirmBtnDisabled]} onPress={confirm} disabled={loading || resolving || !address}>
           {(loading || resolving || !address) ? (
-            <ActivityIndicator color="#fff" />
+            <ActivityIndicator color={Colors.black} />
           ) : (
             <Text style={styles.confirmText}>Onayla</Text>
           )}
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
     top: vs(60),
     left: s(16),
     right: s(16),
-    backgroundColor: 'rgba(255,255,255,0.96)',
+    backgroundColor: Colors.secondary,
     borderRadius: ms(12),
     paddingHorizontal: s(12),
     paddingVertical: vs(10),
@@ -182,16 +183,16 @@ const styles = StyleSheet.create({
     shadowRadius: ms(8),
     shadowOffset: { width: 0, height: 2 },
   },
-  backBtn: { position: 'absolute', top: vs(20), left: s(16), backgroundColor: 'rgba(255,255,255,0.96)', borderRadius: ms(20), padding: s(8), elevation: 6 },
-  headerText: { flex: 1, color: '#333', fontSize: fs(14), fontWeight: '600' },
+  backBtn: { position: 'absolute', top: vs(20), left: s(16), backgroundColor: Colors.secondary, borderRadius: ms(20), padding: s(8), elevation: 6 },
+  headerText: { flex: 1, color: Colors.white, fontSize: fs(14), fontWeight: '600' },
   headerAction: { marginLeft: s(8) },
-  locateFab: { position: 'absolute', right: s(16), bottom: vs(220), width: s(52), height: s(52), borderRadius: s(26), backgroundColor: '#f4a119', alignItems: 'center', justifyContent: 'center', elevation: 6 },
+  locateFab: { position: 'absolute', right: s(16), bottom: vs(220), width: s(52), height: s(52), borderRadius: s(26), backgroundColor: Colors.primary, alignItems: 'center', justifyContent: 'center', elevation: 6 },
   footer: {
     position: 'absolute',
     bottom: vs(40),
     left: s(16),
     right: s(16),
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
     borderRadius: ms(16),
     padding: s(16),
     elevation: 10,
@@ -201,9 +202,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     alignItems: 'center',
   },
-  addressChip: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderWidth: 1, borderColor: '#eee', borderRadius: ms(12), paddingVertical: vs(8), paddingHorizontal: s(12), marginBottom: vs(10), width: '100%' },
-  addressChipText: { flex: 1, color: '#333', fontSize: fs(13), fontWeight: '600' },
-  confirmBtn: { backgroundColor: '#000', borderRadius: ms(12), paddingVertical: vs(12), paddingHorizontal: s(16), alignItems: 'center', width: '100%' },
+  addressChip: { flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.secondary, borderWidth: 1, borderColor: Colors.border, borderRadius: ms(12), paddingVertical: vs(8), paddingHorizontal: s(12), marginBottom: vs(10), width: '100%' },
+  addressChipText: { flex: 1, color: Colors.white, fontSize: fs(13), fontWeight: '600' },
+  confirmBtn: { backgroundColor: Colors.primary, borderRadius: ms(12), paddingVertical: vs(12), paddingHorizontal: s(16), alignItems: 'center', width: '100%' },
   confirmBtnDisabled: { opacity: 0.8 },
-  confirmText: { color: '#fff', fontWeight: '700', fontSize: fs(16) },
+  confirmText: { color: Colors.black, fontWeight: '700', fontSize: fs(16) },
 });

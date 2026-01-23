@@ -6,14 +6,15 @@ import { s, vs, fs, ms } from '../utils/scale';
 import Constants from 'expo-constants';
 import { useConfig } from '../context/ConfigContext';
 import { getPlacePredictions, getPlaceDetails } from '../api/googleMaps';
+import { Colors } from '../constants/Colors';
 
 // Fallback if env is not working immediately (though it should)
 
 export default function AddressAutocomplete({ placeholder, value, onSelect, onMapSelect, onClear, enableCurrent = false }) {
     const { config } = useConfig();
-    const API_KEY = config?.googleMapsApiKey || (Platform.OS === 'ios' 
-      ? Constants.expoConfig?.extra?.googleMapsApiKeyIos
-      : Constants.expoConfig?.extra?.googleMapsApiKeyAndroid);
+    const API_KEY = config?.googleMapsApiKey || (Platform.OS === 'ios'
+        ? Constants.expoConfig?.extra?.googleMapsApiKeyIos
+        : Constants.expoConfig?.extra?.googleMapsApiKeyAndroid);
     const [query, setQuery] = useState(value?.address || '');
     const [predictions, setPredictions] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -88,7 +89,7 @@ export default function AddressAutocomplete({ placeholder, value, onSelect, onMa
                     const parts = [a.street, a.district, a.city].filter(Boolean);
                     if (parts.length > 0) address = parts.join(', ');
                 }
-            } catch (_) {}
+            } catch (_) { }
             const payload = { address, location: { lat: r.latitude, lng: r.longitude } };
             onSelect?.(payload);
             setQuery(address);
@@ -101,22 +102,22 @@ export default function AddressAutocomplete({ placeholder, value, onSelect, onMa
     return (
         <View style={styles.container}>
             <View style={styles.inputContainer}>
-                <Ionicons name="search" size={s(18)} color="#666" style={styles.searchIcon} />
+                <Ionicons name="search" size={s(18)} color={Colors.gray} style={styles.searchIcon} />
                 <TextInput
                     style={styles.input}
                     placeholder={placeholder}
                     value={query}
                     onChangeText={searchPlaces}
-                    placeholderTextColor="#999"
+                    placeholderTextColor={Colors.gray}
                 />
                 {query.length > 0 ? (
                     <TouchableOpacity onPress={() => { setQuery(''); setPredictions([]); onClear?.(); }}>
-                        <Ionicons name="close-circle" size={s(18)} color="#ccc" />
+                        <Ionicons name="close-circle" size={s(18)} color={Colors.gray} />
                     </TouchableOpacity>
                 ) : (
                     enableCurrent && (
                         <TouchableOpacity onPress={useCurrentLocation}>
-                            <Ionicons name="locate" size={s(18)} color="#f4a119" />
+                            <Ionicons name="locate" size={s(18)} color={Colors.primary} />
                         </TouchableOpacity>
                     )
                 )}
@@ -152,17 +153,17 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f5f5f5',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(10),
         paddingHorizontal: s(10),
         height: vs(42),
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: Colors.border,
     },
     searchIcon: { marginRight: s(8) },
-    input: { flex: 1, fontSize: fs(14), color: '#333' },
+    input: { flex: 1, fontSize: fs(14), color: Colors.white },
     listContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: Colors.secondary,
         borderRadius: ms(10),
         marginTop: vs(6),
         maxHeight: vs(180),
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
         shadowRadius: ms(4),
         shadowOffset: { width: 0, height: 2 },
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: Colors.border,
         overflow: 'hidden'
     },
     item: {
@@ -181,9 +182,9 @@ const styles = StyleSheet.create({
         paddingVertical: vs(10),
         paddingHorizontal: s(12),
         borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
-        backgroundColor: '#fff'
+        borderBottomColor: Colors.border,
+        backgroundColor: Colors.secondary
     },
-    itemText: { fontSize: fs(13), color: '#333' },
-    
+    itemText: { fontSize: fs(13), color: Colors.white },
+
 });
