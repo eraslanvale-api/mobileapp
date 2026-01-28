@@ -805,7 +805,7 @@ const BottomSheetMenu = ({ initialIndex = 1 }) => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginBottom: vs(24), position: 'relative' }}>
                             <Text style={[styles.headerTitle, { fontSize: fs(20), color: Colors.primary, textAlign: 'center' }]}>Acil Durum Kişisi</Text>
                             <TouchableOpacity onPress={() => setEmergencyModalVisible(false)} style={{ position: 'absolute', right: 0, padding: 4 }}>
-                                <Ionicons name="close" size={24} color="#1a1a1a" />
+                                <Ionicons name="close" size={24} color={Colors.primary} />
                             </TouchableOpacity>
                         </View>
 
