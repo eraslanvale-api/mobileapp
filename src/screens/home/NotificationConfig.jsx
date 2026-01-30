@@ -27,7 +27,7 @@ async function ensureAndroidChannel() {
       bypassDnd: false,
       enableLights: true,
     });
-  } catch (_) {}
+  } catch (_) { }
 }
 
 async function requestPermissions() {
@@ -89,7 +89,7 @@ export default function PushTokenManager() {
           // Backend'e gönder (Backend: varsa güncelle, yoksa oluştur)
           await registerExpoPushToken({ token: expoToken });
           await AsyncStorage.setItem('@push_expo_token', expoToken);
-        } catch (error) {}
+        } catch (error) { }
       }
 
       // Device Push Token Kayıt/Güncelleme
@@ -97,18 +97,18 @@ export default function PushTokenManager() {
         try {
           await registerPushToken({ token: deviceToken, platform: Platform.OS });
           await AsyncStorage.setItem('@push_device_token', deviceToken);
-        } catch (error) {}
+        } catch (error) { }
       } else {
         // Retry logic for Device Token if it's null initially
         setTimeout(async () => {
-            try {
-                const { token: retryToken } = await getDevicePushToken();
-                if (retryToken) {
-                    await registerPushToken({ token: retryToken, platform: Platform.OS });
-                    await AsyncStorage.setItem('@push_device_token', retryToken);
-                }
-            } catch (retryError) {}
-        }, 3000); 
+          try {
+            const { token: retryToken } = await getDevicePushToken();
+            if (retryToken) {
+              await registerPushToken({ token: retryToken, platform: Platform.OS });
+              await AsyncStorage.setItem('@push_device_token', retryToken);
+            }
+          } catch (retryError) { }
+        }, 3000);
       }
 
       await AsyncStorage.setItem('@push_user_id', user.id);
@@ -134,7 +134,7 @@ export default function PushTokenManager() {
         const curr = Number(raw ?? '0');
         const next = isNaN(curr) ? 1 : curr + 1;
         await AsyncStorage.setItem('@notif_unread', String(next));
-      } catch (_) {}
+      } catch (_) { }
     });
 
     responseSubRef.current = Notifications.addNotificationResponseReceivedListener(async (response) => {
@@ -144,11 +144,10 @@ export default function PushTokenManager() {
     return () => {
       cancelled = true;
       subscription.remove();
-      try { receivedSubRef.current && Notifications.removeNotificationSubscription(receivedSubRef.current); } catch (_) {}
-      try { responseSubRef.current && Notifications.removeNotificationSubscription(responseSubRef.current); } catch (_) {}
+      try { receivedSubRef.current && Notifications.removeNotificationSubscription(receivedSubRef.current); } catch (_) { }
+      try { responseSubRef.current && Notifications.removeNotificationSubscription(responseSubRef.current); } catch (_) { }
     };
   }, [isAuthenticated]);
 
   return null;
 }
-

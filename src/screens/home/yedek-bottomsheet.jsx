@@ -733,16 +733,8 @@ const BottomSheetMenu = ({ initialIndex = 1 }) => {
                     <View>
                         <Text style={styles.bottomPrice}>₺{Number(route?.price || 0).toFixed(2)}</Text>
                     </View>
-                    <TouchableOpacity
-                        style={[styles.bottomCta, (!termsAccepted || confirmLoading) && { opacity: 0.4 }]}
-                        onPress={handlePaymentAndConfirm}
-                        disabled={!termsAccepted || confirmLoading}
-                    >
-                        {confirmLoading ? (
-                            <ActivityIndicator color="#fff" />
-                        ) : (
-                            <Text style={styles.bottomCtaText}>Onayla</Text>
-                        )}
+                    <TouchableOpacity style={[styles.bottomCta, !termsAccepted && { opacity: 0.4 }]} onPress={handlePaymentAndConfirm} disabled={!termsAccepted}>
+                        <Text style={styles.bottomCtaText}>Onayla</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -854,7 +846,10 @@ const BottomSheetMenu = ({ initialIndex = 1 }) => {
 
                                     <TouchableOpacity
                                         style={styles.addNewContactBtn}
-                                        onPress={() => navigation.navigate('EmergencyContacts')}
+                                        onPress={() => {
+                                            setEmergencyModalVisible(false);
+                                            navigation.navigate('EmergencyContacts');
+                                        }}
                                     >
                                         <Ionicons name="add" size={20} color={Colors.primary} />
                                         <Text style={styles.addNewContactText}>Yeni Kişi Ekle</Text>
